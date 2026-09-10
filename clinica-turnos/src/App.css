@@ -1,0 +1,144 @@
+.app-header {
+  background-color: #0f766e;
+  color: white;
+  padding: 24px 32px;
+}
+
+.app-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 1.6rem;
+}
+
+.app-header p {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  margin: 0 0 2px 0;
+  font-size: 1.15rem;
+}
+
+.subtitulo {
+  margin: 0 0 16px 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.form-row input {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  background-color: #e5e7eb;
+  font-weight: 500;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #0f766e;
+  color: white;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.lista li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 8px 12px;
+  gap: 8px;
+}
+
+.lista.horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: none;
+}
+
+.lista.horizontal li {
+  background: #eef2ff;
+}
+
+.lista.horizontal li.activo {
+  background-color: #0f766e;
+  color: white;
+  font-weight: 600;
+}
+
+.meta {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.vacio {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.destacado {
+  background: #f0fdfa;
+  border: 1px dashed #0f766e;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.destacado h3 {
+  margin: 4px 0;
+  color: #0f766e;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}

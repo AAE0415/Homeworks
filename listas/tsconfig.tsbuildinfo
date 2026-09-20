@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/types.ts","./src/components/Navbar.tsx","./src/dataStructures/DoublyLinkedList.ts","./src/dataStructures/DoublyNode.ts","./src/dataStructures/LinkedList.ts","./src/dataStructures/Node.ts","./src/dataStructures/mockData.ts","./src/pages/HistoryPage.tsx","./src/pages/SongsPage.tsx"],"version":"5.9.3"}

@@ -1,0 +1,200 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: #f3f2ee;
+  color: #1f2a24;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: #1f2a24;
+  color: #ffffff;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-link {
+  color: #c9d1cb;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link-active {
+  background: #2f6f4f;
+  color: #ffffff;
+}
+
+/* Page layout */
+.app-main {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.page-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  font-size: 13px;
+  color: #6b7268;
+  margin-top: 0;
+  margin-bottom: 1.75rem;
+}
+
+/* "Now playing" / current node card */
+.now-playing {
+  background: #ffffff;
+  border: 1px solid #e2e0d6;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.now-playing-label {
+  font-size: 12px;
+  color: #8a8a80;
+}
+
+.now-playing-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 4px 0 2px;
+}
+
+.now-playing-artist {
+  font-size: 14px;
+  color: #6b7268;
+  margin: 0;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+}
+
+.controls button,
+.browser-nav-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2f6f4f;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.controls button:hover,
+.browser-nav-btn:hover:not(:disabled) {
+  background-color: #275c41;
+}
+
+.controls button:disabled,
+.browser-nav-btn:disabled {
+  background-color: #c9c7bc;
+  cursor: not-allowed;
+}
+
+/* Browser-style bar for the history page */
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e0d6;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 1.25rem;
+}
+
+.browser-nav-btn {
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.browser-url {
+  font-family: monospace;
+  font-size: 13px;
+  color: #6b7268;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Node diagram track */
+.node-track {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e0d6;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.node-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.node-box {
+  border: 1.5px solid #c9c7bc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #f8f7f3;
+}
+
+.node-box-active {
+  border-color: #2f6f4f;
+  background: #e5f0e9;
+}
+
+.node-value {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.node-arrow {
+  color: #8a8a80;
+  font-size: 14px;
+}
+
+.node-null {
+  font-size: 13px;
+  color: #8a8a80;
+  font-style: italic;
+}

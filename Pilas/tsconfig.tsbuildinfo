@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/types.ts","./src/components/BookForm.tsx","./src/components/BookStackView.tsx","./src/dataStructures/Stack.ts","./src/dataStructures/mockData.ts"],"version":"5.9.3"}

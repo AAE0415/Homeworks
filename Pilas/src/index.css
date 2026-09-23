@@ -1,0 +1,223 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --purple-900: #2e1065;
+  --purple-700: #6d28d9;
+  --purple-600: #7c3aed;
+  --purple-100: #ede9fe;
+  --purple-50: #f7f5fd;
+  --border: #e3ddf0;
+  --text: #221a35;
+  --text-muted: #7c7492;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background-color: var(--purple-50);
+  color: var(--text);
+}
+
+.app-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+/* Header */
+.app-header {
+  margin-bottom: 2.5rem;
+}
+
+.app-kicker {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple-600);
+  font-weight: 600;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 6px 0 4px;
+  color: var(--purple-900);
+  letter-spacing: -0.01em;
+}
+
+.app-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form */
+.book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--purple-900);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.field input {
+  font-family: inherit;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--purple-50);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--purple-600);
+  background: #ffffff;
+}
+
+.form-error {
+  font-size: 12.5px;
+  color: #b3401f;
+}
+
+.book-form button[type="submit"] {
+  margin-top: 4px;
+  padding: 11px 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--purple-700);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.book-form button[type="submit"]:hover {
+  background-color: var(--purple-900);
+}
+
+/* Section heading with pop button */
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.ghost-button {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--purple-700);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ghost-button:hover:not(:disabled) {
+  border-color: var(--purple-600);
+  background: var(--purple-100);
+}
+
+.ghost-button:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Stack of book cards */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.book-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.book-card-top {
+  border-color: var(--purple-600);
+  background: linear-gradient(180deg, var(--purple-100) 0%, #ffffff 55%);
+}
+
+.top-badge {
+  position: absolute;
+  top: -9px;
+  right: 14px;
+  background: var(--purple-700);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.book-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 2px;
+  color: var(--purple-900);
+}
+
+.book-meta {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+
+.book-meta-muted {
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 2rem 0;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}

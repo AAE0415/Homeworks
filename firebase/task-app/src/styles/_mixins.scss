@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+@mixin card-surface {
+  background: $surface;
+  border: 1px solid rgba($ink, 0.12);
+  border-radius: $radius;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@mixin button-theme($color, $hover) {
+  --bs-btn-bg: #{$color};
+  --bs-btn-border-color: #{$color};
+  --bs-btn-hover-bg: #{$hover};
+  --bs-btn-hover-border-color: #{$hover};
+  --bs-btn-active-bg: #{$hover};
+  --bs-btn-active-border-color: #{$hover};
+  --bs-btn-disabled-bg: #{$color};
+  --bs-btn-disabled-border-color: #{$color};
+}

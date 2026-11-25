@@ -1,4 +1,5 @@
 import { fechaLocalISO } from './format';
+import Heap from './structures/Heap';
 
 export const ESTADOS = ['recibido', 'anticipo_confirmado', 'en_cocina', 'en_camino', 'entregado'];
 
@@ -26,4 +27,19 @@ export function reconciliarCanasta(items, productosPorId) {
     resultado.push({ ...item, precio: p.precio, disponible: p.disponible });
   }
   return { items: resultado, cambios };
+}
+
+const porAgenda = (a, b) => a.fecha.localeCompare(b.fecha) || String(a.confirmado_at).localeCompare(String(b.confirmado_at));
+
+/** Agenda de cocina: primero la entrega más cercana; a igual fecha, lo confirmado antes. Usa un Heap. */
+export function ordenarAgenda(pedidos) {
+  const heap = new Heap(porAgenda, pedidos);
+  const ordenados = [];
+  while (!heap.isEmpty()) ordenados.push(heap.pop());
+  return ordenados;
+}
+
+/** Los k productos con más unidades vendidas ({ producto_id, cantidad }). Usa Heap.topK. */
+export function masPedidos(ventas, k = 4) {
+  return Heap.topK(ventas, k, (a, b) => a.cantidad - b.cantidad);
 }

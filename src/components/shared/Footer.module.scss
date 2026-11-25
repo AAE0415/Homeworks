@@ -1,0 +1,13 @@
+@use '../../styles/mixins' as *;
+
+.pie { border-top: 1px solid var(--tinta); margin-top: var(--s9); }
+.interior {
+  max-width: var(--ancho); margin: 0 auto; padding: var(--s6);
+  display: flex; flex-wrap: wrap; gap: var(--s5) var(--s7); align-items: baseline;
+  font-size: .9rem; color: var(--tinta-suave);
+
+  a { display: inline-flex; gap: var(--s2); align-items: center; }
+}
+.marca { font-family: var(--marca); font-size: 1.7rem; color: var(--rojo); text-decoration: none; }
+
+@include movil { .interior { padding: var(--s5) var(--s4); } }

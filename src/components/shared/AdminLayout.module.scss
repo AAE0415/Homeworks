@@ -1,0 +1,52 @@
+@use '../../styles/mixins' as *;
+
+.admin { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+
+.riel {
+  background: var(--tinta); color: var(--papel);
+  padding: var(--s5) var(--s4);
+  display: flex; flex-direction: column; gap: var(--s6);
+  position: sticky; top: 0; height: 100vh;
+
+  nav { display: grid; gap: 2px; }
+  nav a {
+    display: flex; align-items: center; gap: var(--s3); padding: var(--s3);
+    text-decoration: none; color: var(--papel-noche); font-weight: 500; border-radius: 2px;
+    &:hover { background: rgba(251, 250, 246, .08); color: #fff; }
+    &[aria-current='page'] { background: var(--papel); color: var(--tinta); font-weight: 700; }
+  }
+}
+
+.marca {
+  font-family: var(--marca); font-size: 2rem; line-height: 1; color: var(--rojo-noche);
+  text-decoration: none; padding: 0 var(--s2);
+  small { display: block; margin-top: var(--s1); @include etiqueta-display(.78rem); letter-spacing: .14em; color: var(--papel-noche-tenue); }
+  &:hover { color: var(--rojo-noche); }
+}
+
+.pie {
+  margin-top: auto; display: grid; gap: var(--s2); font-size: .85rem; color: var(--papel-noche-tenue);
+  a, button { color: var(--papel-noche); display: inline-flex; gap: var(--s2); align-items: center; text-decoration: none; }
+  button { background: none; border: 0; padding: 0; cursor: pointer; font-size: .85rem; }
+  a:hover, button:hover { color: #fff; }
+}
+
+.area { padding: var(--s6) var(--s7) var(--s8); min-width: 0; }
+
+.barraMovil { display: none; }
+
+@include movil {
+  .admin { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .barraMovil {
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 30; background: var(--tinta); padding: var(--s3) var(--s4);
+    .marca { font-size: 1.7rem; padding: 0; }
+    button { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 1.5px solid var(--papel); color: var(--papel); cursor: pointer; }
+  }
+  .riel {
+    display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; height: auto; z-index: 29;
+    &[data-abierto='true'] { display: flex; }
+    > .marca { display: none; }
+  }
+  .area { padding: var(--s5) var(--s4) var(--s7); }
+}

@@ -1,0 +1,8 @@
+.noEncontrada {
+  padding-top: var(--s8); padding-bottom: var(--s8);
+  display: grid; gap: var(--s4); justify-items: start;
+  :global(.numeral) { font-size: clamp(6rem, 18vw, 11rem); color: var(--rojo); }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); }
+  p { margin: 0; color: var(--tinta-suave); }
+}
+.acciones { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s3); }

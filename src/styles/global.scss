@@ -1,0 +1,207 @@
+/* Delilicias · estilos globales: tintas, tipografía y piezas del almanaque (ver DESIGN.md) */
+
+@font-face {
+  font-family: "Big Shoulders Display";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/big-shoulders-display-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Big Shoulders Display";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/big-shoulders-display-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/schibsted-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/schibsted-grotesk-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/schibsted-grotesk-italic-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Grand Hotel";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/grand-hotel-400-latin.woff2") format("woff2");
+}
+
+:root {
+  /* Papel y tintas */
+  --papel: #FBFAF6;
+  --papel-sombra: #F1EEE6;
+  --tinta: #161412;
+  --tinta-suave: #4A4540;
+  --tinta-tenue: #6E675F;
+  --filete: #D9D3C7;
+  --rojo: #D8261C;
+  --rojo-hondo: #A8180F;
+  --rojo-velo: #FBE7E4;
+  --verde: #0E5C3A;
+  --verde-velo: #E3F0E8;
+  --dorado: #C9A24A;
+  --rojo-noche: #FF5A4E;
+  --verde-hondo: #0A4A2E;
+  --papel-noche: #E9E4DA;
+  --papel-noche-tenue: #B8B0A4;
+
+  /* Tipografía */
+  --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --texto: "Schibsted Grotesk", system-ui, sans-serif;
+  --marca: "Grand Hotel", cursive;
+
+  /* Espaciado (escala de 4) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+
+  --ancho: 1320px;
+  --sombra: 0 1px 2px rgba(22, 20, 18, .06), 0 12px 28px -12px rgba(22, 20, 18, .22);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--rojo); }
+::selection { background: var(--rojo); color: var(--papel); }
+:focus-visible { outline: 2px solid var(--rojo); outline-offset: 3px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+html { scrollbar-color: var(--tinta-tenue) var(--papel-sombra); }
+input, select, textarea { caret-color: var(--rojo); }
+
+.icon { width: 1.25em; height: 1.25em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-height: 48px; padding: 0 var(--s5);
+  border: 1.5px solid var(--tinta); border-radius: 2px;
+  background: transparent; color: var(--tinta);
+  font-family: var(--display); font-weight: 800; font-size: 1.15rem; letter-spacing: .05em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+}
+.btn:hover { background: var(--tinta); color: var(--papel); }
+.btn:active { transform: translateY(1px); }
+.btn--rojo { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.btn--rojo:hover { background: var(--rojo-hondo); border-color: var(--rojo-hondo); color: #fff; }
+.btn--verde { background: var(--verde); border-color: var(--verde); color: #fff; }
+.btn--verde:hover { background: #0A4A2E; border-color: #0A4A2E; color: #fff; }
+.btn--chico { min-height: 40px; padding: 0 var(--s4); font-size: 1rem; }
+.btn--bloque { width: 100%; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn-canasta .contador {
+  display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; padding: 0 .35em;
+  background: #fff; color: var(--rojo); border-radius: 999px;
+  font-family: var(--texto); font-size: .8rem; font-weight: 700; letter-spacing: 0;
+}
+.btn-texto {
+  display: inline-flex; align-items: center; gap: var(--s2); background: none; border: 0; padding: var(--s2) 0;
+  font-weight: 600; color: var(--rojo-hondo); cursor: pointer; text-decoration: underline; text-underline-offset: .25em;
+}
+
+/* ---------- Tipografía de almanaque ---------- */
+.titular {
+  font-family: var(--display); font-weight: 800; line-height: .95; letter-spacing: -.01em;
+  text-wrap: balance; margin: 0;
+}
+.numeral { font-family: var(--display); font-weight: 900; line-height: .82; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.precio { font-family: var(--display); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+.nota { color: var(--tinta-suave); font-size: .92rem; }
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Perforación entre hojas del almanaque */
+.perforacion {
+  height: 10px;
+  background: radial-gradient(circle at 5px 5px, var(--papel-sombra) 2.6px, transparent 3px) 0 0 / 14px 10px repeat-x;
+  border-top: 1px dashed var(--filete);
+}
+
+/* Óvalo rojo trazado a mano */
+.ovalo { position: absolute; left: -9%; top: -7%; width: 118%; height: 114%; pointer-events: none; overflow: visible; }
+.ovalo path { fill: none; stroke: var(--rojo); stroke-width: 2.6; stroke-linecap: round; }
+.ovalo--dibuja path { stroke-dasharray: 420; stroke-dashoffset: 420; animation: trazo .9s var(--ease) .2s forwards; }
+@keyframes trazo { to { stroke-dashoffset: 0; } }
+
+/* Sello de goma */
+.sello {
+  display: inline-flex; align-items: center; gap: .4em;
+  padding: .28em .7em .22em; border: 2px solid currentColor; border-radius: 3px;
+  font-family: var(--display); font-weight: 800; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--rojo); transform: rotate(-2deg); line-height: 1.1; white-space: nowrap;
+}
+.sello--verde { color: var(--verde); }
+.sello--tinta { color: var(--tinta); }
+.sello--pendiente { color: var(--tinta-tenue); border-style: dashed; transform: none; }
+
+/* Etiquetas de formulario */
+.campo { display: grid; gap: var(--s2); }
+.campo label, .campo .etiqueta { font-weight: 600; font-size: .92rem; }
+.campo .ayuda { font-size: .85rem; color: var(--tinta-tenue); }
+.control {
+  width: 100%; min-height: 48px; padding: var(--s3) var(--s4);
+  background: #fff; border: 1.5px solid var(--filete); border-radius: 2px;
+  transition: border-color .2s var(--ease);
+}
+.control:hover { border-color: var(--tinta-tenue); }
+.control:focus { outline: none; border-color: var(--tinta); box-shadow: 0 0 0 3px var(--rojo-velo); }
+.control::placeholder { color: var(--tinta-tenue); }
+textarea.control { min-height: 96px; resize: vertical; }
+.campo--error .control { border-color: var(--rojo); }
+.campo--error .ayuda { color: var(--rojo-hondo); font-weight: 500; }
+
+/* Contenedor */
+.hoja { max-width: var(--ancho); margin: 0 auto; padding: 0 var(--s6); }
+
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .ovalo--dibuja path { stroke-dashoffset: 0; }
+}
+
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; }
+
+@media (max-width: 900px) {
+  .hoja { padding: 0 var(--s4); }
+}
+
+/* Enlace para saltar al contenido (teclado) */
+.saltar {
+  position: absolute; left: var(--s4); top: -100px; z-index: 100;
+  background: var(--tinta); color: var(--papel); padding: var(--s2) var(--s4);
+}
+.saltar:focus { top: var(--s2); color: var(--papel); }

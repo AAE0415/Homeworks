@@ -1,0 +1,9 @@
+.loader {
+  display: flex; align-items: center; justify-content: center; gap: var(--s3);
+  min-height: 40vh; color: var(--tinta-suave); font-size: .95rem;
+}
+.punto {
+  width: 10px; height: 10px; border-radius: 50%; background: var(--rojo);
+  animation: respira 1.2s var(--ease) infinite alternate;
+}
+@keyframes respira { from { opacity: .25; } to { opacity: 1; } }

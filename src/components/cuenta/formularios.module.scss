@@ -1,0 +1,9 @@
+@use '../../styles/mixins' as *;
+
+.form { display: grid; gap: var(--s4); }
+.dos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); align-items: start; }
+.error { margin: 0; padding: var(--s3) var(--s4); background: var(--rojo-velo); color: var(--rojo-hondo); font-weight: 500; font-size: .92rem; }
+.exito { margin: 0; padding: var(--s3) var(--s4); background: var(--verde-velo); color: var(--verde); font-weight: 500; font-size: .92rem; }
+.aviso { font-size: .85rem; color: var(--tinta-tenue); margin: 0; }
+
+@include movil { .dos { grid-template-columns: 1fr; } }

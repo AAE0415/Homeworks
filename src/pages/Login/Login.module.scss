@@ -1,9 +1,0 @@
-.login {
-  padding-top: var(--s7); padding-bottom: var(--s8);
-  display: grid; gap: var(--s4); justify-items: start;
-  h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); border-bottom: 3px solid var(--tinta); padding-bottom: var(--s2); width: 100%; }
-  p { margin: 0; color: var(--tinta-suave); }
-}
-.demo { display: grid; gap: var(--s3); padding: var(--s4); border: 1.5px dashed var(--filete); background: #fff; }
-.nota { font-size: .9rem; }
-.botones { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; }

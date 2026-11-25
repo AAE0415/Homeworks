@@ -17,7 +17,7 @@ export default function AdminLayout() {
   const { perfil, logout } = useAuth();
   const [abierto, setAbierto] = useState(false);
   const navigate = useNavigate();
-  const salir = () => { logout(); navigate('/', { replace: true }); };
+  const salir = async () => { await logout(); navigate('/', { replace: true }); };
 
   return (
     <div className={styles.admin}>

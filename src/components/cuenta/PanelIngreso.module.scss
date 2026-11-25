@@ -1,0 +1,41 @@
+@use '../../styles/mixins' as *;
+
+.ingreso { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 69px); }
+
+.foto {
+  position: relative; margin: 0; border-right: 1px solid var(--tinta);
+  img { width: 100%; height: 100%; object-fit: cover; }
+  figcaption {
+    position: absolute; left: var(--s5); bottom: var(--s5);
+    background: var(--papel); border: 1px solid var(--tinta); padding: var(--s3) var(--s4);
+    font-family: var(--display); font-weight: 800; font-size: 1.2rem; text-transform: uppercase;
+  }
+}
+
+.formulario {
+  display: grid; align-content: center; justify-items: start; padding: var(--s8);
+  > div { width: min(440px, 100%); }
+  h1 { font-size: clamp(2.6rem, 5vw, 4rem); margin-bottom: var(--s3); }
+}
+
+.bajada { margin: 0 0 var(--s5); color: var(--tinta-suave); }
+
+.pestanas {
+  display: flex; border-bottom: 1px solid var(--tinta); margin-bottom: var(--s5);
+  a {
+    flex: 1; min-height: 48px; display: grid; place-items: center; text-decoration: none;
+    border-bottom: 3px solid transparent; margin-bottom: -1px;
+    font-family: var(--display); font-weight: 800; font-size: 1.15rem; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--tinta-tenue);
+    &[aria-current='page'] { color: var(--tinta); border-bottom-color: var(--rojo); }
+    &:hover { color: var(--tinta); }
+  }
+}
+
+.aviso { padding: var(--s3) var(--s4); background: var(--rojo-velo); color: var(--rojo-hondo); font-size: .9rem; margin: 0 0 var(--s4); }
+
+@include movil {
+  .ingreso { grid-template-columns: 1fr; min-height: 0; }
+  .foto { height: 180px; border-right: 0; border-bottom: 1px solid var(--tinta); figcaption { display: none; } }
+  .formulario { padding: var(--s5) var(--s4) var(--s7); }
+}

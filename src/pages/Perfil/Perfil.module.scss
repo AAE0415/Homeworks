@@ -1,3 +1,14 @@
-.pagina {
-  display: block;
+.perfil {
+  max-width: 720px;
+  padding-top: var(--s7);
+  padding-bottom: var(--s8);
+
+  h1 {
+    font-size: clamp(2.6rem, 6vw, 4rem);
+    border-bottom: 3px solid var(--tinta);
+    padding-bottom: var(--s2);
+  }
 }
+
+.correo { color: var(--tinta-suave); margin: var(--s3) 0 var(--s5); }
+.acciones { display: flex; flex-wrap: wrap; gap: var(--s3); }

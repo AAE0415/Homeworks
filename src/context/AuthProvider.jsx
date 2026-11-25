@@ -1,37 +1,77 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { limpiarTelefono, traducirErrorAuth } from '../helpers/validacion';
+import { supabase, supabaseConfigurado } from '../lib/supabase';
 import { AuthContext } from './authContext';
 
-const CLAVE_DEMO = 'delilicias:demo-sesion';
-
-// PROVISIONAL (Hito 2): sesión simulada solo en desarrollo para probar las guardias de rutas.
-// En el Hito 4 se reemplaza por Supabase Auth con el mismo contrato:
-// { user, perfil, cargando, login, registrar, logout, actualizarPerfil }.
-function leerDemo() {
-  if (!import.meta.env.DEV) return null;
-  try { return JSON.parse(localStorage.getItem(CLAVE_DEMO)); } catch { return null; }
-}
-
+// Sesión real con Supabase Auth. Contrato:
+// { user, perfil, cargando, configurado, login, registrar, logout, actualizarPerfil }
+// Las funciones devuelven { error: string } en español, o { ok: true }.
 export function AuthProvider({ children }) {
-  const [sesion, setSesion] = useState(leerDemo);
+  const [user, setUser] = useState(null);
+  const [perfil, setPerfil] = useState(null);
+  const [cargando, setCargando] = useState(supabaseConfigurado);
 
-  const entrarDemo = useCallback((rol) => {
-    const demo = { user: { id: `demo-${rol}` }, perfil: { id: `demo-${rol}`, nombre: rol === 'admin' ? 'Administradora' : 'Laura Gómez', rol } };
-    localStorage.setItem(CLAVE_DEMO, JSON.stringify(demo));
-    setSesion(demo);
+  const cargarPerfil = useCallback(async (usuario) => {
+    if (!usuario) { setPerfil(null); return; }
+    const { data } = await supabase.from('profiles').select('*').eq('id', usuario.id).maybeSingle();
+    setPerfil(data ?? null);
   }, []);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem(CLAVE_DEMO);
-    setSesion(null);
+  useEffect(() => {
+    if (!supabaseConfigurado) return undefined;
+    let activo = true;
+
+    supabase.auth.getSession().then(async ({ data }) => {
+      const usuario = data.session?.user ?? null;
+      if (!activo) return;
+      setUser(usuario);
+      await cargarPerfil(usuario);
+      if (activo) setCargando(false);
+    });
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_evento, session) => {
+      const usuario = session?.user ?? null;
+      setUser(usuario);
+      // Fuera del callback para no bloquear el cliente de auth
+      setTimeout(() => cargarPerfil(usuario), 0);
+    });
+
+    return () => { activo = false; sub.subscription.unsubscribe(); };
+  }, [cargarPerfil]);
+
+  const login = useCallback(async (email, password) => {
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    return error ? { error: traducirErrorAuth(error) } : { ok: true };
   }, []);
+
+  const registrar = useCallback(async ({ nombre, telefono, barrio_id, email, password }) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: email.trim(),
+      password,
+      options: { data: { nombre: nombre.trim(), telefono: limpiarTelefono(telefono), barrio_id } },
+    });
+    if (error) return { error: traducirErrorAuth(error) };
+    // Si el proyecto exige confirmar el correo, no hay sesión todavía
+    return { ok: true, confirmarCorreo: !data.session };
+  }, []);
+
+  const logout = useCallback(async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setPerfil(null);
+  }, []);
+
+  const actualizarPerfil = useCallback(async ({ nombre, telefono, barrio_id }) => {
+    const cambios = { nombre: nombre.trim(), telefono: limpiarTelefono(telefono), barrio_id };
+    const { data, error } = await supabase.from('profiles').update(cambios).eq('id', user.id).select().single();
+    if (error) return { error: traducirErrorAuth(error) };
+    setPerfil(data);
+    return { ok: true };
+  }, [user]);
 
   const valor = useMemo(() => ({
-    user: sesion?.user ?? null,
-    perfil: sesion?.perfil ?? null,
-    cargando: false,
-    entrarDemo,
-    logout,
-  }), [sesion, entrarDemo, logout]);
+    user, perfil, cargando, configurado: supabaseConfigurado, login, registrar, logout, actualizarPerfil,
+  }), [user, perfil, cargando, login, registrar, logout, actualizarPerfil]);
 
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>;
 }

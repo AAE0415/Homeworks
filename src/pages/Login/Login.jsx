@@ -1,33 +1,52 @@
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import f from '../../components/cuenta/formularios.module.scss';
+import PanelIngreso from '../../components/cuenta/PanelIngreso';
+import Campo from '../../components/shared/Campo';
+import { validarIngreso } from '../../helpers/validacion';
 import useAuth from '../../hooks/useAuth';
-import styles from './Login.module.scss';
 
 export default function Login() {
-  const { user, entrarDemo, logout } = useAuth();
+  const { user, perfil, login, configurado } = useAuth();
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const volver = params.get('volver') || '/';
+  const volver = params.get('volver') || '';
+  const [datos, setDatos] = useState({ email: '', password: '' });
+  const [errores, setErrores] = useState({});
+  const [errorGeneral, setErrorGeneral] = useState('');
+  const [enviando, setEnviando] = useState(false);
 
-  const entrar = (rol) => {
-    entrarDemo(rol);
-    navigate(rol === 'admin' && volver === '/' ? '/admin' : volver, { replace: true });
+  if (user && perfil) return <Navigate to={volver || (perfil.rol === 'admin' ? '/admin' : '/')} replace />;
+
+  const cambiar = (e) => setDatos((d) => ({ ...d, [e.target.name]: e.target.value }));
+
+  const enviar = async (e) => {
+    e.preventDefault();
+    const err = validarIngreso(datos);
+    setErrores(err);
+    setErrorGeneral('');
+    if (Object.keys(err).length) return;
+    setEnviando(true);
+    const r = await login(datos.email, datos.password);
+    setEnviando(false);
+    if (r.error) setErrorGeneral(r.error);
+    else if (volver) navigate(volver, { replace: true });
   };
 
   return (
-    <section className={`hoja ${styles.login}`} aria-labelledby="t-login">
-      <h1 className="titular" id="t-login">Ingresar</h1>
-      <p>El inicio de sesión real con Supabase llega en el hito 4.</p>
-      {import.meta.env.DEV && (
-        <div className={styles.demo}>
-          <p className={styles.nota}>Sesión de prueba (solo en desarrollo) para revisar las rutas privadas:</p>
-          <div className={styles.botones}>
-            <button className="btn btn--rojo" type="button" onClick={() => entrar('cliente')}>Entrar como cliente</button>
-            <button className="btn" type="button" onClick={() => entrar('admin')}>Entrar como administradora</button>
-            {user && <button className="btn-texto" type="button" onClick={logout}>Cerrar sesión</button>}
-          </div>
-        </div>
-      )}
-      <p>¿No tienes cuenta? <Link to="/registro">Créala aquí</Link>.</p>
-    </section>
+    <PanelIngreso titulo="Ingresa" bajada="Para separar tu fecha y seguir tu pedido. Tu canasta no se pierde." activa="login" volver={volver}>
+      <form className={f.form} onSubmit={enviar} noValidate>
+        {errorGeneral && <p className={f.error} role="alert">{errorGeneral}</p>}
+        <Campo label="Correo" error={errores.email}>
+          <input name="email" type="email" autoComplete="email" value={datos.email} onChange={cambiar} />
+        </Campo>
+        <Campo label="Contraseña" error={errores.password}>
+          <input name="password" type="password" autoComplete="current-password" value={datos.password} onChange={cambiar} />
+        </Campo>
+        <button className="btn btn--rojo btn--bloque" type="submit" disabled={enviando || !configurado}>
+          {enviando ? 'Ingresando…' : 'Ingresar'}
+        </button>
+      </form>
+    </PanelIngreso>
   );
 }

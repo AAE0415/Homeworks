@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anticipos · Administración Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<link rel="stylesheet" href="admin.css">
+<style>
+  .fila-trabajo { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: var(--s6); align-items: start; }
+  .turno { background: #fff; border: 1px solid var(--tinta); }
+  .turno__cab { display: flex; align-items: baseline; gap: var(--s4); padding: var(--s4) var(--s5); border-bottom: 1px solid var(--tinta); }
+  .turno__cab .titular { font-size: 1.9rem; }
+  .turno__cab .espera { margin-left: auto; font-size: .88rem; color: var(--tinta-suave); display: inline-flex; gap: var(--s2); align-items: center; }
+  .turno__cuerpo { display: grid; grid-template-columns: 1fr 230px; gap: var(--s5); padding: var(--s5); }
+  .datos { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: var(--s2) var(--s4); font-size: .95rem; align-content: start; }
+  .datos dt { color: var(--tinta-tenue); }
+  .datos dd { margin: 0; font-weight: 500; }
+  .monto { grid-column: 1 / -1; margin-top: var(--s3); padding-top: var(--s3); border-top: 1px dashed var(--filete); display: grid; gap: var(--s1); }
+  .monto .numeral { font-size: 2.6rem; }
+  .monto span:first-child { font-weight: 600; white-space: nowrap; }
+  .monto { gap: var(--s4); }
+  .recibo-img { border: 1px solid var(--filete); background: var(--papel-sombra); padding: var(--s3); display: grid; gap: var(--s2); }
+  .recibo-img figure { margin: 0; background: #fff; border: 1px solid var(--filete); padding: var(--s4) var(--s3); font-size: .78rem; display: grid; gap: var(--s2); text-align: center; }
+  .recibo-img figure b { font-family: var(--display); font-size: 1.7rem; font-weight: 800; }
+  .recibo-img .ok { width: 40px; height: 40px; border-radius: 50%; background: var(--verde-velo); color: var(--verde); display: grid; place-items: center; margin: 0 auto; }
+  .recibo-img .etq { font-size: .8rem; color: var(--tinta-tenue); text-align: center; }
+  .recibo-img a { font-size: .85rem; text-align: center; }
+  .coincide { display: flex; gap: var(--s2); align-items: center; color: var(--verde); font-weight: 600; font-size: .88rem; }
+  .turno__acciones { display: flex; gap: var(--s3); flex-wrap: wrap; padding: var(--s4) var(--s5); border-top: 1px solid var(--tinta); background: var(--papel); }
+  .turno__acciones .btn-texto { margin-left: auto; color: var(--verde); }
+
+  .fila h2 { font-family: var(--display); font-weight: 800; font-size: 1.5rem; text-transform: uppercase; line-height: 1; margin: 0 0 var(--s3); display: flex; align-items: baseline; justify-content: space-between; }
+  .fila h2 small { font-family: var(--texto); font-weight: 500; font-size: .85rem; text-transform: none; color: var(--tinta-tenue); }
+  .fila ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--tinta); }
+  .fila li { display: grid; grid-template-columns: 44px 1fr auto; gap: var(--s3); align-items: center; padding: var(--s3) 0; border-bottom: 1px solid var(--filete); }
+  .fila .pos { font-size: 2.2rem; color: var(--tinta-tenue); text-align: center; }
+  .fila li b { display: block; }
+  .fila li span { font-size: .85rem; color: var(--tinta-suave); }
+  .fila .tabular { font-weight: 600; text-align: right; }
+  .fila .sin { display: block; font-size: .8rem; color: var(--rojo-hondo); font-weight: 600; }
+  @media (max-width: 1100px) { .fila-trabajo { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .turno__cuerpo { grid-template-columns: 1fr; } .turno__cab { flex-wrap: wrap; } .turno__cab .espera { margin-left: 0; } }
+</style>
+</head>
+<body class="admin">
+<aside class="riel">
+  <a class="marca" href="#">Delilicias <small>Administración</small></a>
+  <nav aria-label="Administración">
+    <a href="#"><svg class="icon"><use href="#i-resumen"/></svg>Resumen</a>
+    <a href="admin-anticipos.html" aria-current="page"><svg class="icon"><use href="#i-check"/></svg>Anticipos <span class="cuenta">4</span></a>
+    <a href="admin-agenda.html"><svg class="icon"><use href="#i-cocina"/></svg>Agenda de cocina</a>
+    <a href="#"><svg class="icon"><use href="#i-plato"/></svg>Menú</a>
+    <a href="#"><svg class="icon"><use href="#i-calendario"/></svg>Cupos por fecha</a>
+  </nav>
+  <div class="riel__pie"><span>Sesión: Administradora</span><a href="#"><svg class="icon"><use href="#i-salir"/></svg>Salir</a></div>
+</aside>
+<div class="barra-movil"><span class="marca">Delilicias</span><button type="button" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button></div>
+
+<main class="area">
+  <div class="area__cab">
+    <div><h1 class="titular">Anticipos por confirmar</h1><p>Se atienden en el orden en que llegaron.</p></div>
+    <span class="en-vivo">Actualizado en vivo</span>
+  </div>
+
+  <div class="fila-trabajo">
+    <article class="turno" aria-labelledby="t-turno">
+      <div class="turno__cab">
+        <span class="sello sello--tinta">Primero en la fila</span>
+        <h2 class="titular" id="t-turno">Pedido N.º 0151</h2>
+        <span class="espera"><svg class="icon"><use href="#i-reloj"/></svg>Llegó hace 12 min</span>
+      </div>
+      <div class="turno__cuerpo">
+        <dl class="datos">
+          <dt>Cliente</dt><dd>Andrés Muñoz · 316 448 2210</dd>
+          <dt>Entrega</dt><dd>Jueves 24 de diciembre · 10 personas</dd>
+          <dt>Barrio</dt><dd>El Ingenio · 4,6 km de la cocina</dd>
+          <dt>Pedido</dt><dd>Rollo mixto 2 lb, Lomo con arándanos 1 lb, Arroz verde ×6</dd>
+          <dt>Domicilio</dt><dd>Gratis (subtotal $190.500)</dd>
+          <div class="monto"><span>Anticipo esperado (50 %)</span><span class="numeral tabular">$95.250</span></div>
+        </dl>
+        <div class="recibo-img">
+          <figure>
+            <span class="ok"><svg class="icon"><use href="#i-check"/></svg></span>
+            <span>Transferencia exitosa</span>
+            <b class="tabular">$95.250</b>
+            <span>23 nov 2026 · 6:41 p. m.<br>Ref. 0048 2219</span>
+          </figure>
+          <span class="etq">Comprobante subido por el cliente (ejemplo)</span>
+          <span class="coincide"><svg class="icon"><use href="#i-check"/></svg>El valor coincide</span>
+          <a href="#">Abrir en tamaño completo</a>
+        </div>
+      </div>
+      <div class="turno__acciones">
+        <button class="btn btn--verde" type="button"><svg class="icon"><use href="#i-check"/></svg>Confirmar anticipo</button>
+        <button class="btn" type="button">Rechazar</button>
+        <a class="btn-texto" href="#"><svg class="icon"><use href="#i-whatsapp"/></svg>Escribir por WhatsApp</a>
+      </div>
+    </article>
+
+    <section class="fila" aria-labelledby="t-fila">
+      <h2 id="t-fila">En la fila <small>3 más</small></h2>
+      <ol>
+        <li><span class="numeral pos">2</span><span><b>N.º 0152 · Carolina Ruiz</b><span>24 dic · Capri · llegó 6:58 p. m.</span></span><span class="tabular">$74.950</span></li>
+        <li><span class="numeral pos">3</span><span><b>N.º 0153 · Familia Ospina</b><span>31 dic · Granada · llegó 7:20 p. m.</span></span><span class="tabular">$128.400</span></li>
+        <li><span class="numeral pos">4</span><span><b>N.º 0155 · Julián Restrepo</b><span>24 dic · Pance · llegó 8:02 p. m.</span><span class="sin">Aún sin comprobante</span></span><span class="tabular">$52.250</span></li>
+      </ol>
+    </section>
+  </div>
+</main>
+<script src="iconos.js"></script>
+</body>
+</html>

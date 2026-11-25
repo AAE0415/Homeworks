@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delilicias · Cena de Navidad por encargo en Cali</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<style>
+  /* ---------- Portada: lámina + almanaque ---------- */
+  .portada { max-width: var(--ancho); margin: 0 auto; padding: var(--s6) var(--s6) 0; display: grid; grid-template-columns: 7fr 5fr; gap: var(--s7); align-items: stretch; }
+  .lamina { margin: 0; position: relative; display: grid; grid-template-rows: 1fr auto; border: 1px solid var(--tinta); background: #fff; padding: var(--s3); min-height: min(76vh, 720px); }
+  .lamina__foto { position: relative; overflow: hidden; }
+  .lamina__foto img { width: 100%; height: 100%; object-fit: cover; transition: opacity .5s var(--ease); }
+  .lamina__pie { display: flex; align-items: center; gap: var(--s4); padding: var(--s3) var(--s2) var(--s1); border-top: 1px solid var(--tinta); margin-top: var(--s3); }
+  .lamina__pie .numeral { font-size: 2.4rem; color: var(--rojo); }
+  .lamina__nombre { font-family: var(--display); font-weight: 800; font-size: 1.55rem; text-transform: uppercase; letter-spacing: .02em; line-height: 1.05; }
+  .lamina__precio { color: var(--tinta-suave); font-size: .95rem; }
+  .lamina__nav { margin-left: auto; display: flex; align-items: center; gap: var(--s2); }
+  .lamina__nav button { width: 44px; height: 44px; display: grid; place-items: center; border: 1.5px solid var(--tinta); background: var(--papel); cursor: pointer; border-radius: 2px; }
+  .lamina__nav button:hover { background: var(--tinta); color: var(--papel); }
+  .lamina__nav .tabular { font-size: .85rem; color: var(--tinta-tenue); min-width: 3.2em; text-align: center; }
+  .lamina__nav .izq .icon { transform: scaleX(-1); }
+
+  .almanaque { display: flex; flex-direction: column; }
+  .almanaque__mes { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s4); border-bottom: 3px solid var(--tinta); padding-bottom: var(--s2); }
+  .almanaque__mes .numeral { font-size: clamp(4.5rem, 8.4vw, 6rem); text-transform: uppercase; }
+  .almanaque__mes .ano { font-family: var(--display); font-weight: 800; font-size: 2.2rem; color: var(--rojo); line-height: 1; }
+  .almanaque h1 { font-size: clamp(2rem, 3.2vw, 2.75rem); margin: var(--s5) 0 var(--s3); }
+  .almanaque .bajada { margin: 0 0 var(--s5); color: var(--tinta-suave); max-width: 40ch; }
+
+  .cuadricula { display: grid; grid-template-columns: repeat(7, 1fr); border-top: 1px solid var(--tinta); border-left: 1px solid var(--filete); }
+  .cuadricula .dia-semana { font-family: var(--display); font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-align: center; padding: var(--s1) 0; border-right: 1px solid var(--filete); border-bottom: 1px solid var(--tinta); }
+  .cuadricula .dia-semana.dom { color: var(--rojo); }
+  .celda { position: relative; min-height: 66px; border-top: 0; border-left: 0; border-radius: 0; padding: var(--s1) var(--s2); border-right: 1px solid var(--filete); border-bottom: 1px solid var(--filete); background: transparent; text-align: left; font: inherit; color: var(--tinta-tenue); }
+  .celda .n { font-family: var(--display); font-weight: 800; font-size: 1.45rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .celda.festivo .n { color: var(--rojo); }
+  .celda.vacia { background: var(--papel-sombra); }
+  .celda.entrega { color: var(--tinta); cursor: pointer; background: #fff; z-index: 1; }
+  .celda.entrega:hover { background: var(--rojo-velo); }
+  .celda.entrega .n { font-size: 1.9rem; color: var(--rojo); position: relative; display: inline-block; padding: 0 3px; }
+  .celda .ovalo { left: -38%; top: -22%; width: 176%; height: 140%; }
+  .celda .cupo { display: block; font-size: .72rem; font-weight: 600; line-height: 1.2; margin-top: 2px; }
+  .celda .cupo b { font-family: var(--display); font-size: 1.15rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .celda.limite { color: var(--tinta); }
+  .celda.limite .cupo { color: var(--rojo-hondo); }
+  .celda[aria-pressed="true"] { background: var(--rojo-velo); }
+  .portada__accion { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; margin-top: var(--s5); }
+  .portada__accion .nota { margin: 0; }
+
+  /* ---------- Lo más pedido (ranking del heap) ---------- */
+  .seccion { max-width: var(--ancho); margin: var(--s9) auto 0; padding: 0 var(--s6); }
+  .seccion__cab { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4); border-bottom: 3px solid var(--tinta); padding-bottom: var(--s2); margin-bottom: var(--s5); }
+  .seccion__cab h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  .ranking { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--s5) var(--s6); }
+  .ranking li { display: grid; grid-template-columns: auto 1fr; gap: var(--s4); align-items: start; padding-bottom: var(--s4); border-bottom: 1px solid var(--filete); }
+  .ranking .pos { font-size: 3.6rem; color: var(--rojo); min-width: .9em; }
+  .ranking li:first-child { grid-row: 1 / 3; grid-template-columns: 1fr; border-bottom: 0; }
+  .ranking li:first-child .pos { font-size: 6rem; }
+  .ranking img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; border: 1px solid var(--tinta); }
+  .ranking li:first-child img { aspect-ratio: 16 / 10; }
+  .ranking li:not(:first-child) { align-content: center; }
+  .ranking .mini { grid-template-columns: 150px 1fr !important; align-items: center; }
+  .ranking .mini img { aspect-ratio: 1; }
+  .ranking h3 { font-family: var(--display); font-weight: 800; font-size: 1.5rem; line-height: 1.05; text-transform: uppercase; margin: 0 0 var(--s1); }
+  .ranking p { margin: 0; color: var(--tinta-suave); font-size: .92rem; }
+  .ranking .precio { font-size: 1.3rem; color: var(--tinta); display: block; margin-top: var(--s2); }
+  .ranking .mini { display: grid; grid-template-columns: 112px 1fr; gap: var(--s4); }
+
+  /* ---------- Cómo pedir: tira de tres días ---------- */
+  .pasos { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--tinta); border-left: 1px solid var(--filete); }
+  .paso { padding: var(--s5); border-right: 1px solid var(--filete); border-bottom: 1px solid var(--filete); }
+  .paso .numeral { font-size: 4rem; color: var(--rojo); display: block; margin-bottom: var(--s3); }
+  .paso h3 { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; margin: 0 0 var(--s2); line-height: 1; }
+  .paso p { margin: 0; color: var(--tinta-suave); max-width: 34ch; }
+
+  .condiciones { margin-top: var(--s7); background: var(--tinta); color: var(--papel); }
+  .condiciones__in { max-width: var(--ancho); margin: 0 auto; padding: var(--s7) var(--s6); display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s7); align-items: center; }
+  .condiciones h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: #fff; }
+  .condiciones h2 span { color: var(--rojo); }
+  .condiciones ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s3); }
+  .condiciones li { display: flex; gap: var(--s3); align-items: baseline; border-bottom: 1px solid rgba(251,250,246,.18); padding-bottom: var(--s3); color: #E9E4DA; }
+  .condiciones li b { color: #fff; }
+  .condiciones .icon { color: var(--papel); transform: translateY(3px); }
+
+  @media (max-width: 900px) {
+    .portada { grid-template-columns: 1fr; padding: var(--s4) var(--s4) 0; gap: var(--s5); }
+    .lamina { min-height: 0; }
+    .lamina { padding: var(--s2); }
+    .lamina__foto { aspect-ratio: 16 / 8; }
+    .lamina__pie { margin-top: var(--s2); padding-top: var(--s2); }
+    .lamina__nav .tabular { display: none; }
+    .lamina__nav button { width: 40px; height: 40px; }
+    .lamina__precio { font-size: .85rem; }
+    .almanaque .bajada { display: none; }
+    .lamina__pie .numeral { font-size: 1.8rem; }
+    .lamina__nombre { font-size: 1.2rem; }
+    .almanaque__mes .numeral { font-size: 4rem; }
+    .almanaque h1 { margin-top: var(--s4); }
+    .celda { min-height: 58px; padding: 2px 4px; }
+    .celda .n { font-size: 1.15rem; }
+    .celda.entrega .n { font-size: 1.5rem; }
+    .celda .cupo { font-size: .72rem; line-height: 1.1; }
+    .celda .cupo b { font-size: .95rem; }
+    .celda .cupo { font-size: .7rem; }
+    .celda .cupo b { display: block; }
+    .seccion { padding: 0 var(--s4); margin-top: var(--s8); }
+    .ranking { grid-template-columns: 1fr; grid-template-rows: none; }
+    .ranking li:first-child { grid-row: auto; }
+    .ranking .mini { grid-template-columns: 112px 1fr !important; }
+    .ranking li:first-child { grid-row: auto; }
+    .ranking li:first-child .pos { font-size: 4.5rem; }
+    .pasos { grid-template-columns: 1fr; }
+    .condiciones__in { grid-template-columns: 1fr; padding: var(--s7) var(--s4); gap: var(--s5); }
+  }
+</style>
+</head>
+<body>
+<header class="membrete">
+  <div class="membrete__in">
+    <a class="marca" href="inicio.html">Delilicias <small>Cali · Navidad 2026</small></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="inicio.html" aria-current="page">Inicio</a>
+      <a href="menu.html">Menú</a>
+      <a href="checkout.html#cobertura">Cobertura</a>
+      <a href="pedido.html">Mis pedidos</a>
+    </nav>
+    <div class="membrete__acciones">
+      <a class="enlace-cuenta" href="ingreso.html"><svg class="icon"><use href="#i-usuario"/></svg><span>Ingresar</span></a>
+      <a class="btn btn--rojo btn--chico btn-canasta" href="menu.html#canasta"><svg class="icon"><use href="#i-canasta"/></svg>Canasta <span class="contador">3</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="portada" aria-labelledby="titulo">
+    <figure class="lamina" aria-roledescription="carrusel" aria-label="Platos destacados">
+      <div class="lamina__foto"><img src="../../public/img/rollo-mixto.jpg" alt="Rollo mixto en tajadas sobre tabla" id="lamina-img"></div>
+      <figcaption class="lamina__pie">
+        <span>
+          <span class="lamina__nombre" id="lamina-nombre">Rollo mixto</span><br>
+          <span class="lamina__precio"><span class="precio" id="lamina-precio">$52.500</span> la libra · Platos fuertes</span>
+        </span>
+        <span class="lamina__nav">
+          <button class="izq" type="button" aria-label="Plato anterior"><svg class="icon"><use href="#i-flecha"/></svg></button>
+          <span class="tabular" aria-live="polite" id="lamina-pos">1 / 6</span>
+          <button type="button" aria-label="Plato siguiente"><svg class="icon"><use href="#i-flecha"/></svg></button>
+        </span>
+      </figcaption>
+    </figure>
+
+    <div class="almanaque">
+      <div class="almanaque__mes"><span class="numeral">Diciembre</span><span class="ano">2026</span></div>
+      <h1 class="titular" id="titulo">La cena de Navidad, lista para tu mesa</h1>
+      <p class="bajada">Rollos, lomos y costillas hechos en casa, con recetas de siempre. Elige tu fecha: los cupos son limitados.</p>
+
+      <div class="cuadricula" role="group" aria-label="Fechas de entrega de diciembre">
+        <span class="dia-semana">L</span><span class="dia-semana">M</span><span class="dia-semana">M</span><span class="dia-semana">J</span><span class="dia-semana">V</span><span class="dia-semana">S</span><span class="dia-semana dom">D</span>
+        <span class="celda"><span class="n">14</span></span>
+        <span class="celda"><span class="n">15</span></span>
+        <span class="celda"><span class="n">16</span></span>
+        <span class="celda limite"><span class="n">17</span><span class="cupo">Último día para el 24</span></span>
+        <span class="celda"><span class="n">18</span></span>
+        <span class="celda"><span class="n">19</span></span>
+        <span class="celda festivo"><span class="n">20</span></span>
+        <span class="celda"><span class="n">21</span></span>
+        <span class="celda"><span class="n">22</span></span>
+        <span class="celda"><span class="n">23</span></span>
+        <button class="celda entrega" type="button" aria-pressed="true" aria-label="Jueves 24 de diciembre, quedan 12 cupos">
+          <span class="n">24<svg class="ovalo ovalo--dibuja" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M20 9C42-1 84 3 93 23c8 18-14 34-45 34C20 56 3 44 7 26 10 14 24 7 44 5"/></svg></span><span class="cupo"><b>12</b> <span class="pal">cupos</span></span>
+        </button>
+        <span class="celda festivo"><span class="n">25</span></span>
+        <span class="celda"><span class="n">26</span></span>
+        <span class="celda festivo"><span class="n">27</span></span>
+        <span class="celda"><span class="n">28</span></span>
+        <span class="celda"><span class="n">29</span></span>
+        <span class="celda"><span class="n">30</span></span>
+        <button class="celda entrega" type="button" aria-pressed="false" aria-label="Jueves 31 de diciembre, quedan 18 cupos">
+          <span class="n">31<svg class="ovalo" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M20 9C42-1 84 3 93 23c8 18-14 34-45 34C20 56 3 44 7 26 10 14 24 7 44 5"/></svg></span><span class="cupo"><b>18</b> <span class="pal">cupos</span></span>
+        </button>
+        <span class="celda vacia"></span><span class="celda vacia"></span><span class="celda vacia"></span>
+      </div>
+
+      <div class="portada__accion">
+        <a class="btn btn--rojo" href="menu.html">Armar mi canasta para el 24 <svg class="icon"><use href="#i-flecha"/></svg></a>
+        <p class="nota">Anticipo del 50 % · Domicilio gratis desde $149.900</p>
+      </div>
+    </div>
+  </section>
+  <div class="hoja" style="margin-top: var(--s7)"><div class="perforacion" aria-hidden="true"></div></div>
+
+  <section class="seccion" aria-labelledby="t-ranking" style="margin-top: var(--s7)">
+    <div class="seccion__cab">
+      <h2 class="titular" id="t-ranking">Lo más pedido</h2>
+      <a class="btn-texto" href="menu.html">Ver el menú completo <svg class="icon"><use href="#i-flecha"/></svg></a>
+    </div>
+    <ol class="ranking">
+      <li>
+        <span class="numeral pos">1</span>
+        <div>
+          <img src="../../public/img/costilla-san-luis.jpg" alt="Costilla San Luis glaseada">
+          <h3 style="margin-top: var(--s4)">Costilla San Luis en salsa caramelizada</h3>
+          <p>Horneada lentamente y glaseada en salsa caramelizada.</p>
+          <span class="precio">$45.900 <span class="nota">la libra</span></span>
+        </div>
+      </li>
+      <li><span class="numeral pos">2</span><div class="mini"><img src="../../public/img/rollo-mixto.jpg" alt=""><div><h3>Rollo mixto</h3><span class="precio">$52.500 <span class="nota">la libra</span></span></div></div></li>
+      <li><span class="numeral pos">3</span><div class="mini"><img src="../../public/img/lomo-frutos-secos.jpg" alt=""><div><h3>Lomo relleno en frutos secos</h3><span class="precio">$46.500 <span class="nota">la libra</span></span></div></div></li>
+      <li><span class="numeral pos">4</span><div class="mini"><img src="../../public/img/dip-queso-tocineta.jpg" alt=""><div><h3>Dip de queso y tocineta</h3><span class="precio">$44.900 <span class="nota">350 g</span></span></div></div></li>
+      <li><span class="numeral pos">5</span><div class="mini"><img src="../../public/img/arroz-maicitos-tocineta.jpg" alt=""><div><h3>Arroz con maicitos y tocineta</h3><span class="precio">$8.500 <span class="nota">porción</span></span></div></div></li>
+    </ol>
+  </section>
+
+  <section class="seccion" aria-labelledby="t-pasos">
+    <div class="seccion__cab"><h2 class="titular" id="t-pasos">Así encargas tu cena</h2></div>
+    <div class="pasos">
+      <div class="paso"><span class="numeral">1</span><h3>Arma tu canasta</h3><p>Elige los platos, cuántas libras y en cuántas porciones las quieres.</p></div>
+      <div class="paso"><span class="numeral">2</span><h3>Separa tu fecha</h3><p>Escoge el 24 o el 31 y sube el comprobante del 50 % de anticipo.</p></div>
+      <div class="paso"><span class="numeral">3</span><h3>Síguela en vivo</h3><p>Verás cuando tu cena entra a la cocina y cuando sale para tu casa.</p></div>
+    </div>
+  </section>
+
+  <section class="condiciones" aria-labelledby="t-cond">
+    <div class="condiciones__in">
+      <h2 class="titular" id="t-cond">Para el 24, pide a más tardar el <span>17 de diciembre</span>.</h2>
+      <ul>
+        <li><svg class="icon"><use href="#i-check"/></svg><span><b>Anticipo del 50 %</b> para confirmar: Nequi, transferencia o efectivo.</span></li>
+        <li><svg class="icon"><use href="#i-camion"/></svg><span><b>Domicilio gratis</b> desde $149.900. Si no, lo acordamos por WhatsApp.</span></li>
+        <li><svg class="icon"><use href="#i-plato"/></svg><span>Carnes 100 % magras · <b>sin aditivos ni conservantes</b>.</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="pie__in">
+    <a class="marca" href="inicio.html">Delilicias</a>
+    <span>Cocina por encargo · Cali</span>
+    <a href="#"><svg class="icon" style="vertical-align:-4px"><use href="#i-whatsapp"/></svg> +57 315 237 7306</a>
+  </div>
+</footer>
+<script src="iconos.js"></script>
+<script>
+  // Lámina = lista doblemente enlazada circular (maqueta del comportamiento)
+  const platos = [
+    ['rollo-mixto', 'Rollo mixto', '$52.500', 'II', 'la libra · Platos fuertes'],
+    ['costilla-san-luis', 'Costilla San Luis', '$45.900', 'II', 'la libra · Platos fuertes'],
+    ['dip-queso-tocineta', 'Dip de queso y tocineta', '$44.900', 'I', '350 g · Entradas'],
+    ['lomo-arandanos', 'Lomo en salsa de arándanos', '$46.500', 'II', 'la libra · Platos fuertes'],
+    ['ensalada-dulce', 'Ensalada dulce', '$7.800', 'III', 'porción · Acompañantes'],
+    ['bondiola-caramelizada', 'Bondiola caramelizada', '$46.500', 'II', 'la libra · Platos fuertes']
+  ];
+  let i = 0;
+  const img = document.getElementById('lamina-img');
+  function mostrar(d) {
+    i = (i + d + platos.length) % platos.length;
+    const [f, n, p, num, u] = platos[i];
+    img.style.opacity = 0;
+    setTimeout(() => { img.src = `../../public/img/${f}.jpg`; img.alt = n; img.style.opacity = 1; }, 180);
+    document.getElementById('lamina-nombre').textContent = n;
+    document.getElementById('lamina-precio').textContent = p;
+    document.getElementById('lamina-precio').nextSibling.textContent = ' ' + u;
+    document.getElementById('lamina-pos').textContent = `${i + 1} / ${platos.length}`;
+  }
+  const [prev, next] = document.querySelectorAll('.lamina__nav button');
+  prev.onclick = () => mostrar(-1); next.onclick = () => mostrar(1);
+
+  // Elegir fecha: el óvalo se dibuja
+  document.querySelectorAll('.celda.entrega').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('.celda.entrega').forEach(o => { o.setAttribute('aria-pressed', 'false'); o.querySelector('.ovalo').classList.remove('ovalo--dibuja'); });
+    c.setAttribute('aria-pressed', 'true');
+    const o = c.querySelector('.ovalo'); void o.getBoundingClientRect(); o.classList.add('ovalo--dibuja');
+    document.querySelector('.portada__accion .btn').firstChild.textContent = 'Armar mi canasta para el ' + c.querySelector('.n').firstChild.textContent + ' ';
+  }));
+</script>
+</body>
+</html>

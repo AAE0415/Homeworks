@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta gráfica · Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<style>
+  .portada-doc { max-width: var(--ancho); margin: 0 auto; padding: var(--s8) var(--s6) var(--s6); display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s7); align-items: end; border-bottom: 3px solid var(--tinta); }
+  .portada-doc .marca { font-size: clamp(4rem, 10vw, 8rem); }
+  .portada-doc h1 { font-size: clamp(2rem, 4vw, 3rem); margin-top: var(--s3); }
+  .portada-doc p { margin: 0; color: var(--tinta-suave); max-width: 52ch; }
+  .pantallas { max-width: var(--ancho); margin: 0 auto; padding: var(--s6); display: grid; grid-template-columns: repeat(4, 1fr); border-left: 1px solid var(--filete); }
+  .pantalla { padding: var(--s4); border-right: 1px solid var(--filete); border-bottom: 1px solid var(--filete); text-decoration: none; display: grid; gap: var(--s2); }
+  .pantalla:hover { background: var(--rojo-velo); color: inherit; }
+  .pantalla .numeral { font-size: 3.2rem; color: var(--rojo); }
+  .pantalla b { font-family: var(--display); font-weight: 800; font-size: 1.35rem; text-transform: uppercase; line-height: 1.05; }
+  .pantalla span { font-size: .88rem; color: var(--tinta-suave); }
+  .sistema { max-width: var(--ancho); margin: var(--s7) auto 0; padding: 0 var(--s6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s7); }
+  .sistema h2 { font-family: var(--display); font-weight: 800; font-size: 1.8rem; text-transform: uppercase; border-bottom: 1px solid var(--tinta); padding-bottom: var(--s2); margin: 0 0 var(--s4); }
+  .tintas { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); }
+  .tinta { border: 1px solid var(--filete); }
+  .tinta i { display: block; height: 72px; }
+  .tinta span { display: block; padding: var(--s2); font-size: .8rem; }
+  .tinta b { display: block; font-size: .9rem; }
+  .muestra { display: grid; gap: var(--s4); }
+  .muestra .a { font-family: var(--display); font-weight: 900; font-size: 4rem; line-height: .9; }
+  .muestra .b { font-family: var(--texto); font-size: 1.05rem; }
+  .muestra .c { font-family: var(--marca); font-size: 2.6rem; color: var(--rojo); line-height: 1; }
+  .muestra small { display: block; font-family: var(--texto); font-size: .8rem; color: var(--tinta-tenue); font-weight: 400; letter-spacing: 0; }
+  .piezas { display: flex; flex-wrap: wrap; gap: var(--s4); align-items: center; }
+  @media (max-width: 900px) {
+    .portada-doc, .sistema { grid-template-columns: 1fr; padding-left: var(--s4); padding-right: var(--s4); }
+    .pantallas { grid-template-columns: 1fr 1fr; padding: var(--s4); }
+  }
+</style>
+</head>
+<body>
+<header class="portada-doc">
+  <div>
+    <span class="marca">Delilicias</span>
+    <h1 class="titular">Propuesta gráfica · Plataforma de pedidos por encargo</h1>
+  </div>
+  <p>Mundo visual: el almanaque de diciembre de la tienda. Las fotos de los platos son la lámina y las fechas de entrega son una cuadrícula que se usa. Proyecto final de Estructuras de Datos II · Juan Pablo Cuellar. Los pedidos, nombres y cifras de cupos son datos de ejemplo.</p>
+</header>
+
+<nav class="pantallas" aria-label="Pantallas">
+  <a class="pantalla" href="inicio.html"><span class="numeral">1</span><b>Inicio</b><span>Lámina con carrusel circular, fechas y cupos, lo más pedido.</span></a>
+  <a class="pantalla" href="menu.html"><span class="numeral">2</span><b>Menú y buscador</b><span>Secciones del árbol, autocompletado con trie, porciones.</span></a>
+  <a class="pantalla" href="canasta.html"><span class="numeral">3</span><b>Canasta</b><span>Panel lateral con deshacer (pila) y anticipo.</span></a>
+  <a class="pantalla" href="ingreso.html"><span class="numeral">4</span><b>Crear cuenta</b><span>Registro con celular obligatorio y errores claros.</span></a>
+  <a class="pantalla" href="checkout.html"><span class="numeral">5</span><b>Separar fecha</b><span>Cupos por fecha, barrio y ruta más corta (grafo).</span></a>
+  <a class="pantalla" href="pedido.html"><span class="numeral">6</span><b>Pedido en vivo</b><span>Sellos de estado en tiempo real y WhatsApp.</span></a>
+  <a class="pantalla" href="admin-anticipos.html"><span class="numeral">7</span><b>Admin · Anticipos</b><span>Cola por orden de llegada con comprobante.</span></a>
+  <a class="pantalla" href="admin-agenda.html"><span class="numeral">8</span><b>Admin · Agenda</b><span>Días como columnas, orden por urgencia (heap).</span></a>
+</nav>
+
+<section class="sistema" aria-label="Sistema visual">
+  <div>
+    <h2>Tintas</h2>
+    <div class="tintas">
+      <div class="tinta"><i style="background:#FBFAF6"></i><span><b>Papel</b>#FBFAF6</span></div>
+      <div class="tinta"><i style="background:#161412"></i><span><b>Tinta</b>#161412</span></div>
+      <div class="tinta"><i style="background:#D8261C"></i><span><b>Rojo almanaque</b>#D8261C</span></div>
+      <div class="tinta"><i style="background:#0E5C3A"></i><span><b>Verde pino</b>#0E5C3A</span></div>
+      <div class="tinta"><i style="background:#C9A24A"></i><span><b>Dorado</b>#C9A24A</span></div>
+      <div class="tinta"><i style="background:#D9D3C7"></i><span><b>Filete</b>#D9D3C7</span></div>
+    </div>
+  </div>
+  <div>
+    <h2>Letras</h2>
+    <div class="muestra">
+      <span class="a">24 · DICIEMBRE<small>Big Shoulders Display · numerales y titulares</small></span>
+      <span class="b">Rollos, lomos y costillas hechos en casa.<small>Schibsted Grotesk · textos y formularios</small></span>
+      <span class="c">Delilicias<small>Grand Hotel · solo la marca</small></span>
+    </div>
+  </div>
+  <div style="grid-column: 1 / -1">
+    <h2>Piezas</h2>
+    <div class="piezas">
+      <a class="btn btn--rojo" href="#">Armar mi canasta</a>
+      <a class="btn" href="#">Rechazar</a>
+      <a class="btn btn--verde" href="#"><svg class="icon"><use href="#i-whatsapp"/></svg>Hablar por WhatsApp</a>
+      <span class="sello sello--tinta">Recibido</span>
+      <span class="sello sello--verde">Anticipo confirmado</span>
+      <span class="sello">En cocina</span>
+      <span class="sello sello--pendiente">En camino</span>
+    </div>
+  </div>
+</section>
+<footer class="pie"><div class="pie__in"><span>Delilicias · Propuesta gráfica · 2026</span></div></footer>
+<script src="iconos.js"></script>
+</body>
+</html>

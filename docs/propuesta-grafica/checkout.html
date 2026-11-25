@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu pedido · Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<style>
+  .cab { max-width: var(--ancho); margin: 0 auto; padding: var(--s6) var(--s6) var(--s4); border-bottom: 3px solid var(--tinta); display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; }
+  .cab h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); }
+  .cab .nota { margin: 0; }
+  .orden { max-width: var(--ancho); margin: 0 auto; padding: var(--s6); display: grid; grid-template-columns: 1fr 400px; gap: var(--s7); align-items: start; }
+  .bloque { padding-bottom: var(--s6); margin-bottom: var(--s6); border-bottom: 1px solid var(--filete); }
+  .bloque h2 { font-family: var(--display); font-weight: 800; font-size: 1.9rem; text-transform: uppercase; line-height: 1; margin: 0 0 var(--s4); display: flex; gap: var(--s3); align-items: baseline; }
+  .bloque h2 .numeral { color: var(--rojo); font-size: 2.3rem; }
+
+  /* Fechas: mini almanaque */
+  .fechas { display: grid; grid-template-columns: repeat(2, minmax(0, 300px)); gap: var(--s4); }
+  .fecha { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 0 var(--s4); padding: var(--s4); background: #fff; border: 1.5px solid var(--filete); cursor: pointer; text-align: left; font: inherit; color: inherit; }
+  .fecha:hover { border-color: var(--tinta); }
+  .fecha .numeral { font-size: 4rem; color: var(--rojo); grid-row: span 3; position: relative; align-self: start; padding: 0 4px; }
+  .fecha b { font-family: var(--display); font-size: 1.25rem; text-transform: uppercase; letter-spacing: .03em; }
+  .fecha .cupos { font-size: .85rem; color: var(--tinta-suave); }
+  .fecha .cupos strong { font-family: var(--display); font-size: 1.2rem; color: var(--tinta); font-variant-numeric: tabular-nums; }
+  .fecha .limite { font-size: .78rem; color: var(--rojo-hondo); font-weight: 600; }
+  .fecha[aria-pressed="true"] { border-color: var(--rojo); background: var(--rojo-velo); }
+  .fecha .ovalo { left: -26%; top: -18%; width: 152%; height: 132%; }
+  .fecha .ovalo path { stroke-width: 2.4; }
+
+  .fila-campos { display: grid; grid-template-columns: 180px 1fr; gap: var(--s4); }
+
+  /* Barrio y mapa */
+  .cobertura { display: grid; grid-template-columns: 1fr 1.25fr; gap: var(--s5); align-items: start; }
+  .mapa { aspect-ratio: 47 / 48; border: 1px solid var(--tinta); background: #F6F3EC; }
+  .ruta { margin-top: var(--s4); padding: var(--s4); background: #fff; border: 1.5px solid var(--tinta); display: grid; gap: var(--s2); }
+  .ruta__fila { display: flex; gap: var(--s5); }
+  .ruta__dato .numeral { font-size: 2.6rem; display: block; }
+  .ruta__dato span { font-size: .8rem; color: var(--tinta-tenue); }
+  .ruta ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); font-size: .85rem; color: var(--tinta-suave); }
+  .ruta ol li:not(:last-child)::after { content: "→"; margin-left: var(--s2); color: var(--rojo); }
+  .ruta .domicilio { display: flex; gap: var(--s2); align-items: center; font-weight: 600; color: var(--verde); font-size: .92rem; }
+
+  /* Recibo */
+  .recibo { position: sticky; top: 96px; background: #fff; border: 1px solid var(--tinta); }
+  .recibo__cab { padding: var(--s4) var(--s5); border-bottom: 3px solid var(--tinta); display: flex; justify-content: space-between; align-items: baseline; }
+  .recibo__cab h2 { font-size: 1.8rem; }
+  .recibo ul { list-style: none; margin: 0; padding: var(--s3) var(--s5); }
+  .recibo li { display: grid; grid-template-columns: 1fr auto; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px dashed var(--filete); font-size: .92rem; }
+  .recibo li small { display: block; color: var(--tinta-tenue); font-size: .8rem; }
+  .recibo li .tabular { font-weight: 600; }
+  .recibo dl { margin: 0; padding: var(--s3) var(--s5); display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4); }
+  .recibo dt { color: var(--tinta-suave); }
+  .recibo dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .recibo .anticipo { background: var(--tinta); color: var(--papel); padding: var(--s4) var(--s5); display: flex; justify-content: space-between; align-items: baseline; }
+  .recibo .anticipo .numeral { font-size: 2.4rem; color: #fff; }
+  .recibo__acciones { padding: var(--s5); display: grid; gap: var(--s3); }
+  .recibo__acciones .nota { margin: 0; font-size: .85rem; }
+
+  @media (max-width: 900px) {
+    .cab, .orden { padding-left: var(--s4); padding-right: var(--s4); }
+    .orden { grid-template-columns: 1fr; gap: var(--s5); }
+    .fechas { grid-template-columns: 1fr 1fr; gap: var(--s3); }
+    .fecha { padding: var(--s3); gap: 0 var(--s3); }
+    .fecha .numeral { font-size: 3rem; }
+    .fecha .ovalo { left: -26%; top: -18%; width: 152%; height: 132%; }
+    .fecha b { font-size: 1.05rem; }
+    .fila-campos, .cobertura { grid-template-columns: 1fr; }
+    .recibo { position: static; }
+  }
+</style>
+</head>
+<body>
+<header class="membrete">
+  <div class="membrete__in">
+    <a class="marca" href="inicio.html">Delilicias <small>Cali · Navidad 2026</small></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="inicio.html">Inicio</a><a href="menu.html">Menú</a><a href="checkout.html#cobertura">Cobertura</a><a href="pedido.html">Mis pedidos</a>
+    </nav>
+    <div class="membrete__acciones">
+      <a class="enlace-cuenta" href="#"><svg class="icon"><use href="#i-usuario"/></svg><span>Laura</span></a>
+      <a class="btn btn--rojo btn--chico btn-canasta" href="menu.html#canasta"><svg class="icon"><use href="#i-canasta"/></svg>Canasta <span class="contador">3</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="cab">
+    <h1 class="titular">Separa tu fecha</h1>
+    <p class="nota">Paso 2 de 3 · Después subes el comprobante del anticipo</p>
+  </div>
+
+  <form class="orden" onsubmit="event.preventDefault(); location.href='pedido.html'">
+    <div>
+      <section class="bloque" aria-labelledby="t-f">
+        <h2 id="t-f"><span class="numeral">a</span>¿Para qué día?</h2>
+        <div class="fechas" role="radiogroup" aria-labelledby="t-f">
+          <button class="fecha" type="button" role="radio" aria-checked="true" aria-pressed="true">
+            <span class="numeral">24<svg class="ovalo ovalo--dibuja" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M20 9C42-1 84 3 93 23c8 18-14 34-45 34C20 56 3 44 7 26 10 14 24 7 44 5"/></svg></span><b>Jueves, Nochebuena</b><span class="cupos">Quedan <strong>12</strong> de 40 cupos</span><span class="limite">Pide hasta el 17 de diciembre</span>
+          </button>
+          <button class="fecha" type="button" role="radio" aria-checked="false" aria-pressed="false">
+            <span class="numeral">31</span><b>Jueves, fin de año</b><span class="cupos">Quedan <strong>18</strong> de 40 cupos</span><span class="limite">&nbsp;</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="bloque" aria-labelledby="t-p">
+        <h2 id="t-p"><span class="numeral">b</span>¿Quién recibe?</h2>
+        <div class="fila-campos">
+          <div class="campo"><label for="personas">Personas en la mesa</label><input class="control" id="personas" type="number" min="1" value="8"></div>
+          <div class="campo"><label for="nombre">Nombre de quien recibe</label><input class="control" id="nombre" value="Laura Gómez"></div>
+        </div>
+      </section>
+
+      <section class="bloque" id="cobertura" aria-labelledby="t-b">
+        <h2 id="t-b"><span class="numeral">c</span>¿A dónde la llevamos?</h2>
+        <div class="cobertura">
+          <div style="display:grid; gap: var(--s4)">
+            <div class="campo"><label for="barrio">Barrio</label>
+              <select class="control" id="barrio"><option>Ciudad Jardín</option><option>Capri</option><option>El Ingenio</option><option>Jamundí (fuera de cobertura)</option></select>
+            </div>
+            <div class="campo"><label for="dir">Dirección</label><input class="control" id="dir" value="Calle 16 # 105-40, casa 12"></div>
+            <div class="campo"><label for="notas">Notas para la entrega <span class="ayuda">(opcional)</span></label><textarea class="control" id="notas">Portería del conjunto Los Almendros. Llamar al llegar.</textarea></div>
+            <div class="ruta" aria-live="polite">
+              <div class="ruta__fila">
+                <div class="ruta__dato"><span class="numeral">7,5</span><span>km desde la cocina</span></div>
+                <div class="ruta__dato"><span class="numeral">18</span><span>minutos aprox.</span></div>
+              </div>
+              <ol><li>San Fernando</li><li>Tequendama</li><li>Capri</li><li>Ciudad Jardín</li></ol>
+              <span class="domicilio"><svg class="icon"><use href="#i-check"/></svg>Domicilio gratis: tu pedido supera $149.900</span>
+            </div>
+          </div>
+          <div class="mapa" id="mapa"></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="recibo" aria-labelledby="t-r">
+      <div class="recibo__cab"><h2 class="titular" id="t-r">Tu pedido</h2><a class="btn-texto" href="menu.html#canasta">Editar</a></div>
+      <ul>
+        <li><span>Costilla San Luis · 2 lb<small>4 porciones de 125 g</small></span><span class="tabular">$91.800</span></li>
+        <li><span>Rollo mixto · 1 lb<small>3 porciones de 166 g</small></span><span class="tabular">$52.500</span></li>
+        <li><span>Ensalada dulce · 4</span><span class="tabular">$31.200</span></li>
+      </ul>
+      <dl>
+        <dt>Subtotal</dt><dd>$175.500</dd>
+        <dt>Domicilio</dt><dd style="color:var(--verde)">Gratis</dd>
+        <dt>Saldo al recibir</dt><dd>$87.750</dd>
+      </dl>
+      <div class="anticipo"><span>Anticipo hoy (50 %)</span><span class="numeral">$87.750</span></div>
+      <div class="recibo__acciones">
+        <button class="btn btn--rojo btn--bloque" type="submit">Confirmar pedido para el 24</button>
+        <p class="nota">Pagas el anticipo por Nequi, transferencia o en efectivo y subes el comprobante en el siguiente paso.</p>
+      </div>
+    </aside>
+  </form>
+</main>
+<script src="iconos.js"></script>
+<script src="mapa.js"></script>
+<script>dibujarMapa(document.getElementById('mapa'), { ruta: ['san-fernando', 'tequendama', 'capri', 'ciudad-jardin'], destino: 'ciudad-jardin' });</script>
+</body>
+</html>

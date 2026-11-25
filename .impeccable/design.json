@@ -1,0 +1,469 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-25T18:48:04.134Z",
+  "title": "Design System: Delilicias",
+  "extensions": {
+    "colorMeta": {
+      "papel": {
+        "role": "neutral",
+        "displayName": "Papel bond",
+        "canonical": "#FBFAF6",
+        "tonalRamp": [
+          "#2F2C1D",
+          "#554E30",
+          "#7D713F",
+          "#A8964C",
+          "#BCAE76",
+          "#CCC4A3",
+          "#E0DCCC",
+          "#F5F4F0"
+        ]
+      },
+      "papel-sombra": {
+        "role": "neutral",
+        "displayName": "Papel sombra",
+        "canonical": "#F1EEE6",
+        "tonalRamp": [
+          "#2D2920",
+          "#504935",
+          "#756948",
+          "#9C8A59",
+          "#B3A57F",
+          "#C7BFA8",
+          "#DDD9CF",
+          "#F4F3F0"
+        ]
+      },
+      "blanco": {
+        "role": "neutral",
+        "displayName": "Hoja blanca",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#999999",
+          "#B8B8B8",
+          "#D6D6D6",
+          "#F2F2F2"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta de imprenta",
+        "canonical": "#161412",
+        "tonalRamp": [
+          "#292624",
+          "#47423D",
+          "#665E56",
+          "#867A6E",
+          "#A29990",
+          "#BDB8B2",
+          "#D9D6D4",
+          "#F3F2F2"
+        ]
+      },
+      "tinta-suave": {
+        "role": "neutral",
+        "displayName": "Tinta suave",
+        "canonical": "#4A4540",
+        "tonalRamp": [
+          "#282625",
+          "#46423F",
+          "#645E58",
+          "#837A72",
+          "#A09992",
+          "#BCB8B4",
+          "#D8D6D4",
+          "#F3F2F2"
+        ]
+      },
+      "tinta-tenue": {
+        "role": "neutral",
+        "displayName": "Tinta tenue",
+        "canonical": "#6E675F",
+        "tonalRamp": [
+          "#282625",
+          "#46433F",
+          "#645F58",
+          "#837B72",
+          "#A09992",
+          "#BCB8B4",
+          "#D8D6D4",
+          "#F3F2F2"
+        ]
+      },
+      "filete": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "#D9D3C7",
+        "tonalRamp": [
+          "#2B2822",
+          "#4C4539",
+          "#6E644F",
+          "#918263",
+          "#AA9F88",
+          "#C2BBAD",
+          "#DBD8D1",
+          "#F3F3F1"
+        ]
+      },
+      "rojo": {
+        "role": "primary",
+        "displayName": "Rojo almanaque",
+        "canonical": "#D8261C",
+        "tonalRamp": [
+          "#381614",
+          "#68211D",
+          "#9D2720",
+          "#D7281E",
+          "#DF5A53",
+          "#E1928E",
+          "#EAC5C3",
+          "#F7EEED"
+        ]
+      },
+      "rojo-hondo": {
+        "role": "primary",
+        "displayName": "Rojo hondo",
+        "canonical": "#A8180F",
+        "tonalRamp": [
+          "#3A1513",
+          "#6B1E1A",
+          "#A2231B",
+          "#DE2216",
+          "#E5564D",
+          "#E5908A",
+          "#ECC3C1",
+          "#F8EEED"
+        ]
+      },
+      "rojo-velo": {
+        "role": "primary",
+        "displayName": "Velo rojo",
+        "canonical": "#FBE7E4",
+        "tonalRamp": [
+          "#381915",
+          "#67281E",
+          "#9A3222",
+          "#D33922",
+          "#DC6756",
+          "#E09A8F",
+          "#E9C8C3",
+          "#F7EFED"
+        ]
+      },
+      "rojo-noche": {
+        "role": "primary",
+        "displayName": "Rojo sobre tinta",
+        "canonical": "#FF5A4E",
+        "tonalRamp": [
+          "#3E120F",
+          "#731812",
+          "#AF180D",
+          "#F21303",
+          "#F44B3E",
+          "#EE8981",
+          "#F0C0BD",
+          "#F9EDEC"
+        ]
+      },
+      "verde": {
+        "role": "secondary",
+        "displayName": "Verde pino",
+        "canonical": "#0E5C3A",
+        "tonalRamp": [
+          "#153828",
+          "#1E6647",
+          "#239A66",
+          "#22D286",
+          "#56DCA2",
+          "#90DFBD",
+          "#C3E9D9",
+          "#EEF7F3"
+        ]
+      },
+      "verde-hondo": {
+        "role": "secondary",
+        "displayName": "Verde pino hondo",
+        "canonical": "#0A4A2E",
+        "tonalRamp": [
+          "#143828",
+          "#1D6747",
+          "#219C66",
+          "#1FD686",
+          "#54DEA2",
+          "#8EE1BD",
+          "#C3EAD9",
+          "#EDF7F3"
+        ]
+      },
+      "verde-velo": {
+        "role": "secondary",
+        "displayName": "Velo verde",
+        "canonical": "#E3F0E8",
+        "tonalRamp": [
+          "#1F2D25",
+          "#34513F",
+          "#467759",
+          "#569F72",
+          "#7EB493",
+          "#A7C8B4",
+          "#CEDED4",
+          "#F0F4F2"
+        ]
+      },
+      "dorado": {
+        "role": "tertiary",
+        "displayName": "Dorado de membrete",
+        "canonical": "#C9A24A",
+        "tonalRamp": [
+          "#332B1A",
+          "#5D4C28",
+          "#8A6F33",
+          "#BB933A",
+          "#CAAC68",
+          "#D5C39A",
+          "#E4DCC8",
+          "#F6F4EF"
+        ]
+      },
+      "papel-noche": {
+        "role": "neutral",
+        "displayName": "Papel sobre tinta",
+        "canonical": "#E9E4DA",
+        "tonalRamp": [
+          "#2C2820",
+          "#4F4636",
+          "#73654A",
+          "#99855C",
+          "#B0A182",
+          "#C5BCAA",
+          "#DDD8D0",
+          "#F4F3F1"
+        ]
+      },
+      "papel-noche-tenue": {
+        "role": "neutral",
+        "displayName": "Papel sobre tinta tenue",
+        "canonical": "#B8B0A4",
+        "tonalRamp": [
+          "#292723",
+          "#48443C",
+          "#686054",
+          "#897D6C",
+          "#A49B8E",
+          "#BEB9B1",
+          "#D9D7D3",
+          "#F3F2F1"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Mes, día del pedido, números de sección y posición, cupos y anticipo; cifras tabulares."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titular de página, con text-wrap: balance."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Encabezados de sección sobre una regla de tinta de 3px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nombres de platos, pasos, bloques del checkout, días del admin; mayúsculas."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido; bajadas a 34–46ch."
+      },
+      "body-sm": {
+        "displayName": "Body pequeño",
+        "purpose": "Notas, ayudas, ítems del recibo."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navegación, botones, sellos, días de la semana; mayúsculas con tracking."
+      },
+      "marca": {
+        "displayName": "Marca",
+        "purpose": "Solo la palabra Delilicias."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sombra",
+        "value": "0 1px 2px rgba(22,20,18,.06), 0 12px 28px -12px rgba(22,20,18,.22)",
+        "purpose": "Solo lo que flota: la lista de sugerencias del buscador."
+      },
+      {
+        "name": "filete-membrete",
+        "value": "0 3px 0 -2px #FBFAF6, 0 4px 0 -2px #C9A24A",
+        "purpose": "Dibuja el filete dorado doble bajo el borde del membrete."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Curva única de transiciones y trazos."
+      },
+      {
+        "name": "trazo",
+        "value": "stroke-dashoffset 420 -> 0, .9s ease, .2s de retraso",
+        "purpose": "El óvalo rojo se dibuja al elegir una fecha."
+      },
+      {
+        "name": "estampar",
+        "value": "rotate(-2deg) scale(1.5) opacity 0 -> scale(1) opacity 1, .7s ease",
+        "purpose": "El sello del estado actual se estampa una vez."
+      },
+      {
+        "name": "transicion-estado",
+        "value": ".2s–.25s ease sobre background, color, border-color",
+        "purpose": "Hover de botones, campos y celdas."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "movil",
+        "value": "900px"
+      },
+      {
+        "name": "agenda-una-columna",
+        "value": "1000px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón base",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Contorno de tinta que se llena al pasar el cursor; acciones secundarias.",
+      "html": "<button class=\"ds-btn\">Ver menú</button>",
+      "css": ".ds-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:0 24px; border:1.5px solid #161412; border-radius:2px; background:transparent; color:#161412; font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-weight:800; font-size:1.15rem; letter-spacing:.05em; text-transform:uppercase; cursor:pointer; transition:background .25s cubic-bezier(.16,1,.3,1), color .25s cubic-bezier(.16,1,.3,1), transform .25s cubic-bezier(.16,1,.3,1); } .ds-btn:hover { background:#161412; color:#FBFAF6; } .ds-btn:active { transform:translateY(1px); } .ds-btn:focus-visible { outline:2px solid #D8261C; outline-offset:3px; }"
+    },
+    {
+      "name": "Botón rojo",
+      "kind": "button",
+      "refersTo": "button-rojo",
+      "description": "La acción principal de cada pantalla.",
+      "html": "<button class=\"ds-btn-rojo\">Armar mi canasta <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-rojo { display:inline-flex; align-items:center; gap:8px; min-height:48px; padding:0 24px; border:1.5px solid #D8261C; border-radius:2px; background:#D8261C; color:#fff; font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-weight:800; font-size:1.15rem; letter-spacing:.05em; text-transform:uppercase; cursor:pointer; transition:background .25s cubic-bezier(.16,1,.3,1), border-color .25s cubic-bezier(.16,1,.3,1), transform .25s cubic-bezier(.16,1,.3,1); } .ds-btn-rojo:hover { background:#A8180F; border-color:#A8180F; } .ds-btn-rojo:active { transform:translateY(1px); } .ds-btn-rojo:focus-visible { outline:2px solid #D8261C; outline-offset:3px; }"
+    },
+    {
+      "name": "Botón verde",
+      "kind": "button",
+      "refersTo": "button-verde",
+      "description": "Solo para confirmar (anticipos en el admin).",
+      "html": "<button class=\"ds-btn-verde\">Confirmar anticipo</button>",
+      "css": ".ds-btn-verde { display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:0 16px; border:1.5px solid #0E5C3A; border-radius:2px; background:#0E5C3A; color:#fff; font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-weight:800; font-size:1rem; letter-spacing:.05em; text-transform:uppercase; cursor:pointer; transition:background .25s cubic-bezier(.16,1,.3,1); } .ds-btn-verde:hover { background:#0A4A2E; border-color:#0A4A2E; } .ds-btn-verde:focus-visible { outline:2px solid #D8261C; outline-offset:3px; }"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "control",
+      "description": "Etiqueta arriba, ayuda abajo, halo rojo al enfocar.",
+      "html": "<label class=\"ds-campo\"><span class=\"ds-campo__et\">Dirección</span><input class=\"ds-control\" placeholder=\"Calle 5 # 38-20\"><span class=\"ds-campo__ayuda\">Incluye torre y apartamento.</span></label>",
+      "css": ".ds-campo { display:grid; gap:8px; font-family:'Schibsted Grotesk',system-ui,sans-serif; color:#161412; } .ds-campo__et { font-weight:600; font-size:.92rem; } .ds-campo__ayuda { font-size:.85rem; color:#6E675F; } .ds-control { width:100%; min-height:48px; padding:12px 16px; background:#fff; border:1.5px solid #D9D3C7; border-radius:2px; font:inherit; caret-color:#D8261C; transition:border-color .2s cubic-bezier(.16,1,.3,1); } .ds-control:hover { border-color:#6E675F; } .ds-control:focus { outline:none; border-color:#161412; box-shadow:0 0 0 3px #FBE7E4; } .ds-control::placeholder { color:#6E675F; }"
+    },
+    {
+      "name": "Membrete",
+      "kind": "nav",
+      "refersTo": "label",
+      "description": "Barra superior: marca, navegación en mayúsculas, filete dorado doble.",
+      "html": "<header class=\"ds-membrete\"><a class=\"ds-marca\" href=\"#\">Delilicias</a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Inicio</a><a href=\"#\">Menú</a><a href=\"#\">Cobertura</a></nav></header>",
+      "css": ".ds-membrete { display:flex; align-items:center; gap:32px; padding:12px 32px; background:#FBFAF6; border-bottom:1px solid #161412; box-shadow:0 3px 0 -2px #FBFAF6, 0 4px 0 -2px #C9A24A; } .ds-marca { font-family:'Grand Hotel',cursive; font-size:2.15rem; line-height:1; color:#D8261C; text-decoration:none; } .ds-marca:hover { color:#A8180F; } .ds-nav { display:flex; gap:24px; margin-left:auto; } .ds-nav a { font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; color:#161412; padding:8px 0; border-bottom:2px solid transparent; } .ds-nav a:hover { color:#D8261C; } .ds-nav a[aria-current=page] { border-bottom-color:#D8261C; } .ds-nav a:focus-visible { outline:2px solid #D8261C; outline-offset:3px; }"
+    },
+    {
+      "name": "Sellos de estado",
+      "kind": "chip",
+      "refersTo": "sello",
+      "description": "Sellos de goma girados -2° para estados de pedido y plato.",
+      "html": "<div class=\"ds-sellos\"><span class=\"ds-sello ds-sello--tinta\">Recibido</span><span class=\"ds-sello ds-sello--verde\">Anticipo confirmado</span><span class=\"ds-sello\">En cocina</span><span class=\"ds-sello ds-sello--pendiente\">En camino</span></div>",
+      "css": ".ds-sellos { display:flex; flex-wrap:wrap; gap:16px; } .ds-sello { display:inline-flex; align-items:center; gap:.4em; padding:.28em .7em .22em; border:2px solid currentColor; border-radius:3px; font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-weight:800; font-size:.95rem; letter-spacing:.08em; text-transform:uppercase; color:#D8261C; transform:rotate(-2deg); line-height:1.1; white-space:nowrap; } .ds-sello--verde { color:#0E5C3A; } .ds-sello--tinta { color:#161412; } .ds-sello--pendiente { color:#6E675F; border-style:dashed; transform:none; }"
+    },
+    {
+      "name": "Celda de fecha con óvalo",
+      "kind": "custom",
+      "refersTo": "celda-entrega",
+      "description": "Celda de entrega con cupos; el óvalo rojo se dibuja al elegirla.",
+      "html": "<div class=\"ds-cuadricula\"><div class=\"ds-celda\"><span class=\"ds-n\">23</span></div><button class=\"ds-celda ds-celda--entrega\" aria-pressed=\"true\"><span class=\"ds-n ds-n--entrega\">24<svg class=\"ds-ovalo\" viewBox=\"0 0 100 60\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M20 9C42-1 84 3 93 23c8 18-14 34-45 34C20 56 3 44 7 26 10 14 24 7 44 5\"/></svg></span><span class=\"ds-cupo\"><b>12</b> cupos</span></button><div class=\"ds-celda\"><span class=\"ds-n\">25</span></div></div>",
+      "css": ".ds-cuadricula { display:grid; grid-template-columns:repeat(3,96px); border-top:1px solid #161412; border-left:1px solid #D9D3C7; font-family:'Schibsted Grotesk',system-ui,sans-serif; } .ds-celda { position:relative; min-height:66px; padding:4px 8px; border:0; border-right:1px solid #D9D3C7; border-bottom:1px solid #D9D3C7; background:transparent; text-align:left; font:inherit; color:#6E675F; } .ds-n { font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-weight:800; font-size:1.45rem; line-height:1; } .ds-celda--entrega { background:#fff; color:#161412; cursor:pointer; transition:background .2s cubic-bezier(.16,1,.3,1); } .ds-celda--entrega:hover, .ds-celda--entrega[aria-pressed=true] { background:#FBE7E4; } .ds-celda--entrega:focus-visible { outline:2px solid #D8261C; outline-offset:3px; } .ds-n--entrega { position:relative; display:inline-block; padding:0 3px; font-size:1.9rem; color:#D8261C; } .ds-ovalo { position:absolute; left:-38%; top:-22%; width:176%; height:140%; overflow:visible; pointer-events:none; } .ds-ovalo path { fill:none; stroke:#D8261C; stroke-width:2.6; stroke-linecap:round; stroke-dasharray:420; stroke-dashoffset:420; animation:ds-trazo .9s cubic-bezier(.16,1,.3,1) .2s forwards; } @keyframes ds-trazo { to { stroke-dashoffset:0; } } .ds-cupo { display:block; font-size:.72rem; font-weight:600; margin-top:2px; } .ds-cupo b { font-family:'Big Shoulders Display','Arial Narrow',sans-serif; font-size:1.15rem; font-weight:900; }"
+    },
+    {
+      "name": "Perforación",
+      "kind": "custom",
+      "refersTo": "papel-sombra",
+      "description": "Línea perforada que separa hojas del almanaque.",
+      "html": "<div class=\"ds-perforacion\" aria-hidden=\"true\"></div>",
+      "css": ".ds-perforacion { height:10px; background:radial-gradient(circle at 5px 5px, #F1EEE6 2.6px, transparent 3px) 0 0 / 14px 10px repeat-x; border-top:1px dashed #D9D3C7; }"
+    },
+    {
+      "name": "Riel de administración",
+      "kind": "nav",
+      "refersTo": "riel",
+      "description": "Columna de tinta del panel admin; el ítem actual se invierte a papel.",
+      "html": "<aside class=\"ds-riel\"><span class=\"ds-riel__marca\">Delilicias</span><nav><a href=\"#\" aria-current=\"page\">Anticipos <span class=\"ds-riel__cuenta\">3</span></a><a href=\"#\">Agenda</a><a href=\"#\">Menú</a></nav></aside>",
+      "css": ".ds-riel { width:248px; background:#161412; color:#FBFAF6; padding:24px 16px; display:flex; flex-direction:column; gap:32px; font-family:'Schibsted Grotesk',system-ui,sans-serif; } .ds-riel__marca { font-family:'Grand Hotel',cursive; font-size:2rem; color:#FF5A4E; padding:0 8px; } .ds-riel nav { display:grid; gap:2px; } .ds-riel nav a { display:flex; align-items:center; gap:12px; padding:12px; text-decoration:none; color:#E9E4DA; font-weight:500; border-radius:2px; } .ds-riel nav a:hover { background:rgba(251,250,246,.08); color:#fff; } .ds-riel nav a[aria-current=page] { background:#FBFAF6; color:#161412; font-weight:700; } .ds-riel nav a:focus-visible { outline:2px solid #FF5A4E; outline-offset:2px; } .ds-riel__cuenta { margin-left:auto; min-width:1.7em; height:1.7em; display:grid; place-items:center; border-radius:999px; background:#D8261C; color:#fff; font-size:.78rem; font-weight:700; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El almanaque de la tienda",
+    "overview": "Delilicias se imprime como el almanaque que regala la tienda del barrio en diciembre: una hoja de papel bond, dos tintas (negra y rojo almanaque), la foto del plato como lámina y las fechas de entrega como una cuadrícula que de verdad funciona. Todo lo que el sistema dibuja viene de ese objeto: filetes finos, celdas de fecha, numerales enormes, un óvalo rojo trazado a mano alrededor del 24 y del 31, sellos de goma para los estados y una línea perforada entre hojas.\n\nLa densidad es de impreso, no de app: superficies planas, bordes de un trazo, esquinas casi rectas. El verde pino entra como segunda tinta solo para lo confirmado y el dorado solo en el filete del membrete. El panel de la administradora es el mismo almanaque en modo de trabajo: un riel de tinta a la izquierda y los días como columnas de tickets.\n\nEl movimiento es tinta que se dibuja: el óvalo se traza con `stroke-dashoffset` y el sello se estampa. No hay nada más que se mueva por gusto.",
+    "keyCharacteristics": [
+      "Papel bond con impresión a dos tintas; el rojo marca fechas, numerales y la acción principal.",
+      "Numerales y titulares condensados en mayúsculas (Big Shoulders Display); texto en Schibsted Grotesk; la marca en Grand Hotel.",
+      "Cuadrícula de filetes: líneas de 1px color filete, reglas de 3px en tinta bajo cada encabezado.",
+      "Estados como sellos de goma girados -2°.",
+      "Planitud: casi sin sombras; la profundidad la da el blanco sobre papel y el borde de tinta."
+    ],
+    "rules": [
+      {
+        "name": "The Dos Tintas Rule",
+        "body": "Cada pantalla se imprime en tinta y rojo. El verde aparece solo cuando algo está confirmado; si no hay confirmación en pantalla, no hay verde.",
+        "section": "colors"
+      },
+      {
+        "name": "The Filete Dorado Rule",
+        "body": "El dorado vive solo en el filete del membrete. Ningún otro elemento lo usa.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numeral Manda Rule",
+        "body": "Toda cifra que el usuario decide con ella (fecha, cupos, precio, anticipo) se compone en Big Shoulders con cifras tabulares, nunca en el cuerpo de texto.",
+        "section": "typography"
+      },
+      {
+        "name": "The Una Firma Rule",
+        "body": "Grand Hotel se usa únicamente para la marca. Nunca para titulares ni acentos.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hoja Plana Rule",
+        "body": "Las superficies en reposo no tienen sombra. Si algo necesita separarse, recibe fondo blanco y un borde de tinta.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do marcar fechas de entrega con el óvalo rojo trazado a mano y dibujarlo solo cuando el usuario elige.",
+      "Do usar sellos de goma para todo estado de pedido o plato (Recibido, Anticipo confirmado, En cocina, Agotado).",
+      "Do cerrar cada encabezado de sección con una regla de tinta de 3px y separar filas con filetes de 1px.",
+      "Do componer cifras de fecha, cupo y precio en Big Shoulders con cifras tabulares.",
+      "Do respetar `prefers-reduced-motion`: el óvalo aparece trazado y las transiciones se anulan."
+    ],
+    "donts": [
+      "Don't usar verde para algo que no esté confirmado.",
+      "Don't usar el dorado fuera del filete del membrete.",
+      "Don't redondear tarjetas ni botones más allá de 2–3px; las pastillas son solo para contadores.",
+      "Don't poner sombras en superficies en reposo.",
+      "Don't usar Grand Hotel fuera de la marca.",
+      "Don't armar la portada como titular, botón y una fila de tarjetas iguales."
+    ]
+  }
+}

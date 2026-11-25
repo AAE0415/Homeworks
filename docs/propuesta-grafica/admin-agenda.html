@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agenda de cocina · Administración Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<link rel="stylesheet" href="admin.css">
+<style>
+  .dias { display: grid; grid-template-columns: 1fr 1fr; border-left: 1px solid var(--filete); border-top: 1px solid var(--tinta); }
+  .dia { border-right: 1px solid var(--filete); min-width: 0; }
+  .dia__cab { display: grid; grid-template-columns: auto 1fr auto; gap: 0 var(--s4); align-items: end; padding: var(--s4) var(--s5); border-bottom: 3px solid var(--tinta); background: #fff; }
+  .dia__cab .numeral { font-size: 5rem; color: var(--rojo); }
+  .dia__cab .dia-nombre { margin: 0; font-family: var(--display); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; display: block; line-height: 1; }
+  .dia__cab span { font-size: .85rem; color: var(--tinta-suave); }
+  .cupo { text-align: right; }
+  .cupo .numeral { font-size: 2.2rem; color: var(--tinta); }
+  .cupo small { display: block; font-size: .78rem; color: var(--tinta-tenue); }
+  .barra { grid-column: 1 / -1; height: 6px; background: var(--papel-sombra); margin-top: var(--s3); }
+  .barra i { display: block; height: 100%; background: var(--tinta); }
+  .conteo { display: flex; gap: var(--s4); flex-wrap: wrap; padding: var(--s3) var(--s5); border-bottom: 1px solid var(--filete); font-size: .85rem; color: var(--tinta-suave); }
+  .conteo b { color: var(--tinta); font-variant-numeric: tabular-nums; }
+  .tickets { list-style: none; margin: 0; padding: var(--s3) var(--s4) var(--s5); display: grid; gap: var(--s3); }
+  .ticket { background: #fff; border: 1px solid var(--filete); padding: var(--s4); display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4); }
+  .ticket.urgente { border-color: var(--tinta); }
+  .ticket h3 { margin: 0; font-size: 1rem; display: flex; gap: var(--s3); align-items: baseline; flex-wrap: wrap; }
+  .ticket h3 .tabular { font-family: var(--display); font-weight: 800; font-size: 1.3rem; }
+  .ticket p { margin: 0; font-size: .86rem; color: var(--tinta-suave); grid-column: 1 / 2; }
+  .ticket .sello { align-self: start; justify-self: end; font-size: .8rem; }
+  .ticket .acc { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--s3); margin-top: var(--s2); }
+  .ticket .acc .hora { font-size: .8rem; color: var(--tinta-tenue); margin-right: auto; display: inline-flex; gap: var(--s1); align-items: center; }
+  .orden-nota { font-size: .85rem; color: var(--tinta-suave); margin: 0 0 var(--s4); display: flex; gap: var(--s2); align-items: center; }
+  @media (max-width: 1000px) { .dias { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="admin">
+<aside class="riel">
+  <a class="marca" href="#">Delilicias <small>Administración</small></a>
+  <nav aria-label="Administración">
+    <a href="#"><svg class="icon"><use href="#i-resumen"/></svg>Resumen</a>
+    <a href="admin-anticipos.html"><svg class="icon"><use href="#i-check"/></svg>Anticipos <span class="cuenta">4</span></a>
+    <a href="admin-agenda.html" aria-current="page"><svg class="icon"><use href="#i-cocina"/></svg>Agenda de cocina</a>
+    <a href="#"><svg class="icon"><use href="#i-plato"/></svg>Menú</a>
+    <a href="#"><svg class="icon"><use href="#i-calendario"/></svg>Cupos por fecha</a>
+  </nav>
+  <div class="riel__pie"><span>Sesión: Administradora</span><a href="#"><svg class="icon"><use href="#i-salir"/></svg>Salir</a></div>
+</aside>
+<div class="barra-movil"><span class="marca">Delilicias</span><button type="button" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button></div>
+
+<main class="area">
+  <div class="area__cab">
+    <div><h1 class="titular">Agenda de cocina</h1><p>Primero lo que se entrega antes; a igual fecha, lo que se confirmó primero.</p></div>
+    <span class="en-vivo">Actualizado en vivo</span>
+  </div>
+
+  <div class="dias">
+    <section class="dia" aria-labelledby="t-24">
+      <div class="dia__cab">
+        <span class="numeral">24</span>
+        <span><h2 class="dia-nombre" id="t-24">Jueves, Nochebuena</h2><span>Entregas de 10 a. m. a 7 p. m.</span></span>
+        <span class="cupo"><span class="numeral tabular">28</span><small>de 40 cupos</small></span>
+        <div class="barra" aria-hidden="true"><i style="width:70%"></i></div>
+      </div>
+      <div class="conteo"><span><b>9</b> por cocinar</span><span><b>3</b> en cocina</span><span><b>0</b> en camino</span></div>
+      <ol class="tickets">
+        <li class="ticket urgente">
+          <h3><span class="tabular">N.º 0098</span> San Antonio · 6 personas</h3>
+          <span class="sello">En cocina</span>
+          <p>Costilla San Luis 3 lb (5 porc.) · Ensalada rusa ×6</p>
+          <div class="acc"><span class="hora"><svg class="icon"><use href="#i-reloj"/></svg>Confirmado 12 nov</span><button class="btn btn--chico" type="button">Pasar a En camino</button></div>
+        </li>
+        <li class="ticket urgente">
+          <h3><span class="tabular">N.º 0104</span> Ciudad Jardín · 12 personas</h3>
+          <span class="sello">En cocina</span>
+          <p>Rollo mixto 3 lb (4 porc.) · Lomo en frutos secos 2 lb · Arroz verde ×12</p>
+          <div class="acc"><span class="hora"><svg class="icon"><use href="#i-reloj"/></svg>Confirmado 14 nov</span><button class="btn btn--chico" type="button">Pasar a En camino</button></div>
+        </li>
+        <li class="ticket">
+          <h3><span class="tabular">N.º 0117</span> Granada · 8 personas</h3>
+          <span class="sello sello--verde">Confirmado</span>
+          <p>Pollo relleno 2 lb (4 porc.) · Dip de queso y tocineta ×2</p>
+          <div class="acc"><span class="hora"><svg class="icon"><use href="#i-reloj"/></svg>Confirmado 18 nov</span><button class="btn btn--chico" type="button">Pasar a En cocina</button></div>
+        </li>
+        <li class="ticket">
+          <h3><span class="tabular">N.º 0142</span> Ciudad Jardín · 8 personas</h3>
+          <span class="sello sello--verde">Confirmado</span>
+          <p>Costilla San Luis 2 lb (4 porc.) · Rollo mixto 1 lb · Ensalada dulce ×4</p>
+          <div class="acc"><span class="hora"><svg class="icon"><use href="#i-reloj"/></svg>Confirmado 25 nov</span><button class="btn btn--chico" type="button">Pasar a En cocina</button></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="dia" aria-labelledby="t-31">
+      <div class="dia__cab">
+        <span class="numeral">31</span>
+        <span><h2 class="dia-nombre" id="t-31">Jueves, fin de año</h2><span>Entregas de 10 a. m. a 6 p. m.</span></span>
+        <span class="cupo"><span class="numeral tabular">22</span><small>de 40 cupos</small></span>
+        <div class="barra" aria-hidden="true"><i style="width:55%"></i></div>
+      </div>
+      <div class="conteo"><span><b>22</b> por cocinar</span><span><b>0</b> en cocina</span><span><b>0</b> en camino</span></div>
+      <ol class="tickets">
+        <li class="ticket">
+          <h3><span class="tabular">N.º 0101</span> Versalles · 5 personas</h3>
+          <span class="sello sello--verde">Confirmado</span>
+          <p>Solomillo en champiñones 2 lb (5 porc.) · Arroz con maicitos ×5</p>
+          <div class="acc"><span class="hora"><svg class="icon"><use href="#i-reloj"/></svg>Confirmado 13 nov</span><button class="btn btn--chico" type="button">Pasar a En cocina</button></div>
+        </li>
+        <li class="ticket">
+          <h3><span class="tabular">N.º 0122</span> El Peñón · 14 personas</h3>
+          <span class="sello sello--verde">Confirmado</span>
+          <p>Bondiola 3 lb · Costilla San Luis 2 lb · Ensalada dulce ×14</p>
+          <div class="acc"><span class="hora"><svg class="icon"><use href="#i-reloj"/></svg>Confirmado 20 nov</span><button class="btn btn--chico" type="button">Pasar a En cocina</button></div>
+        </li>
+      </ol>
+    </section>
+  </div>
+</main>
+<script src="iconos.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedido 0142 · Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<style>
+  .pedido { max-width: var(--ancho); margin: 0 auto; padding: var(--s6); display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--s7); }
+  .migas { font-size: .88rem; color: var(--tinta-tenue); margin-bottom: var(--s3); }
+
+  /* Hoja del día */
+  .hoja-dia { background: #fff; border: 1px solid var(--tinta); position: relative; }
+  .hoja-dia__cab { display: grid; grid-template-columns: auto 1fr; gap: 0 var(--s5); padding: var(--s5) var(--s5) var(--s4); border-bottom: 3px solid var(--tinta); align-items: end; }
+  .hoja-dia__cab .numeral { font-size: 9rem; color: var(--rojo); grid-row: span 3; }
+  .hoja-dia__cab .dia { font-family: var(--display); font-weight: 800; font-size: 1.9rem; text-transform: uppercase; line-height: 1; }
+  .hoja-dia__cab .mes { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
+  .hoja-dia__cab .num-pedido { margin-top: var(--s3); font-size: .95rem; }
+  .vivo { position: absolute; top: var(--s4); right: var(--s4); display: inline-flex; align-items: center; gap: var(--s2); font-size: .8rem; font-weight: 600; color: var(--verde); }
+  .vivo::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--verde); }
+  @keyframes latido { 0% { box-shadow: 0 0 0 0 rgba(14,92,58,.45); } 70%, 100% { box-shadow: 0 0 0 9px rgba(14,92,58,0); } }
+
+  .estados { list-style: none; margin: 0; padding: var(--s3) var(--s5) var(--s5); }
+  .estado { display: grid; grid-template-columns: 210px 1fr; gap: var(--s5); align-items: center; padding: var(--s4) 0; border-bottom: 1px dashed var(--filete); }
+  .estado:last-child { border-bottom: 0; }
+  .estado .sello { font-size: 1.05rem; justify-self: start; }
+  .estado p { margin: 0; color: var(--tinta-suave); font-size: .92rem; }
+  .estado time { display: block; font-weight: 600; color: var(--tinta); }
+  .estado.actual { position: relative; }
+  .estado.actual .sello { font-size: 1.35rem; padding: .35em .8em .28em; animation: estampar .7s var(--ease) both; }
+  @keyframes estampar { from { transform: rotate(-2deg) scale(1.5); opacity: 0; } to { transform: rotate(-2deg) scale(1); opacity: 1; } }
+  .estado.actual p { color: var(--tinta); }
+
+  .lado { display: grid; gap: var(--s5); align-content: start; }
+  .tarjeta { border-top: 3px solid var(--tinta); padding-top: var(--s4); }
+  .tarjeta h2 { font-family: var(--display); font-weight: 800; font-size: 1.5rem; text-transform: uppercase; margin: 0 0 var(--s3); line-height: 1; }
+  .comprobante { display: grid; grid-template-columns: 56px 1fr auto; gap: var(--s4); align-items: center; padding: var(--s3); background: var(--verde-velo); }
+  .comprobante .doc { width: 56px; height: 68px; background: #fff; border: 1px solid var(--verde); display: grid; place-items: center; color: var(--verde); }
+  .comprobante b { display: block; }
+  .comprobante span { font-size: .85rem; color: var(--tinta-suave); }
+  .whatsapp { display: grid; gap: var(--s3); }
+  .whatsapp p { margin: 0; color: var(--tinta-suave); font-size: .92rem; }
+  .mini-mapa { aspect-ratio: 47 / 30; overflow: hidden; border: 1px solid var(--tinta); }
+  .mini-mapa svg { height: auto !important; margin-top: -32%; }
+  .items { list-style: none; margin: 0; padding: 0; }
+  .items li { display: flex; justify-content: space-between; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px dashed var(--filete); font-size: .92rem; }
+  .items li:last-child { border-bottom: 0; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .pedido { grid-template-columns: 1fr; padding: var(--s4); gap: var(--s5); }
+    .hoja-dia__cab { padding: var(--s4); gap: 0 var(--s4); }
+    .hoja-dia__cab .numeral { font-size: 6rem; }
+    .hoja-dia__cab .dia { font-size: 1.4rem; }
+    .estados { padding: var(--s2) var(--s4) var(--s4); }
+    .estado { grid-template-columns: 1fr; gap: var(--s2); }
+    .vivo { position: static; margin: var(--s3) var(--s4) 0; }
+  }
+</style>
+</head>
+<body>
+<header class="membrete">
+  <div class="membrete__in">
+    <a class="marca" href="inicio.html">Delilicias <small>Cali · Navidad 2026</small></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="inicio.html">Inicio</a><a href="menu.html">Menú</a><a href="checkout.html#cobertura">Cobertura</a><a href="pedido.html" aria-current="page">Mis pedidos</a>
+    </nav>
+    <div class="membrete__acciones">
+      <a class="enlace-cuenta" href="#"><svg class="icon"><use href="#i-usuario"/></svg><span>Laura</span></a>
+      <a class="btn btn--rojo btn--chico btn-canasta" href="menu.html#canasta"><svg class="icon"><use href="#i-canasta"/></svg>Canasta <span class="contador">0</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="pedido">
+  <div>
+    <p class="migas"><a href="#">Mis pedidos</a> / Pedido 0142</p>
+    <article class="hoja-dia" aria-labelledby="t-ped">
+      <span class="vivo" role="status">En vivo · se actualiza solo</span>
+      <div class="hoja-dia__cab">
+        <span class="numeral" aria-hidden="true">24</span>
+        <span class="dia">Jueves, Nochebuena</span>
+        <span class="mes">Diciembre 2026</span>
+        <h1 class="num-pedido" id="t-ped">Pedido <b>N.º 0142</b> · entrega entre 4 y 6 p. m.</h1>
+      </div>
+      <ol class="estados" aria-label="Estado del pedido">
+        <li class="estado"><span class="sello sello--tinta">Recibido</span><p><time>25 nov · 3:12 p. m.</time>Recibimos tu pedido y separamos tu cupo.</p></li>
+        <li class="estado"><span class="sello sello--verde">Anticipo confirmado</span><p><time>25 nov · 5:40 p. m.</time>Tu anticipo de $87.750 está confirmado.</p></li>
+        <li class="estado actual" aria-current="step"><span class="sello">En cocina</span><p><time>24 dic · 9:05 a. m.</time>Tu cena se está preparando.</p></li>
+        <li class="estado"><span class="sello sello--pendiente">En camino</span><p>Te avisamos cuando salga de la cocina.</p></li>
+        <li class="estado"><span class="sello sello--pendiente">Entregado</span><p>¡Buen provecho!</p></li>
+      </ol>
+    </article>
+  </div>
+
+  <div class="lado">
+    <section class="tarjeta" aria-labelledby="t-comp">
+      <h2 id="t-comp">Comprobante del anticipo</h2>
+      <div class="comprobante">
+        <span class="doc"><svg class="icon"><use href="#i-check"/></svg></span>
+        <span><b>transferencia-0142.jpg</b><span>Subido el 25 nov · revisado por Delilicias</span></span>
+        <a class="btn-texto" href="#">Ver</a>
+      </div>
+    </section>
+
+    <section class="tarjeta whatsapp" aria-labelledby="t-wa">
+      <h2 id="t-wa">¿Dudas o domicilio?</h2>
+      <p>Te abrimos WhatsApp con tu número de pedido, la fecha y tu barrio ya escritos.</p>
+      <a class="btn btn--verde" href="#"><svg class="icon"><use href="#i-whatsapp"/></svg>Hablar por WhatsApp</a>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="t-ruta">
+      <h2 id="t-ruta">Ruta a Ciudad Jardín · 7,5 km</h2>
+      <div class="mini-mapa" id="mapa"></div>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="t-items">
+      <h2 id="t-items">Lo que pediste</h2>
+      <ul class="items">
+        <li><span>Costilla San Luis · 2 lb · 4 porciones</span><span class="tabular">$91.800</span></li>
+        <li><span>Rollo mixto · 1 lb · 3 porciones</span><span class="tabular">$52.500</span></li>
+        <li><span>Ensalada dulce · 4</span><span class="tabular">$31.200</span></li>
+        <li><span>Saldo al recibir</span><span class="tabular">$87.750</span></li>
+      </ul>
+    </section>
+  </div>
+</main>
+<script src="iconos.js"></script>
+<script src="mapa.js"></script>
+<script>dibujarMapa(document.getElementById('mapa'), { ruta: ['san-fernando', 'tequendama', 'capri', 'ciudad-jardin'], destino: 'ciudad-jardin', compacto: true });</script>
+</body>
+</html>

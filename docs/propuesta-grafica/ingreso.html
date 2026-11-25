@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ingresar · Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<style>
+  body { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+  .ingreso { display: grid; grid-template-columns: 1fr 1fr; min-height: 0; }
+  .ingreso__foto { position: relative; border-right: 1px solid var(--tinta); }
+  .ingreso__foto img { width: 100%; height: 100%; object-fit: cover; }
+  .ingreso__foto figcaption { position: absolute; left: var(--s5); bottom: var(--s5); background: var(--papel); border: 1px solid var(--tinta); padding: var(--s3) var(--s4); font-family: var(--display); font-weight: 800; font-size: 1.2rem; text-transform: uppercase; }
+  .ingreso__form { display: grid; align-content: center; justify-items: start; padding: var(--s8) var(--s8); }
+  .ingreso__form > div { width: min(440px, 100%); }
+  .ingreso h1 { font-size: clamp(2.6rem, 5vw, 4rem); margin-bottom: var(--s3); }
+  .ingreso .bajada { margin: 0 0 var(--s5); color: var(--tinta-suave); }
+  .pestanas { display: flex; border-bottom: 1px solid var(--tinta); margin-bottom: var(--s5); }
+  .pestanas button { flex: 1; min-height: 48px; background: none; border: 0; border-bottom: 3px solid transparent; font-family: var(--display); font-weight: 800; font-size: 1.15rem; letter-spacing: .05em; text-transform: uppercase; color: var(--tinta-tenue); cursor: pointer; margin-bottom: -1px; }
+  .pestanas button[aria-selected="true"] { color: var(--tinta); border-bottom-color: var(--rojo); }
+  form { display: grid; gap: var(--s4); }
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); align-items: start; }
+  .aviso { font-size: .85rem; color: var(--tinta-tenue); margin: 0; }
+  @media (max-width: 900px) {
+    .ingreso { grid-template-columns: 1fr; }
+    .ingreso__foto { height: 180px; border-right: 0; border-bottom: 1px solid var(--tinta); }
+    .ingreso__foto figcaption { display: none; }
+    .ingreso__form { padding: var(--s5) var(--s4) var(--s7); }
+    .dos { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="membrete">
+  <div class="membrete__in">
+    <a class="marca" href="inicio.html">Delilicias <small>Cali · Navidad 2026</small></a>
+    <nav class="nav" aria-label="Principal"><a href="inicio.html">Inicio</a><a href="menu.html">Menú</a><a href="checkout.html#cobertura">Cobertura</a><a href="pedido.html">Mis pedidos</a></nav>
+    <div class="membrete__acciones"><a class="btn btn--rojo btn--chico btn-canasta" href="menu.html#canasta"><svg class="icon"><use href="#i-canasta"/></svg>Canasta <span class="contador">3</span></a></div>
+  </div>
+</header>
+<main class="ingreso">
+  <figure class="ingreso__foto" style="margin:0"><img src="../../public/img/costilla-san-luis.jpg" alt="Costilla San Luis glaseada"><figcaption>Tu canasta te espera</figcaption></figure>
+  <div class="ingreso__form">
+    <div>
+      <h1 class="titular">Crea tu cuenta</h1>
+      <p class="bajada">Para separar tu fecha y seguir tu pedido. Tu canasta no se pierde.</p>
+      <div class="pestanas" role="tablist">
+        <button role="tab" aria-selected="false" type="button">Ingresar</button>
+        <button role="tab" aria-selected="true" type="button">Crear cuenta</button>
+      </div>
+      <form onsubmit="event.preventDefault(); location.href='checkout.html'">
+        <div class="campo"><label for="n">Nombre</label><input class="control" id="n" autocomplete="name" value="Laura Gómez"></div>
+        <div class="dos">
+          <div class="campo campo--error"><label for="t">Celular (WhatsApp)</label><input class="control" id="t" inputmode="tel" autocomplete="tel" value="315 23" aria-describedby="t-err" aria-invalid="true"><span class="ayuda" id="t-err">Escribe los 10 dígitos, por ejemplo 315 237 7306.</span></div>
+          <div class="campo"><label for="b">Barrio</label><select class="control" id="b"><option>Ciudad Jardín</option></select></div>
+        </div>
+        <div class="campo"><label for="e">Correo</label><input class="control" id="e" type="email" autocomplete="email" value="laura@correo.com"></div>
+        <div class="campo"><label for="c">Contraseña</label><input class="control" id="c" type="password" autocomplete="new-password" value="contraseña123"><span class="ayuda">Mínimo 8 caracteres.</span></div>
+        <button class="btn btn--rojo btn--bloque" type="submit">Crear cuenta y seguir</button>
+        <p class="aviso">Solo usamos tu celular para hablar contigo sobre tu pedido.</p>
+      </form>
+    </div>
+  </div>
+</main>
+<script src="iconos.js"></script>
+</body>
+</html>

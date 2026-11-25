@@ -1,0 +1,30 @@
+/* Panel de administración: el mismo almanaque, en modo de trabajo */
+body.admin { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; background: var(--papel); }
+.riel { background: var(--tinta); color: var(--papel); padding: var(--s5) var(--s4); display: flex; flex-direction: column; gap: var(--s6); position: sticky; top: 0; height: 100vh; }
+.riel .marca { color: #FF5A4E; font-size: 2rem; padding: 0 var(--s2); }
+.riel .marca small { display: block; color: #B8B0A4; margin-top: var(--s1); }
+.riel nav { display: grid; gap: 2px; }
+.riel nav a { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s3); text-decoration: none; color: #E9E4DA; font-weight: 500; border-radius: 2px; }
+.riel nav a:hover { background: rgba(251,250,246,.08); color: #fff; }
+.riel nav a[aria-current="page"] { background: var(--papel); color: var(--tinta); font-weight: 700; }
+.riel nav .cuenta { margin-left: auto; min-width: 1.7em; height: 1.7em; display: grid; place-items: center; border-radius: 999px; background: var(--rojo); color: #fff; font-size: .78rem; font-weight: 700; }
+.riel__pie { margin-top: auto; font-size: .85rem; color: #B8B0A4; display: grid; gap: var(--s2); }
+.riel__pie a { color: #E9E4DA; display: inline-flex; gap: var(--s2); align-items: center; text-decoration: none; }
+
+.area { padding: var(--s6) var(--s7) var(--s8); min-width: 0; }
+.area__cab { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s4); flex-wrap: wrap; border-bottom: 3px solid var(--tinta); padding-bottom: var(--s3); margin-bottom: var(--s6); }
+.area__cab h1 { font-size: clamp(2.4rem, 4vw, 3.4rem); }
+.area__cab p { margin: var(--s2) 0 0; color: var(--tinta-suave); }
+.en-vivo { display: inline-flex; align-items: center; gap: var(--s2); font-size: .85rem; font-weight: 600; color: var(--verde); }
+.en-vivo::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--verde); }
+
+.barra-movil { display: none; }
+
+@media (max-width: 900px) {
+  body.admin { grid-template-columns: 1fr; }
+  .riel { display: none; }
+  .barra-movil { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); position: sticky; top: 0; z-index: 10; background: var(--tinta); color: var(--papel); padding: var(--s3) var(--s4); }
+  .barra-movil .marca { color: #FF5A4E; font-size: 1.7rem; }
+  .barra-movil button { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 1.5px solid var(--papel); color: var(--papel); }
+  .area { padding: var(--s5) var(--s4) var(--s7); }
+}

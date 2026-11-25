@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menú · Delilicias</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="stylesheet" href="almanaque.css">
+<style>
+  .cab-menu { max-width: var(--ancho); margin: 0 auto; padding: var(--s7) var(--s6) var(--s5); display: grid; grid-template-columns: 1fr minmax(320px, 460px); gap: var(--s6); align-items: end; border-bottom: 3px solid var(--tinta); }
+  .cab-menu h1 { font-size: clamp(3rem, 7vw, 5.5rem); }
+  .cab-menu p { margin: var(--s3) 0 0; color: var(--tinta-suave); }
+
+  /* Buscador (trie) */
+  .buscador { position: relative; }
+  .buscador .control { padding-left: 44px; font-size: 1.05rem; border-color: var(--tinta); }
+  .buscador > .icon { position: absolute; left: 14px; top: 14px; color: var(--tinta-suave); }
+  .sugerencias { position: absolute; z-index: 15; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1.5px solid var(--tinta); box-shadow: var(--sombra); list-style: none; margin: 0; padding: var(--s2) 0; }
+  .sugerencias li { display: grid; grid-template-columns: 48px 1fr auto; gap: var(--s3); align-items: center; padding: var(--s2) var(--s4); cursor: pointer; }
+  .sugerencias li[aria-selected="true"], .sugerencias li:hover { background: var(--rojo-velo); }
+  .sugerencias img { width: 48px; height: 48px; object-fit: cover; }
+  .sugerencias mark { background: none; color: var(--rojo-hondo); font-weight: 700; }
+  .sugerencias .donde { display: block; font-size: .8rem; color: var(--tinta-tenue); }
+  .sugerencias .precio { font-size: 1.1rem; }
+  .sugerencias li.sugerencias__pie { display: block; cursor: default; background: none; border-top: 1px solid var(--filete); margin-top: var(--s2); padding: var(--s2) var(--s4) 0; font-size: .82rem; color: var(--tinta-tenue); }
+
+  .cuerpo-menu { max-width: var(--ancho); margin: 0 auto; padding: 0 var(--s6); display: grid; grid-template-columns: 220px 1fr; gap: var(--s7); }
+
+  /* Menú lateral (árbol n-ario) */
+  .lateral { position: sticky; top: 92px; align-self: start; padding-top: var(--s6); }
+  .lateral ol { list-style: none; margin: 0; padding: 0; }
+  .lateral > ol > li { border-bottom: 1px solid var(--filete); padding: var(--s3) 0; }
+  .lateral a { text-decoration: none; display: flex; gap: var(--s3); align-items: baseline; }
+  .lateral .numeral { font-size: 1.6rem; color: var(--rojo); min-width: 1.6em; }
+  .lateral .sec { font-family: var(--display); font-weight: 800; font-size: 1.2rem; text-transform: uppercase; }
+  .lateral .cuenta { margin-left: auto; font-size: .8rem; color: var(--tinta-tenue); }
+  .lateral ol ol { margin: var(--s2) 0 0 2.6em; display: grid; gap: 2px; }
+  .lateral ol ol a { font-size: .88rem; color: var(--tinta-suave); padding: 2px 0; }
+  .lateral ol ol a[aria-current="true"] { color: var(--rojo); font-weight: 600; }
+
+  .seccion-menu { padding-top: var(--s6); scroll-margin-top: 90px; }
+  .seccion-menu + .seccion-menu { margin-top: var(--s8); }
+  .seccion-menu__cab { display: grid; grid-template-columns: auto 1fr; column-gap: var(--s5); align-items: end; border-bottom: 1px solid var(--tinta); padding-bottom: var(--s3); margin-bottom: var(--s5); }
+  .seccion-menu__cab .numeral { font-size: 5.5rem; color: var(--rojo); grid-row: span 2; }
+  .seccion-menu__cab h2 { font-size: 2.6rem; }
+  .seccion-menu__cab p { margin: 0; color: var(--tinta-suave); font-style: italic; }
+
+  /* I · Entradas: destacado */
+  .destacado { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s6); align-items: center; }
+  .destacado img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--tinta); }
+  .destacado h3 { font-family: var(--display); font-weight: 800; font-size: 2.2rem; line-height: 1; text-transform: uppercase; margin: 0 0 var(--s3); }
+  .destacado p { margin: 0 0 var(--s4); color: var(--tinta-suave); max-width: 46ch; }
+  .destacado .precio { font-size: 2.2rem; display: block; margin-bottom: var(--s4); }
+  .destacado .precio small { font-family: var(--texto); font-weight: 500; font-size: .95rem; color: var(--tinta-tenue); }
+
+  /* II · Platos fuertes: lista de precios a dos columnas */
+  .nota-promesa { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); align-items: center; margin: 0 0 var(--s5); padding: var(--s3) var(--s4); background: var(--verde-velo); color: var(--verde); font-weight: 600; font-size: .92rem; }
+  .lista-fuertes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--s6); }
+  .plato { display: grid; grid-template-columns: 112px 1fr auto; gap: var(--s4); padding: var(--s4) 0; border-bottom: 1px solid var(--filete); align-items: start; }
+  .plato img { width: 112px; height: 112px; object-fit: cover; }
+  .plato h3 { font-family: var(--display); font-weight: 800; font-size: 1.3rem; line-height: 1.05; text-transform: uppercase; margin: 0 0 var(--s1); }
+  .plato h3 a { text-decoration: none; }
+  .plato p { margin: 0; font-size: .88rem; color: var(--tinta-suave); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .plato .der { display: grid; justify-items: end; gap: var(--s2); }
+  .plato .precio { font-size: 1.35rem; white-space: nowrap; }
+  .plato .unidad { font-size: .78rem; color: var(--tinta-tenue); }
+  .agregar { width: 44px; height: 44px; display: grid; place-items: center; border: 1.5px solid var(--tinta); background: transparent; cursor: pointer; border-radius: 2px; }
+  .agregar:hover { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+  .plato.agotado img { filter: grayscale(1); opacity: .55; }
+  .plato.agotado h3, .plato.agotado p { color: var(--tinta-tenue); }
+  .plato.agotado .sello { font-size: .8rem; }
+
+  /* Selector de porciones (hijos del nodo plato) */
+  .porciones { grid-column: 1 / -1; display: grid; gap: var(--s3); padding: var(--s4); background: #fff; border: 1.5px solid var(--tinta); }
+  .porciones legend { font-weight: 600; font-size: .9rem; padding: 0; margin-bottom: var(--s2); }
+  .porciones fieldset { border: 0; margin: 0; padding: 0; }
+  .opciones { display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .opcion input { position: absolute; opacity: 0; }
+  .opcion span { display: inline-flex; flex-direction: column; padding: var(--s2) var(--s3); border: 1.5px solid var(--filete); cursor: pointer; font-size: .85rem; line-height: 1.25; }
+  .opcion span b { font-family: var(--display); font-size: 1.15rem; font-weight: 800; }
+  .opcion input:checked + span { border-color: var(--rojo); background: var(--rojo-velo); }
+  .opcion input:focus-visible + span { outline: 2px solid var(--rojo); outline-offset: 2px; }
+  .porciones__fila { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; }
+  .paso-cant { display: inline-flex; align-items: center; border: 1.5px solid var(--tinta); }
+  .paso-cant button { width: 40px; height: 40px; display: grid; place-items: center; border: 0; background: none; cursor: pointer; }
+  .paso-cant button:hover { background: var(--papel-sombra); }
+  .paso-cant output { min-width: 4.5em; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  /* III · Acompañantes: cuatro columnas compactas */
+  .lista-acomp { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-left: 1px solid var(--filete); border-top: 1px solid var(--filete); }
+  .acomp { padding: var(--s4); border-right: 1px solid var(--filete); border-bottom: 1px solid var(--filete); display: grid; gap: var(--s3); align-content: start; }
+  .acomp img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .acomp h3 { font-family: var(--display); font-weight: 800; font-size: 1.2rem; line-height: 1.05; text-transform: uppercase; margin: 0; }
+  .acomp .fila { display: flex; align-items: center; justify-content: space-between; }
+  .acomp .precio { font-size: 1.25rem; }
+
+  /* ---------- Canasta (panel lateral) ---------- */
+  .velo { position: fixed; inset: 0; background: rgba(22, 20, 18, .42); z-index: 40; opacity: 0; pointer-events: none; transition: opacity .3s var(--ease); }
+  .panel { position: fixed; z-index: 41; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--papel); border-left: 1px solid var(--tinta); display: grid; grid-template-rows: auto auto 1fr auto; transform: translateX(100%); transition: transform .45s var(--ease); }
+  body.canasta-abierta .velo { opacity: 1; pointer-events: auto; }
+  body.canasta-abierta .panel { transform: none; }
+  .panel__cab { display: flex; align-items: center; justify-content: space-between; padding: var(--s4) var(--s5); border-bottom: 3px solid var(--tinta); }
+  .panel__cab h2 { font-size: 2.2rem; }
+  .cerrar { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 1.5px solid var(--tinta); cursor: pointer; }
+  .deshacer { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s5); background: var(--tinta); color: var(--papel); font-size: .9rem; }
+  .deshacer button { margin-left: auto; display: inline-flex; align-items: center; gap: var(--s2); background: none; border: 1.5px solid var(--papel); color: var(--papel); padding: var(--s1) var(--s3); font-family: var(--display); font-weight: 800; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; min-height: 36px; }
+  .deshacer button:hover { background: var(--papel); color: var(--tinta); }
+  .items { list-style: none; margin: 0; padding: 0 var(--s5); overflow: auto; }
+  .item { display: grid; grid-template-columns: 72px 1fr; gap: var(--s4); padding: var(--s4) 0; border-bottom: 1px solid var(--filete); }
+  .item img { width: 72px; height: 72px; object-fit: cover; }
+  .item h3 { font-family: var(--display); font-weight: 800; font-size: 1.15rem; line-height: 1.05; text-transform: uppercase; margin: 0; }
+  .item .detalle { font-size: .82rem; color: var(--tinta-tenue); margin: 2px 0 var(--s2); }
+  .item .fila { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+  .item .paso-cant button { width: 34px; height: 34px; }
+  .item .paso-cant output { min-width: 3.4em; font-size: .9rem; }
+  .item .quitar { font-size: .82rem; }
+  .totales { padding: var(--s4) var(--s5) var(--s5); border-top: 1px solid var(--tinta); background: #fff; display: grid; gap: var(--s2); }
+  .totales dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: var(--s1) var(--s4); font-size: .95rem; }
+  .totales dt { color: var(--tinta-suave); }
+  .totales dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .totales .gratis { color: var(--verde); }
+  .totales .anticipo dt, .totales .anticipo dd { color: var(--tinta); font-weight: 700; font-size: 1.05rem; padding-top: var(--s2); border-top: 1px dashed var(--filete); }
+  .totales .btn { margin-top: var(--s3); }
+
+  @media (max-width: 900px) {
+    .cab-menu { grid-template-columns: 1fr; padding: var(--s5) var(--s4) var(--s4); gap: var(--s4); }
+    .cuerpo-menu { grid-template-columns: 1fr; padding: 0 var(--s4); gap: 0; }
+    .lateral { position: sticky; top: 61px; z-index: 10; background: var(--papel); padding: 0; border-bottom: 1px solid var(--tinta); margin: 0 calc(-1 * var(--s4)); }
+    .lateral > ol { display: flex; overflow-x: auto; gap: var(--s5); padding: var(--s2) var(--s4); }
+    .lateral > ol > li { border: 0; padding: 0; white-space: nowrap; }
+    .lateral ol ol, .lateral .cuenta { display: none; }
+    .lateral .numeral { font-size: 1.2rem; min-width: 0; }
+    .lateral .sec { font-size: 1rem; }
+    .seccion-menu__cab .numeral { font-size: 3.6rem; }
+    .seccion-menu__cab h2 { font-size: 1.9rem; }
+    .destacado { grid-template-columns: 1fr; gap: var(--s4); }
+    .lista-fuertes { grid-template-columns: 1fr; }
+    .plato { grid-template-columns: 84px 1fr auto; gap: var(--s3); }
+    .plato img { width: 84px; height: 84px; }
+    .lista-acomp { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="membrete">
+  <div class="membrete__in">
+    <a class="marca" href="inicio.html">Delilicias <small>Cali · Navidad 2026</small></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="inicio.html">Inicio</a>
+      <a href="menu.html" aria-current="page">Menú</a>
+      <a href="checkout.html#cobertura">Cobertura</a>
+      <a href="pedido.html">Mis pedidos</a>
+    </nav>
+    <div class="membrete__acciones">
+      <a class="enlace-cuenta" href="ingreso.html"><svg class="icon"><use href="#i-usuario"/></svg><span>Ingresar</span></a>
+      <button class="btn btn--rojo btn--chico btn-canasta" type="button" data-abrir-canasta aria-haspopup="dialog"><svg class="icon"><use href="#i-canasta"/></svg>Canasta <span class="contador">3</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="cab-menu">
+    <div>
+      <h1 class="titular">El menú</h1>
+      <p>Platos de temporada para el 24 y el 31 de diciembre.</p>
+    </div>
+    <div class="buscador" role="search">
+      <svg class="icon"><use href="#i-buscar"/></svg>
+      <label class="sr-only" for="q">Buscar platos o ingredientes</label>
+      <input class="control" id="q" type="search" value="toci" placeholder="Busca un plato o ingrediente" role="combobox" aria-expanded="true" aria-controls="sug" aria-autocomplete="list" autocomplete="off">
+      <ul class="sugerencias" id="sug" role="listbox" aria-label="Sugerencias">
+        <li role="option" aria-selected="true"><img src="../../public/img/dip-queso-tocineta.jpg" alt=""><span>Dip de queso crema y <mark>toci</mark>neta<span class="donde">I · Entradas</span></span><span class="precio">$44.900</span></li>
+        <li role="option" aria-selected="false"><img src="../../public/img/arroz-maicitos-tocineta.jpg" alt=""><span>Arroz con maicitos y <mark>toci</mark>neta<span class="donde">III · Acompañantes</span></span><span class="precio">$8.500</span></li>
+        <li role="option" aria-selected="false"><img src="../../public/img/rollo-mixto.jpg" alt=""><span>Rollo mixto<span class="donde">II · Platos fuertes · envuelto en <mark>toci</mark>neta</span></span><span class="precio">$52.500</span></li>
+        <li class="sugerencias__pie" aria-hidden="true">3 platos · ↑ ↓ para moverte, Enter para abrir</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cuerpo-menu">
+    <nav class="lateral" aria-label="Secciones del menú">
+      <ol>
+        <li><a href="#entradas"><span class="numeral">I</span><span class="sec">Entradas</span><span class="cuenta">1</span></a></li>
+        <li><a href="#fuertes"><span class="numeral">II</span><span class="sec">Platos fuertes</span><span class="cuenta">10</span></a>
+          <ol>
+            <li><a href="#" aria-current="true">Rollo mixto</a></li>
+            <li><a href="#">Lomo en frutos secos</a></li>
+            <li><a href="#">Costilla San Luis</a></li>
+            <li><a href="#">Cordon bleu</a></li>
+            <li><a href="#">Pollo relleno</a></li>
+            <li><a href="#">Jamón de pollo</a></li>
+            <li><a href="#">Galantina de pollo</a></li>
+            <li><a href="#">Bondiola caramelizada</a></li>
+            <li><a href="#">Lomo con arándanos</a></li>
+            <li><a href="#">Solomillo con champiñones</a></li>
+          </ol>
+        </li>
+        <li><a href="#acompanantes"><span class="numeral">III</span><span class="sec">Acompañantes</span><span class="cuenta">4</span></a></li>
+      </ol>
+    </nav>
+
+    <div>
+      <section class="seccion-menu" id="entradas" aria-labelledby="t-ent">
+        <div class="seccion-menu__cab"><span class="numeral">I</span><h2 class="titular" id="t-ent">Entradas</h2><p>Para abrir la noche</p></div>
+        <article class="destacado">
+          <img src="../../public/img/dip-queso-tocineta.jpg" alt="Dip de queso crema con tocineta y galletas">
+          <div>
+            <h3>Dip de queso crema y tocineta</h3>
+            <p>Queso crema con pimentón caramelizado y tocineta ahumada, acompañado de galletas Ritz.</p>
+            <span class="precio">$44.900 <small>· 350 g</small></span>
+            <button class="btn btn--rojo" type="button"><svg class="icon"><use href="#i-mas"/></svg>Agregar a la canasta</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="seccion-menu" id="fuertes" aria-labelledby="t-fue">
+        <div class="seccion-menu__cab"><span class="numeral">II</span><h2 class="titular" id="t-fue">Platos fuertes</h2><p>El centro de tu cena</p></div>
+        <p class="nota-promesa"><span>Carnes 100 % magras · Sin aditivos ni conservantes</span><span style="font-weight:500">Se venden por libra y te las porcionamos</span></p>
+        <ul class="lista-fuertes">
+          <li class="plato">
+            <img src="../../public/img/rollo-mixto.jpg" alt="Rollo mixto">
+            <div><h3><a href="#">Rollo mixto</a></h3><p>Tres carnes con vegetales, envuelto en tocineta y bañado en salsa de la casa.</p></div>
+            <div class="der"><span class="precio">$52.500</span><span class="unidad">la libra</span></div>
+            <div class="porciones">
+              <fieldset>
+                <legend>¿En cuántas porciones te la cortamos?</legend>
+                <div class="opciones">
+                  <label class="opcion"><input type="radio" name="p1"><span><b>3 porciones</b>de 166 g</span></label>
+                  <label class="opcion"><input type="radio" name="p1" checked><span><b>4 porciones</b>de 125 g</span></label>
+                  <label class="opcion"><input type="radio" name="p1"><span><b>5 porciones</b>de 100 g</span></label>
+                </div>
+              </fieldset>
+              <div class="porciones__fila">
+                <span class="paso-cant"><button type="button" aria-label="Una libra menos"><svg class="icon"><use href="#i-menos"/></svg></button><output>2 libras</output><button type="button" aria-label="Una libra más"><svg class="icon"><use href="#i-mas"/></svg></button></span>
+                <button class="btn btn--rojo btn--chico" type="button">Agregar · $105.000</button>
+              </div>
+            </div>
+          </li>
+          <li class="plato"><img src="../../public/img/lomo-frutos-secos.jpg" alt=""><div><h3><a href="#">Lomo de cerdo relleno en frutos secos</a></h3><p>Lomo de cerdo enrollado con un relleno de frutos secos, dorado al horno.</p></div><div class="der"><span class="precio">$46.500</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar lomo relleno en frutos secos"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato"><img src="../../public/img/costilla-san-luis.jpg" alt=""><div><h3><a href="#">Costilla San Luis en salsa caramelizada</a></h3><p>Corte San Luis, horneada lentamente y glaseada en salsa caramelizada.</p></div><div class="der"><span class="precio">$45.900</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar costilla San Luis"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato"><img src="../../public/img/cordon-bleu.jpg" alt=""><div><h3><a href="#">Cordon bleu</a></h3><p>Pechuga de pollo rellena de jamón y queso, bañada en salsa cremosa.</p></div><div class="der"><span class="precio">$37.500</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar cordon bleu"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato"><img src="../../public/img/pollo-relleno.jpg" alt=""><div><h3><a href="#">Pollo relleno</a></h3><p>Rollo de pollo relleno de huevo, aceitunas y vegetales, dorado al horno.</p></div><div class="der"><span class="precio">$49.500</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar pollo relleno"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato"><img src="../../public/img/jamon-pollo.jpg" alt=""><div><h3><a href="#">Jamón de pollo</a></h3><p>Horneado y sazonado con especias, servido en tajadas.</p></div><div class="der"><span class="precio">$35.000</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar jamón de pollo"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato agotado"><img src="../../public/img/galantina-pollo.jpg" alt=""><div><h3>Galantina de pollo</h3><p>Con frutas secas y vegetales, servida fría en rodajas.</p></div><div class="der"><span class="precio">$35.000</span><span class="sello sello--tinta">Agotado</span></div></li>
+          <li class="plato"><img src="../../public/img/bondiola-caramelizada.jpg" alt=""><div><h3><a href="#">Bondiola caramelizada</a></h3><p>Horneada y glaseada en salsa caramelizada, servida en tajadas.</p></div><div class="der"><span class="precio">$46.500</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar bondiola caramelizada"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato"><img src="../../public/img/lomo-arandanos.jpg" alt=""><div><h3><a href="#">Lomo de cerdo en salsa de arándanos</a></h3><p>Dorado al horno, en tajadas y bañado en salsa de arándanos.</p></div><div class="der"><span class="precio">$46.500</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar lomo en salsa de arándanos"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="plato"><img src="../../public/img/solomillo-champinones.jpg" alt=""><div><h3><a href="#">Solomillo en salsa de champiñones</a></h3><p>Solomillo de cerdo jugoso, bañado en salsa cremosa de champiñones.</p></div><div class="der"><span class="precio">$52.500</span><span class="unidad">la libra</span><button class="agregar" type="button" aria-label="Agregar solomillo"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+        </ul>
+      </section>
+
+      <section class="seccion-menu" id="acompanantes" aria-labelledby="t-aco">
+        <div class="seccion-menu__cab"><span class="numeral">III</span><h2 class="titular" id="t-aco">Acompañantes</h2><p>Para completar tu mesa</p></div>
+        <ul class="lista-acomp">
+          <li class="acomp"><img src="../../public/img/arroz-maicitos-tocineta.jpg" alt=""><h3>Arroz con maicitos y tocineta</h3><div class="fila"><span class="precio">$8.500</span><button class="agregar" type="button" aria-label="Agregar arroz con maicitos"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="acomp"><img src="../../public/img/arroz-verde.jpg" alt=""><h3>Arroz verde</h3><div class="fila"><span class="precio">$6.500</span><button class="agregar" type="button" aria-label="Agregar arroz verde"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="acomp"><img src="../../public/img/ensalada-dulce.jpg" alt=""><h3>Ensalada dulce</h3><div class="fila"><span class="precio">$7.800</span><button class="agregar" type="button" aria-label="Agregar ensalada dulce"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+          <li class="acomp"><img src="../../public/img/ensalada-rusa.jpg" alt=""><h3>Ensalada rusa</h3><div class="fila"><span class="precio">$6.800</span><button class="agregar" type="button" aria-label="Agregar ensalada rusa"><svg class="icon"><use href="#i-mas"/></svg></button></div></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="pie">
+  <div class="pie__in">
+    <a class="marca" href="inicio.html">Delilicias</a>
+    <span>Cocina por encargo · Cali</span>
+    <a href="#"><svg class="icon" style="vertical-align:-4px"><use href="#i-whatsapp"/></svg> +57 315 237 7306</a>
+  </div>
+</footer>
+
+<div class="velo" data-cerrar-canasta></div>
+<aside class="panel" role="dialog" aria-modal="true" aria-labelledby="t-canasta">
+  <div class="panel__cab">
+    <h2 class="titular" id="t-canasta">Tu canasta</h2>
+    <button class="cerrar" type="button" aria-label="Cerrar canasta" data-cerrar-canasta><svg class="icon"><use href="#i-cerrar"/></svg></button>
+  </div>
+  <div class="deshacer" role="status">
+    <span>Quitaste <b>Dip de queso y tocineta</b>.</span>
+    <button type="button"><svg class="icon"><use href="#i-deshacer"/></svg>Deshacer</button>
+  </div>
+  <ul class="items">
+    <li class="item">
+      <img src="../../public/img/costilla-san-luis.jpg" alt="">
+      <div>
+        <h3>Costilla San Luis</h3>
+        <p class="detalle">4 porciones de 125 g por libra · $45.900 la libra</p>
+        <div class="fila"><span class="paso-cant"><button type="button" aria-label="Una libra menos"><svg class="icon"><use href="#i-menos"/></svg></button><output>2 lb</output><button type="button" aria-label="Una libra más"><svg class="icon"><use href="#i-mas"/></svg></button></span><span class="precio">$91.800</span></div>
+        <button class="btn-texto quitar" type="button">Quitar</button>
+      </div>
+    </li>
+    <li class="item">
+      <img src="../../public/img/rollo-mixto.jpg" alt="">
+      <div>
+        <h3>Rollo mixto</h3>
+        <p class="detalle">3 porciones de 166 g por libra · $52.500 la libra</p>
+        <div class="fila"><span class="paso-cant"><button type="button" aria-label="Una libra menos"><svg class="icon"><use href="#i-menos"/></svg></button><output>1 lb</output><button type="button" aria-label="Una libra más"><svg class="icon"><use href="#i-mas"/></svg></button></span><span class="precio">$52.500</span></div>
+        <button class="btn-texto quitar" type="button">Quitar</button>
+      </div>
+    </li>
+    <li class="item">
+      <img src="../../public/img/ensalada-dulce.jpg" alt="">
+      <div>
+        <h3>Ensalada dulce</h3>
+        <p class="detalle">$7.800 la porción</p>
+        <div class="fila"><span class="paso-cant"><button type="button" aria-label="Una porción menos"><svg class="icon"><use href="#i-menos"/></svg></button><output>4</output><button type="button" aria-label="Una porción más"><svg class="icon"><use href="#i-mas"/></svg></button></span><span class="precio">$31.200</span></div>
+        <button class="btn-texto quitar" type="button">Quitar</button>
+      </div>
+    </li>
+  </ul>
+  <div class="totales">
+    <dl>
+      <dt>Subtotal</dt><dd>$175.500</dd>
+      <dt>Domicilio</dt><dd class="gratis">Gratis</dd>
+      <div class="anticipo" style="display:contents"><dt>Anticipo para confirmar (50 %)</dt><dd>$87.750</dd></div>
+    </dl>
+    <a class="btn btn--rojo btn--bloque" href="checkout.html">Elegir fecha y pagar anticipo <svg class="icon"><use href="#i-flecha"/></svg></a>
+  </div>
+</aside>
+
+<script src="iconos.js"></script>
+<script>
+  const abrir = () => document.body.classList.add('canasta-abierta');
+  const cerrar = () => document.body.classList.remove('canasta-abierta');
+  document.querySelectorAll('[data-abrir-canasta]').forEach(b => b.onclick = abrir);
+  document.querySelectorAll('[data-cerrar-canasta]').forEach(b => b.onclick = cerrar);
+  addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); });
+  if (location.hash === '#canasta') abrir();
+  const q = document.getElementById('q'), sug = document.getElementById('sug');
+  q.addEventListener('input', () => { const v = q.value.trim(); sug.hidden = !v; q.setAttribute('aria-expanded', String(!!v)); });
+</script>
+</body>
+</html>

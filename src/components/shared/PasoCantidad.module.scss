@@ -1,0 +1,17 @@
+.paso {
+  display: inline-flex; align-items: center; border: 1.5px solid var(--tinta); background: #fff;
+
+  button {
+    width: 40px; height: 40px; display: grid; place-items: center;
+    border: 0; background: none; cursor: pointer;
+    &:hover:not(:disabled) { background: var(--papel-sombra); }
+    &:disabled { opacity: .35; cursor: not-allowed; }
+  }
+
+  output { min-width: 4.8em; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+}
+
+.compacto {
+  button { width: 34px; height: 34px; }
+  output { min-width: 3.4em; font-size: .9rem; }
+}

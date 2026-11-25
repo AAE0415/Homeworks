@@ -1,14 +1,13 @@
-import PaginaPendiente from '../../components/shared/PaginaPendiente';
+import ContenidoCanasta from '../../components/cart/ContenidoCanasta';
 import styles from './Canasta.module.scss';
 
 export default function Canasta() {
   return (
-    <div className={styles.pagina}>
-      <PaginaPendiente
-        titulo="Tu canasta"
-        descripcion="Productos elegidos, deshacer, subtotal, domicilio y anticipo."
-        hito={5}
-      />
-    </div>
+    <section className={`hoja ${styles.canasta}`} aria-labelledby="t-pagina-canasta">
+      <h1 className="titular" id="t-pagina-canasta">Tu canasta</h1>
+      <div className={styles.hoja}>
+        <ContenidoCanasta />
+      </div>
+    </section>
   );
 }

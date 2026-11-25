@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import CanastaPanel from '../cart/CanastaPanel';
 import Footer from './Footer';
 import Menu from './Menu';
 
@@ -10,6 +11,7 @@ export default function Layout() {
       <Menu />
       <main id="contenido"><Outlet /></main>
       <Footer />
+      <CanastaPanel />
     </>
   );
 }

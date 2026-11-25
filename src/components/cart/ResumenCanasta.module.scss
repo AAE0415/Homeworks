@@ -1,0 +1,8 @@
+.resumen {
+  margin: 0; display: grid; grid-template-columns: 1fr auto; gap: var(--s1) var(--s4); font-size: .95rem;
+  dt { color: var(--tinta-suave); }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+}
+.gratis { color: var(--verde); }
+.pista { grid-column: 1 / -1; text-align: left !important; font-size: .82rem; font-weight: 500 !important; color: var(--tinta-tenue); }
+.anticipo { color: var(--tinta) !important; font-weight: 700; font-size: 1.05rem; padding-top: var(--s2); border-top: 1px dashed var(--filete); }

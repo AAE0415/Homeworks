@@ -1,0 +1,32 @@
+@use '../../styles/mixins' as *;
+
+.lateral {
+  position: sticky; top: 92px; align-self: start; padding-top: var(--s6);
+
+  ol { list-style: none; margin: 0; padding: 0; }
+  > ol > li { border-bottom: 1px solid var(--filete); padding: var(--s3) 0; }
+  a { text-decoration: none; display: flex; gap: var(--s3); align-items: baseline; }
+  > ol > li > a[aria-current] .sec { color: var(--rojo-hondo); }
+  :global(.numeral) { font-size: 1.6rem; color: var(--rojo); min-width: 1.6em; }
+
+  ol ol { margin: var(--s2) 0 0 2.6em; display: grid; gap: 2px; }
+  ol ol a { font-size: .88rem; color: var(--tinta-suave); padding: 2px 0; }
+  ol ol a:hover { color: var(--rojo-hondo); }
+}
+
+.sec { font-family: var(--display); font-weight: 800; font-size: 1.2rem; text-transform: uppercase; }
+.cuenta { margin-left: auto; font-size: .8rem; color: var(--tinta-tenue); }
+
+@include movil {
+  .lateral {
+    top: 61px; z-index: 10; background: var(--papel); padding: 0;
+    border-bottom: 1px solid var(--tinta); margin: 0 calc(-1 * var(--s4));
+
+    > ol { display: flex; overflow-x: auto; gap: var(--s5); padding: var(--s2) var(--s4); }
+    > ol > li { border: 0; padding: 0; white-space: nowrap; }
+    ol ol { display: none; }
+    :global(.numeral) { font-size: 1.2rem; min-width: 0; }
+  }
+  .sec { font-size: 1rem; }
+  .cuenta { display: none; }
+}

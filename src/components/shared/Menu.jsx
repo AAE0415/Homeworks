@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import useCart from '../../hooks/useCart';
 import Icon from './Icon';
 import styles from './Menu.module.scss';
 
@@ -12,8 +13,9 @@ const ENLACES = [
 ];
 
 // Membrete del almanaque: marca, navegación principal, cuenta y canasta.
-export default function Menu({ totalCanasta = 0 }) {
+export default function Menu() {
   const { user, perfil } = useAuth();
+  const { totalItems, abrirPanel } = useCart();
   const [abierto, setAbierto] = useState(false);
 
 
@@ -39,10 +41,10 @@ export default function Menu({ totalCanasta = 0 }) {
             <Icon name="usuario" />
             <span>{user ? nombre || 'Mi cuenta' : 'Ingresar'}</span>
           </Link>
-          <Link className={`btn btn--rojo btn--chico ${styles.canasta}`} to="/canasta">
+          <button className={`btn btn--rojo btn--chico ${styles.canasta}`} type="button" onClick={abrirPanel} aria-haspopup="dialog">
             <Icon name="canasta" />
-            Canasta <span className={styles.contador} aria-label={`${totalCanasta} productos`}>{totalCanasta}</span>
-          </Link>
+            Canasta <span className={styles.contador} aria-label={`${totalItems} en la canasta`}>{totalItems}</span>
+          </button>
           <button
             className={styles.hamburguesa}
             type="button"

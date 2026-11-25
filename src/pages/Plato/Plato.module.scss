@@ -1,3 +1,25 @@
-.pagina {
-  display: block;
+@use '../../styles/mixins' as *;
+
+.plato { padding-top: var(--s6); }
+
+.migas { font-size: .88rem; color: var(--tinta-tenue); margin: 0 0 var(--s4); }
+
+.cuerpo { display: grid; grid-template-columns: 7fr 5fr; gap: var(--s7); align-items: start; }
+
+.lamina {
+  margin: 0; border: 1px solid var(--tinta); background: #fff; padding: var(--s3);
+  img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+}
+
+.texto {
+  display: grid; gap: var(--s4); align-content: start;
+  h1 { font-size: clamp(2.4rem, 4.5vw, 3.6rem); border-bottom: 3px solid var(--tinta); padding-bottom: var(--s3); }
+}
+
+.descripcion { margin: 0; color: var(--tinta-suave); font-size: 1.05rem; max-width: 46ch; }
+.precio { margin: 0; color: var(--tinta-tenue); :global(.precio) { font-size: 2.4rem; color: var(--tinta); } }
+.nota { margin: 0; padding: var(--s3) var(--s4); background: var(--verde-velo); color: var(--verde); font-weight: 600; font-size: .9rem; }
+
+@include movil {
+  .cuerpo { grid-template-columns: 1fr; gap: var(--s5); }
 }

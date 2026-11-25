@@ -1,0 +1,24 @@
+.porciones {
+  display: grid; gap: var(--s3); padding: var(--s4);
+  background: #fff; border: 1.5px solid var(--tinta);
+
+  fieldset { border: 0; margin: 0; padding: 0; }
+  legend { font-weight: 600; font-size: .9rem; padding: 0; margin-bottom: var(--s2); }
+}
+
+.opciones { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+.opcion {
+  input { position: absolute; opacity: 0; }
+
+  span {
+    display: inline-flex; flex-direction: column; padding: var(--s2) var(--s3);
+    border: 1.5px solid var(--filete); cursor: pointer; font-size: .85rem; line-height: 1.25;
+  }
+
+  b { font-family: var(--display); font-size: 1.15rem; font-weight: 800; }
+  input:checked + span { border-color: var(--rojo); background: var(--rojo-velo); }
+  input:focus-visible + span { outline: 2px solid var(--rojo); outline-offset: 2px; }
+}
+
+.fila { display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap; }

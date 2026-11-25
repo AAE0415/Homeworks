@@ -1,0 +1,15 @@
+.barra {
+  display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s5);
+  background: var(--tinta); color: var(--papel); font-size: .9rem;
+
+  b { color: #fff; }
+
+  button {
+    margin-left: auto; display: inline-flex; align-items: center; gap: var(--s2); flex: none;
+    background: none; border: 1.5px solid var(--papel); color: var(--papel);
+    padding: var(--s1) var(--s3); min-height: 36px;
+    font-family: var(--display); font-weight: 800; letter-spacing: .05em; text-transform: uppercase; cursor: pointer;
+
+    &:hover { background: var(--papel); color: var(--tinta); }
+  }
+}

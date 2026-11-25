@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import Icon from './Icon';
 import styles from './AdminLayout.module.scss';
@@ -16,8 +16,6 @@ const SECCIONES = [
 export default function AdminLayout() {
   const { perfil, logout } = useAuth();
   const [abierto, setAbierto] = useState(false);
-  const { pathname } = useLocation();
-  useEffect(() => setAbierto(false), [pathname]);
 
   return (
     <div className={styles.admin}>
@@ -31,7 +29,7 @@ export default function AdminLayout() {
 
       <aside className={styles.riel} id="riel-admin" data-abierto={abierto}>
         <Link className={styles.marca} to="/admin">Delilicias <small>Administración</small></Link>
-        <nav aria-label="Administración">
+        <nav aria-label="Administración" onClick={(e) => e.target.closest('a') && setAbierto(false)}>
           {SECCIONES.map((s) => (
             <NavLink key={s.to} to={s.to} end={s.end}><Icon name={s.icono} />{s.texto}</NavLink>
           ))}

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import Icon from './Icon';
 import styles from './Menu.module.scss';
@@ -15,9 +15,7 @@ const ENLACES = [
 export default function Menu({ totalCanasta = 0 }) {
   const { user, perfil } = useAuth();
   const [abierto, setAbierto] = useState(false);
-  const { pathname } = useLocation();
 
-  useEffect(() => setAbierto(false), [pathname]);
 
   const nombre = perfil?.nombre?.split(' ')[0];
 
@@ -28,7 +26,8 @@ export default function Menu({ totalCanasta = 0 }) {
           Delilicias <small>Cali · Navidad 2026</small>
         </Link>
 
-        <nav className={styles.nav} id="nav-principal" aria-label="Principal" data-abierto={abierto}>
+        <nav className={styles.nav} id="nav-principal" aria-label="Principal" data-abierto={abierto}
+          onClick={(e) => e.target.closest('a') && setAbierto(false)}>
           {ENLACES.map((e) => (
             <NavLink key={e.to} to={e.to} end={e.end}>{e.texto}</NavLink>
           ))}

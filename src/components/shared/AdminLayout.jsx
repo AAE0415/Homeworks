@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import Icon from './Icon';
 import styles from './AdminLayout.module.scss';
@@ -16,6 +16,8 @@ const SECCIONES = [
 export default function AdminLayout() {
   const { perfil, logout } = useAuth();
   const [abierto, setAbierto] = useState(false);
+  const navigate = useNavigate();
+  const salir = () => { logout(); navigate('/', { replace: true }); };
 
   return (
     <div className={styles.admin}>
@@ -37,7 +39,7 @@ export default function AdminLayout() {
         <div className={styles.pie}>
           <span>Sesión: {perfil?.nombre ?? 'Administradora'}</span>
           <Link to="/">Ver la tienda</Link>
-          <button type="button" onClick={logout}><Icon name="salir" />Salir</button>
+          <button type="button" onClick={salir}><Icon name="salir" />Salir</button>
         </div>
       </aside>
 

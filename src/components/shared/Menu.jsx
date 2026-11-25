@@ -43,7 +43,7 @@ export default function Menu() {
           </Link>
           <button className={`btn btn--rojo btn--chico ${styles.canasta}`} type="button" onClick={abrirPanel} aria-haspopup="dialog">
             <Icon name="canasta" />
-            Canasta <span className={styles.contador} aria-label={`${totalItems} en la canasta`}>{totalItems}</span>
+            <span className={styles.textoCanasta}>Canasta</span> <span className={styles.contador} aria-label={`${totalItems} en la canasta`}>{totalItems}</span>
           </button>
           <button
             className={styles.hamburguesa}

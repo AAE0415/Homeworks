@@ -1,0 +1,23 @@
+.mapa {
+  border: 1px solid var(--tinta);
+  background: var(--papel-sombra);
+  position: relative;
+  z-index: 0; // que el mapa no quede por encima del membrete ni del panel
+
+  :global(.leaflet-tile-pane) { filter: grayscale(.85) sepia(.12) contrast(.95) brightness(1.04); }
+  :global(.leaflet-control-attribution) { font-size: .7rem; }
+  :global(.leaflet-container) { font-family: var(--texto); }
+}
+
+.lienzo { width: 100%; height: 100%; }
+
+:global(.leaflet-tooltip).etiqueta {
+  background: var(--papel);
+  border: 1px solid var(--tinta);
+  border-radius: 2px;
+  box-shadow: none;
+  color: var(--tinta);
+  font-weight: 600;
+  font-size: .78rem;
+  padding: 2px 6px;
+}

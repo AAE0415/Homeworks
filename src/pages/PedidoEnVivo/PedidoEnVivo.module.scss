@@ -1,3 +1,19 @@
-.pagina {
-  display: block;
+@use '../../styles/mixins' as *;
+
+.pedido {
+  padding-top: var(--s7);
+  h1 { font-size: clamp(2.4rem, 5vw, 4rem); border-bottom: 3px solid var(--tinta); padding-bottom: var(--s2); }
+  h2 { font-family: var(--display); font-weight: 800; font-size: 1.5rem; text-transform: uppercase; margin: 0 0 var(--s3); border-top: 3px solid var(--tinta); padding-top: var(--s3); }
 }
+
+.sub { color: var(--tinta-suave); margin: var(--s3) 0 var(--s6); }
+.cuerpo { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s7); align-items: start; }
+.ok { margin: 0; padding: var(--s3) var(--s4); background: var(--verde-velo); color: var(--verde); font-weight: 600; }
+
+.items {
+  list-style: none; margin: 0; padding: 0;
+  li { display: flex; justify-content: space-between; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px dashed var(--filete); font-size: .92rem; }
+  li:last-child { font-weight: 700; border-bottom: 0; }
+}
+
+@include movil { .cuerpo { grid-template-columns: 1fr; } }

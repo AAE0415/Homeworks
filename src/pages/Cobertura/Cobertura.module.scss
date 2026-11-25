@@ -1,3 +1,14 @@
-.pagina {
-  display: block;
+@use '../../styles/mixins' as *;
+
+.cobertura { padding-top: var(--s7); }
+
+.cabecera {
+  border-bottom: 3px solid var(--tinta); padding-bottom: var(--s3); margin-bottom: var(--s5);
+  h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
+  p { margin: var(--s3) 0 0; color: var(--tinta-suave); max-width: 60ch; }
 }
+
+.cuerpo { display: grid; grid-template-columns: 360px 1fr; gap: var(--s6); align-items: start; }
+.lado { display: grid; gap: var(--s4); }
+
+@include movil { .cuerpo { grid-template-columns: 1fr; } }

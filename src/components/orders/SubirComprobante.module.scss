@@ -1,0 +1,17 @@
+.subir {
+  display: grid; gap: var(--s3); justify-items: start;
+  p { margin: 0; color: var(--tinta-suave); font-size: .95rem; }
+  b { color: var(--tinta); }
+}
+
+.zona {
+  width: 100%; display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s4); border: 1.5px dashed var(--tinta-tenue); background: #fff; cursor: pointer;
+  font-weight: 600;
+
+  &:hover, &:focus-within { border-color: var(--tinta); background: var(--papel-sombra); }
+  input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  :global(.icon) { width: 1.5em; height: 1.5em; color: var(--rojo); }
+}
+
+.error { color: var(--rojo-hondo) !important; font-weight: 600; }

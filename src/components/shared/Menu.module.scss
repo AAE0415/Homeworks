@@ -72,3 +72,9 @@
     a[aria-current='page'] { color: var(--rojo); border-bottom-color: var(--filete); }
   }
 }
+
+@media (max-width: 400px) {
+  .textoCanasta { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .cuenta { padding: var(--s1); }
+  .interior { gap: var(--s2); }
+}

@@ -38,11 +38,12 @@ drop trigger if exists al_crear_usuario on auth.users;
 create trigger al_crear_usuario after insert on auth.users
   for each row execute function public.crear_perfil();
 
--- Un cliente no puede cambiarse el rol a sí mismo
+-- Un cliente no puede cambiarse el rol a sí mismo desde la app.
+-- Desde el SQL Editor (sin usuario de la app, auth.uid() es null) sí se puede asignar.
 create or replace function public.proteger_rol()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  if new.rol is distinct from old.rol and not public.es_admin() then
+  if new.rol is distinct from old.rol and auth.uid() is not null and not public.es_admin() then
     raise exception 'No puedes cambiar el rol';
   end if;
   return new;

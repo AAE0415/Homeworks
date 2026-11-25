@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import f from '../../components/cuenta/formularios.module.scss';
 import Campo from '../../components/shared/Campo';
+import Loader from '../../components/shared/Loader';
 import { BARRIOS } from '../../data/barrios';
 import { validarRegistro } from '../../helpers/validacion';
 import useAuth from '../../hooks/useAuth';
@@ -10,12 +11,19 @@ import styles from './Perfil.module.scss';
 const barriosOrdenados = [...BARRIOS.nodos].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
 
 export default function Perfil() {
-  const { user, perfil, actualizarPerfil, logout } = useAuth();
+  const { perfil } = useAuth();
+  if (!perfil) return <Loader texto="Cargando tu perfil…" />;
+  // key: si cambia el perfil, el formulario arranca con los datos nuevos
+  return <FormularioPerfil key={perfil.id} perfil={perfil} />;
+}
+
+function FormularioPerfil({ perfil }) {
+  const { user, actualizarPerfil, logout } = useAuth();
   const navigate = useNavigate();
   const [datos, setDatos] = useState({
-    nombre: perfil?.nombre ?? '',
-    telefono: perfil?.telefono ?? '',
-    barrio_id: perfil?.barrio_id ?? '',
+    nombre: perfil.nombre ?? '',
+    telefono: perfil.telefono ?? '',
+    barrio_id: perfil.barrio_id ?? '',
   });
   const [errores, setErrores] = useState({});
   const [mensaje, setMensaje] = useState(null);

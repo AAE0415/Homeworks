@@ -9,12 +9,15 @@ import { AuthContext } from './authContext';
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [perfil, setPerfil] = useState(null);
-  const [cargando, setCargando] = useState(supabaseConfigurado);
+  const [cargandoSesion, setCargandoSesion] = useState(supabaseConfigurado);
+  // id del usuario cuyo perfil ya se intentó cargar (evita mostrar rutas con el perfil a medias)
+  const [perfilDe, setPerfilDe] = useState(null);
 
   const cargarPerfil = useCallback(async (usuario) => {
-    if (!usuario) { setPerfil(null); return; }
+    if (!usuario) { setPerfil(null); setPerfilDe(null); return; }
     const { data } = await supabase.from('profiles').select('*').eq('id', usuario.id).maybeSingle();
     setPerfil(data ?? null);
+    setPerfilDe(usuario.id);
   }, []);
 
   useEffect(() => {
@@ -26,7 +29,7 @@ export function AuthProvider({ children }) {
       if (!activo) return;
       setUser(usuario);
       await cargarPerfil(usuario);
-      if (activo) setCargando(false);
+      if (activo) setCargandoSesion(false);
     });
 
     const { data: sub } = supabase.auth.onAuthStateChange((_evento, session) => {
@@ -68,6 +71,8 @@ export function AuthProvider({ children }) {
     setPerfil(data);
     return { ok: true };
   }, [user]);
+
+  const cargando = cargandoSesion || Boolean(user && perfilDe !== user.id);
 
   const valor = useMemo(() => ({
     user, perfil, cargando, configurado: supabaseConfigurado, login, registrar, logout, actualizarPerfil,

@@ -1,7 +1,7 @@
 -- ─────────────────────────────────────────────────────────────
 --  Delilicias · Esquema de base de datos (Supabase / PostgreSQL)
 --  Ejecutar completo en Supabase → SQL Editor, una sola vez.
---  Después ejecutar seed.sql.
+--  Después ejecutar grants.sql y seed.sql.
 -- ─────────────────────────────────────────────────────────────
 
 -- ========== Perfiles (un perfil por usuario de auth.users) ==========

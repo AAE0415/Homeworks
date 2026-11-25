@@ -1,0 +1,47 @@
+@use '../../styles/mixins' as *;
+
+.lamina {
+  margin: 0; position: relative; display: grid; grid-template-rows: 1fr auto;
+  border: 1px solid var(--tinta); background: #fff; padding: var(--s3);
+  min-height: min(76vh, 720px);
+}
+
+.vacia { background: var(--papel-sombra); }
+
+.foto {
+  position: relative; overflow: hidden; display: block;
+  img { width: 100%; height: 100%; object-fit: cover; animation: aparece .5s var(--ease); }
+}
+
+@keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+
+.pie {
+  display: flex; align-items: center; gap: var(--s4);
+  padding: var(--s3) var(--s2) var(--s1); border-top: 1px solid var(--tinta); margin-top: var(--s3);
+}
+
+.nombre { display: block; font-family: var(--display); font-weight: 800; font-size: 1.55rem; text-transform: uppercase; letter-spacing: .02em; line-height: 1.05; }
+.precio { color: var(--tinta-suave); font-size: .95rem; }
+
+.nav {
+  margin-left: auto; display: flex; align-items: center; gap: var(--s2);
+
+  button {
+    width: 44px; height: 44px; display: grid; place-items: center;
+    border: 1.5px solid var(--tinta); background: var(--papel); cursor: pointer; border-radius: 2px;
+    &:hover { background: var(--tinta); color: var(--papel); }
+  }
+
+  :global(.tabular) { font-size: .85rem; color: var(--tinta-tenue); min-width: 3.2em; text-align: center; }
+}
+
+.izq :global(.icon) { transform: scaleX(-1); }
+
+@include movil {
+  .lamina { min-height: 0; padding: var(--s2); }
+  .foto { aspect-ratio: 16 / 8; }
+  .pie { margin-top: var(--s2); padding-top: var(--s2); }
+  .nombre { font-size: 1.2rem; }
+  .precio { font-size: .85rem; }
+  .nav { :global(.tabular) { display: none; } button { width: 40px; height: 40px; } }
+}

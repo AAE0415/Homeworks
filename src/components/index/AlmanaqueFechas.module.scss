@@ -1,0 +1,54 @@
+@use '../../styles/mixins' as *;
+
+.cuadricula {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--tinta); border-left: 1px solid var(--filete);
+}
+
+.diaSemana {
+  font-family: var(--display); font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-align: center;
+  padding: var(--s1) 0; border-right: 1px solid var(--filete); border-bottom: 1px solid var(--tinta);
+}
+.domingo { color: var(--rojo); }
+
+.celda {
+  position: relative; min-height: 66px; padding: var(--s1) var(--s2);
+  border: 0; border-right: 1px solid var(--filete); border-bottom: 1px solid var(--filete); border-radius: 0;
+  background: transparent; text-align: left; font: inherit; color: var(--tinta-tenue);
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+
+.numero {
+  position: relative; display: inline-block; padding: 0 3px;
+  font-family: var(--display); font-weight: 800; font-size: 1.45rem; line-height: 1; font-variant-numeric: tabular-nums;
+
+  :global(.ovalo) { left: -38%; top: -22%; width: 176%; height: 140%; }
+}
+
+.festivo .numero { color: var(--rojo); }
+.vacia { background: var(--papel-sombra); }
+
+.entrega {
+  color: var(--tinta); cursor: pointer; background: #fff; z-index: 1;
+  .numero { font-size: 1.9rem; color: var(--rojo); }
+  &:hover:not(:disabled) { background: var(--rojo-velo); }
+  &[aria-pressed='true'] { background: var(--rojo-velo); }
+  &:disabled { cursor: not-allowed; .numero { color: var(--tinta-tenue); } }
+}
+
+.cupo {
+  display: block; font-size: .72rem; font-weight: 600; line-height: 1.2; margin-top: 2px;
+  b { font-family: var(--display); font-size: 1.15rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+}
+
+.limite { color: var(--tinta); .cupo { color: var(--rojo-hondo); } }
+
+.cargando { height: 230px; background: var(--papel-sombra); }
+.error { color: var(--rojo-hondo); font-weight: 600; }
+
+@include movil {
+  .celda { min-height: 58px; padding: 2px 4px; }
+  .numero { font-size: 1.15rem; }
+  .entrega .numero { font-size: 1.5rem; }
+  .cupo { font-size: .7rem; line-height: 1.1; b { display: block; font-size: .95rem; } }
+}

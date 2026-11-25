@@ -153,8 +153,9 @@ input, select, textarea { caret-color: var(--rojo); }
 /* Óvalo rojo trazado a mano */
 .ovalo { position: absolute; left: -9%; top: -7%; width: 118%; height: 114%; pointer-events: none; overflow: visible; }
 .ovalo path { fill: none; stroke: var(--rojo); stroke-width: 2.6; stroke-linecap: round; }
-.ovalo--dibuja path { stroke-dasharray: 420; stroke-dashoffset: 420; animation: trazo .9s var(--ease) .2s forwards; }
-@keyframes trazo { to { stroke-dashoffset: 0; } }
+/* El trazo termina visible aunque la animación no corra (pestaña en segundo plano, etc.) */
+.ovalo--dibuja path { stroke-dasharray: 420; stroke-dashoffset: 0; animation: trazo .9s var(--ease) .2s backwards; }
+@keyframes trazo { from { stroke-dashoffset: 420; } }
 
 /* Sello de goma */
 .sello {

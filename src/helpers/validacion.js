@@ -43,3 +43,23 @@ export function traducirErrorAuth(error) {
   if (/failed to fetch|network/i.test(m)) return 'No hay conexión con el servidor. Revisa tu internet.';
   return 'No pudimos completar la operación. Inténtalo de nuevo en un momento.';
 }
+
+export function validarCheckout({ fecha_entrega_id, personas, nombre_recibe, barrio_id, direccion, enCobertura }) {
+  const errores = {};
+  if (!fecha_entrega_id) errores.fecha_entrega_id = 'Elige la fecha de entrega.';
+  if (!(Number(personas) >= 1)) errores.personas = 'Escribe para cuántas personas es la cena.';
+  if (!nombre_recibe?.trim()) errores.nombre_recibe = 'Escribe quién recibe el pedido.';
+  if (!barrio_id) errores.barrio_id = 'Elige el barrio de entrega.';
+  else if (!enCobertura) errores.barrio_id = 'Ese barrio está fuera de cobertura. Escríbenos por WhatsApp y lo revisamos.';
+  if (!direccion?.trim()) errores.direccion = 'Escribe la dirección de entrega.';
+  return errores;
+}
+
+const MAX_COMPROBANTE = 5 * 1024 * 1024;
+
+export function validarComprobante(archivo) {
+  if (!archivo) return 'Elige la foto o el PDF del comprobante.';
+  if (!/^image\//.test(archivo.type) && archivo.type !== 'application/pdf') return 'Sube una foto o un PDF del comprobante.';
+  if (archivo.size > MAX_COMPROBANTE) return 'El archivo pesa más de 5 MB. Toma una foto más liviana.';
+  return null;
+}

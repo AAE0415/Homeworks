@@ -46,3 +46,34 @@ describe('traducirErrorAuth', () => {
     expect(traducirErrorAuth({ message: 'algo raro' })).toMatch(/No pudimos/);
   });
 });
+
+describe('validarCheckout', () => {
+  const ok = { fecha_entrega_id: 1, personas: '8', nombre_recibe: 'Laura', barrio_id: 'capri', direccion: 'Calle 16 # 105-40', enCobertura: true };
+
+  it('sin errores con datos completos', async () => {
+    const { validarCheckout } = await import('./validacion');
+    expect(validarCheckout(ok)).toEqual({});
+  });
+
+  it('pide fecha, personas, nombre, barrio en cobertura y dirección', async () => {
+    const { validarCheckout } = await import('./validacion');
+    const e = validarCheckout({ fecha_entrega_id: null, personas: '0', nombre_recibe: '', barrio_id: 'jamundi', direccion: ' ', enCobertura: false });
+    expect(Object.keys(e).sort()).toEqual(['barrio_id', 'direccion', 'fecha_entrega_id', 'nombre_recibe', 'personas']);
+    expect(e.barrio_id).toMatch(/WhatsApp/);
+  });
+});
+
+describe('validarComprobante', () => {
+  it('acepta imágenes y PDF de hasta 5 MB', async () => {
+    const { validarComprobante } = await import('./validacion');
+    expect(validarComprobante({ type: 'image/jpeg', size: 1_000_000 })).toBeNull();
+    expect(validarComprobante({ type: 'application/pdf', size: 5 * 1024 * 1024 })).toBeNull();
+  });
+
+  it('rechaza otros formatos, archivos grandes o vacío', async () => {
+    const { validarComprobante } = await import('./validacion');
+    expect(validarComprobante({ type: 'text/plain', size: 10 })).toMatch(/foto o un PDF/);
+    expect(validarComprobante({ type: 'image/png', size: 6 * 1024 * 1024 })).toMatch(/5 MB/);
+    expect(validarComprobante(null)).toMatch(/Elige/);
+  });
+});

@@ -1,3 +1,29 @@
-.pagina {
-  display: block;
+.detalle { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s6); align-items: start; }
+.izq, .der { display: grid; gap: var(--s6); }
+
+.bloque {
+  display: grid; gap: var(--s3);
+  h2 { font-family: var(--display); font-weight: 800; font-size: 1.5rem; text-transform: uppercase; margin: 0; border-top: 3px solid var(--tinta); padding-top: var(--s3); line-height: 1; }
 }
+
+.hoja { background: #fff; border: 1px solid var(--tinta); }
+.acciones { display: flex; gap: var(--s3); flex-wrap: wrap; }
+
+.items {
+  list-style: none; margin: 0; padding: 0;
+  li { display: flex; justify-content: space-between; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px dashed var(--filete); font-size: .92rem; }
+  li:last-child { font-weight: 700; border-bottom: 0; }
+}
+
+.cliente { margin: 0; line-height: 1.7; }
+.gratis { margin: 0; color: var(--verde); font-weight: 600; }
+
+.domicilio {
+  display: grid; gap: var(--s2);
+  label { font-weight: 600; font-size: .9rem; }
+  div { display: flex; gap: var(--s2); }
+  :global(.control) { max-width: 180px; }
+}
+.aviso { font-size: .85rem; color: var(--verde); font-weight: 600; }
+
+@media (max-width: 1100px) { .detalle { grid-template-columns: 1fr; } }

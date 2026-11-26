@@ -32,3 +32,24 @@ describe('masPedidos (usa Heap.topK)', () => {
     expect(masPedidos(ventas)).toHaveLength(4);
   });
 });
+
+describe('colaAnticipos (usa Queue)', () => {
+  const pedidos = [
+    { id: 3, estado: 'recibido', comprobante_url: 'c3', created_at: '2026-11-20T10:00' },
+    { id: 1, estado: 'recibido', comprobante_url: 'c1', created_at: '2026-11-18T10:00' },
+    { id: 2, estado: 'recibido', comprobante_url: null, created_at: '2026-11-19T10:00' },
+    { id: 4, estado: 'en_cocina', comprobante_url: 'c4', created_at: '2026-11-10T10:00' },
+  ];
+
+  it('atiende primero al que llegó primero, entre los que ya subieron comprobante', async () => {
+    const { colaAnticipos } = await import('./orders');
+    const { cola } = colaAnticipos(pedidos);
+    expect(cola.peek().id).toBe(1);
+    expect(cola.toArray().map((p) => p.id)).toEqual([1, 3]);
+  });
+
+  it('separa los que aún no tienen comprobante', async () => {
+    const { colaAnticipos } = await import('./orders');
+    expect(colaAnticipos(pedidos).sinComprobante.map((p) => p.id)).toEqual([2]);
+  });
+});

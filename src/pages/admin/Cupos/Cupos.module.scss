@@ -1,3 +1,21 @@
-.pagina {
-  display: block;
+.fechas { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--s5); }
+
+.fecha {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--s4); padding: var(--s5);
+  background: #fff; border: 1px solid var(--tinta);
+  > :global(.numeral) { font-size: 5rem; color: var(--rojo); }
+  h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 1.5rem; text-transform: uppercase; }
+  p { margin: var(--s1) 0 0; color: var(--tinta-suave); font-size: .9rem; }
 }
+
+.barra { height: 6px; background: var(--papel-sombra); margin-top: var(--s3); i { display: block; height: 100%; background: var(--tinta); } }
+.cifras b { color: var(--tinta); font-family: var(--display); font-size: 1.2rem; }
+
+.editar {
+  display: flex; align-items: center; gap: var(--s2); margin-top: var(--s3); flex-wrap: wrap;
+  label { font-weight: 600; font-size: .9rem; }
+  :global(.control) { width: 110px; }
+}
+
+.ok { color: var(--verde) !important; font-weight: 600; }
+.error { color: var(--rojo-hondo) !important; font-weight: 600; }

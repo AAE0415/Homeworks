@@ -1,3 +1,44 @@
-.pagina {
-  display: block;
+.dias { display: grid; grid-template-columns: 1fr 1fr; border-left: 1px solid var(--filete); border-top: 1px solid var(--tinta); }
+.dia { border-right: 1px solid var(--filete); min-width: 0; }
+
+.diaCab {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0 var(--s4); align-items: end;
+  padding: var(--s4) var(--s5); border-bottom: 3px solid var(--tinta); background: #fff;
+  > :global(.numeral) { font-size: 5rem; color: var(--rojo); }
+  h2 { margin: 0; font-family: var(--display); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; line-height: 1; }
+  span span { font-size: .85rem; color: var(--tinta-suave); }
 }
+
+.cupo {
+  text-align: right;
+  :global(.numeral) { font-size: 2.2rem; color: var(--tinta); }
+  small { display: block; font-size: .78rem; color: var(--tinta-tenue); }
+}
+
+.barra { grid-column: 1 / -1; height: 6px; background: var(--papel-sombra); margin-top: var(--s3); i { display: block; height: 100%; background: var(--tinta); } }
+
+.conteo {
+  display: flex; gap: var(--s4); flex-wrap: wrap; padding: var(--s3) var(--s5); border-bottom: 1px solid var(--filete);
+  font-size: .85rem; color: var(--tinta-suave);
+  b { color: var(--tinta); font-variant-numeric: tabular-nums; }
+}
+
+.tickets { list-style: none; margin: 0; padding: var(--s3) var(--s4) var(--s5); display: grid; gap: var(--s3); }
+
+.ticket {
+  background: #fff; border: 1px solid var(--filete); padding: var(--s4);
+  display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4);
+
+  h3 { margin: 0; font-size: 1rem; display: flex; gap: var(--s3); align-items: baseline; flex-wrap: wrap; }
+  h3 a { text-decoration: none; }
+  h3 :global(.tabular) { font-family: var(--display); font-weight: 800; font-size: 1.3rem; }
+  p { margin: 0; font-size: .86rem; color: var(--tinta-suave); grid-column: 1 / 2; }
+  :global(.sello) { align-self: start; justify-self: end; font-size: .8rem; }
+}
+
+.urgente { border-color: var(--tinta); }
+.acc { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--s3); margin-top: var(--s2); }
+.hora { font-size: .8rem; color: var(--tinta-tenue); margin-right: auto; display: inline-flex; gap: var(--s1); align-items: center; }
+.vacio { margin: 0; padding: var(--s5); color: var(--tinta-suave); font-size: .92rem; }
+
+@media (max-width: 1000px) { .dias { grid-template-columns: 1fr; } }

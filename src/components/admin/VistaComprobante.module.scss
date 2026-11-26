@@ -1,0 +1,16 @@
+.comprobante {
+  margin: 0; padding: var(--s3); background: var(--papel-sombra); border: 1px solid var(--filete);
+  display: grid; gap: var(--s3);
+
+  img { width: 100%; max-height: 320px; object-fit: contain; background: #fff; border: 1px solid var(--filete); }
+  figcaption { font-size: .85rem; color: var(--tinta-suave); }
+  b { color: var(--tinta); }
+}
+
+.pdf {
+  display: grid; place-items: center; min-height: 120px; background: #fff; border: 1px solid var(--filete);
+  font-weight: 600;
+}
+
+.cargando { min-height: 160px; background: #fff; }
+.vacio { padding: var(--s4); background: var(--papel-sombra); color: var(--tinta-suave); font-size: .9rem; }

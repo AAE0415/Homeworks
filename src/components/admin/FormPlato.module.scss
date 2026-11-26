@@ -1,0 +1,9 @@
+.form {
+  display: grid; gap: var(--s4); padding: var(--s5); background: #fff; border: 1px solid var(--tinta); margin-bottom: var(--s6);
+  h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; }
+}
+.grid { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr; gap: var(--s4); align-items: start; }
+.acciones { display: flex; gap: var(--s3); }
+.error { margin: 0; padding: var(--s3); background: var(--rojo-velo); color: var(--rojo-hondo); font-weight: 600; }
+
+@media (max-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } }

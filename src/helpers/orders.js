@@ -1,5 +1,6 @@
 import { fechaLocalISO } from './format';
 import Heap from './structures/Heap';
+import Queue from './structures/Queue';
 
 export const ESTADOS = ['recibido', 'anticipo_confirmado', 'en_cocina', 'en_camino', 'entregado'];
 
@@ -42,4 +43,17 @@ export function ordenarAgenda(pedidos) {
 /** Los k productos con más unidades vendidas ({ producto_id, cantidad }). Usa Heap.topK. */
 export function masPedidos(ventas, k = 4) {
   return Heap.topK(ventas, k, (a, b) => a.cantidad - b.cantidad);
+}
+
+/**
+ * Bandeja de anticipos: COLA (FIFO) de pedidos "recibido" con comprobante, en orden de llegada.
+ * Los que aún no suben comprobante quedan aparte para no frenar la fila.
+ */
+export function colaAnticipos(pedidos) {
+  const recibidos = pedidos
+    .filter((p) => p.estado === 'recibido')
+    .sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
+  const cola = new Queue();
+  recibidos.filter((p) => p.comprobante_url).forEach((p) => cola.enqueue(p));
+  return { cola, sinComprobante: recibidos.filter((p) => !p.comprobante_url) };
 }

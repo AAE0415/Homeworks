@@ -1,0 +1,33 @@
+@use '../../styles/mixins' as *;
+
+.estados { list-style: none; margin: 0; padding: var(--s3) var(--s5) var(--s5); }
+
+.estado {
+  display: grid; grid-template-columns: 250px 1fr; gap: var(--s4); align-items: center;
+  padding: var(--s4) 0; border-bottom: 1px dashed var(--filete);
+  &:last-child { border-bottom: 0; }
+
+  :global(.sello) { font-size: 1.05rem; justify-self: start; }
+  p { margin: 0; color: var(--tinta-suave); font-size: .92rem; }
+  time { display: block; font-weight: 600; color: var(--tinta); }
+}
+
+.actual {
+  :global(.sello) { font-size: 1.2rem; padding: .32em .7em .26em; animation: estampar .7s var(--ease) both; }
+  p { color: var(--tinta); }
+}
+
+@keyframes estampar {
+  from { transform: rotate(-2deg) scale(1.5); opacity: 0; }
+  to { transform: rotate(-2deg) scale(1); opacity: 1; }
+}
+
+.cancelado {
+  padding: var(--s5); display: grid; gap: var(--s3); justify-items: start;
+  p { margin: 0; color: var(--tinta-suave); }
+}
+
+@include movil {
+  .estados { padding: var(--s2) var(--s4) var(--s4); }
+  .estado { grid-template-columns: 1fr; gap: var(--s2); }
+}

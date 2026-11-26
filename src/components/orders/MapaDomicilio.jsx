@@ -1,5 +1,6 @@
 import 'leaflet/dist/leaflet.css';
-import { CircleMarker, MapContainer, Polyline, TileLayer, Tooltip } from 'react-leaflet';
+import { useEffect } from 'react';
+import { CircleMarker, MapContainer, Polyline, TileLayer, Tooltip, useMap } from 'react-leaflet';
 import { BARRIOS, COCINA } from '../../data/barrios';
 import styles from './MapaDomicilio.module.scss';
 
@@ -7,6 +8,18 @@ const porId = Object.fromEntries(BARRIOS.nodos.map((n) => [n.id, n]));
 const punto = (id) => [porId[id].lat, porId[id].lng];
 const ROJO = '#D8261C';
 const TINTA = '#161412';
+
+// Encuadra el mapa para que se vea la ruta completa
+function Encuadre({ puntos }) {
+  const mapa = useMap();
+  const clave = JSON.stringify(puntos);
+  useEffect(() => {
+    const p = JSON.parse(clave);
+    if (p.length > 1) mapa.fitBounds(p, { padding: [36, 36] });
+    else if (p.length === 1) mapa.setView(p[0], mapa.getZoom());
+  }, [clave, mapa]);
+  return null;
+}
 
 // Mapa de Cali (OpenStreetMap) con el grafo de barrios: aristas, nodos y la ruta más corta.
 // Si recibe onElegir, cada barrio se puede tocar para elegirlo.
@@ -22,6 +35,8 @@ export default function MapaDomicilio({ ruta = null, destino = null, onElegir, c
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        <Encuadre puntos={camino.length > 1 ? camino.map(punto) : destino && porId[destino] ? [punto(destino)] : []} />
 
         {/* Aristas del grafo (calles que conectan barrios vecinos) */}
         {!compacto && BARRIOS.aristas.map(([a, b]) => (

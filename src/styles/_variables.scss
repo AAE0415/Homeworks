@@ -1,0 +1,39 @@
+// ─── Variables del panel (reutilizables en todos los componentes) ───
+
+// Colores
+$fondo: #12131c;
+$superficie: #1b1d2a;
+$superficie-alta: #252838;
+$borde: #34374b;
+$texto: #f3f1ea;
+$texto-suave: #b4b2c4;
+$texto-tenue: #8c8aa0;
+
+$acento: #ff6b4a;   // coral: acciones y el número 1
+$oro: #f2c14e;      // podio
+$menta: #4fd1b2;    // recomendaciones directas
+$lila: #a78bfa;     // recomendaciones de segundo nivel
+
+// Color por género (se usa con @each para generar las etiquetas)
+$generos: (
+  'salsa': #ff6b4a,
+  'regueton': #a78bfa,
+  'vallenato': #4fd1b2,
+  'pop': #f2c14e,
+  'trova': #7cc6fe,
+  'llanera': #e8a87c,
+  'otro': #8c8aa0,
+);
+
+// Tipografía
+$fuente: 'Segoe UI', system-ui, -apple-system, sans-serif;
+$fuente-numeros: 'Segoe UI', system-ui, sans-serif;
+
+// Espaciado (escala de 4 px)
+$espacio: 4px;
+$radio: 14px;
+$radio-chico: 8px;
+
+// Puntos de quiebre
+$tablet: 980px;
+$movil: 640px;

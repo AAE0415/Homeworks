@@ -1,0 +1,75 @@
+@use 'variables' as *;
+@use 'functions' as *;
+
+// ─── Mixins reutilizables del dashboard ───
+
+// Tarjeta del panel
+@mixin tarjeta($relleno: 5) {
+  background: $superficie;
+  border: 1px solid $borde;
+  border-radius: $radio;
+  padding: esp($relleno);
+}
+
+// Título de sección
+@mixin titulo-seccion {
+  margin: 0 0 esp(4);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $texto-suave;
+}
+
+// Botón (variante de color)
+@mixin boton($color: $acento) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: esp(2);
+  min-height: 42px;
+  padding: 0 esp(4);
+  border: 0;
+  border-radius: 999px;
+  background: $color;
+  color: $fondo;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+
+  &:hover { filter: brightness(1.08); }
+  &:active { transform: scale(0.97); }
+  &:focus-visible { outline: 2px solid $texto; outline-offset: 3px; }
+}
+
+// Campo de texto
+@mixin campo {
+  width: 100%;
+  min-height: 44px;
+  padding: esp(2) esp(4);
+  border: 1px solid $borde;
+  border-radius: $radio-chico;
+  background: $superficie-alta;
+  color: $texto;
+  font: inherit;
+
+  &::placeholder { color: $texto-tenue; }
+  &:focus { outline: none; border-color: $acento; box-shadow: 0 0 0 3px velo($acento, 0.25); }
+}
+
+// Etiqueta de género con su color
+@mixin etiqueta($color) {
+  display: inline-block;
+  padding: 2px esp(2);
+  border-radius: 999px;
+  background: velo($color, 0.16);
+  color: $color;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+// Responsivo
+@mixin hasta($ancho) {
+  @media (max-width: $ancho) { @content; }
+}

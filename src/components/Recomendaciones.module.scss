@@ -1,0 +1,41 @@
+@use '../styles/variables' as *;
+@use '../styles/functions' as *;
+@use '../styles/mixins' as *;
+
+.recomendaciones {
+  @include tarjeta;
+  h2 { @include titulo-seccion; em { color: $texto; font-style: normal; text-transform: none; letter-spacing: 0; } }
+}
+
+.vacio { margin: 0; color: $texto-tenue; }
+
+.grafo {
+  display: block; width: 100%; max-width: 360px; margin: 0 auto esp(4);
+
+  text { fill: $texto-suave; font-size: 10px; pointer-events: none; }
+}
+
+.arista1 { stroke: velo($menta, 0.7); }
+.arista2 { stroke: velo($lila, 0.5); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.centro { fill: $acento; stroke: $fondo; stroke-width: 3; }
+
+%nodo { cursor: pointer; circle { stroke: $fondo; stroke-width: 2; transition: r 0.15s ease; } &:hover circle { r: 12; } }
+.nodo1 { @extend %nodo; circle { fill: $menta; } }
+.nodo2 { @extend %nodo; circle { fill: $lila; } }
+
+.lista {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: esp(2);
+
+  li {
+    display: flex; align-items: center; gap: esp(3);
+    padding: esp(2) esp(3); border-radius: $radio-chico; background: $superficie-alta;
+  }
+
+  button { flex: 1; display: grid; text-align: left; background: none; border: 0; color: inherit; padding: 0; cursor: pointer; }
+  button:hover b { color: $acento; }
+}
+
+.directa { font-size: 0.72rem; font-weight: 700; color: $menta; text-transform: uppercase; letter-spacing: 0.06em; }
+.indirecta { font-size: 0.72rem; font-weight: 700; color: $lila; }
+.meta { font-size: 0.82rem; color: $texto-tenue; }
+.afinidad { font-variant-numeric: tabular-nums; font-weight: 700; color: $texto-suave; }

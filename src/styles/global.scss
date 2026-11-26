@@ -1,0 +1,29 @@
+@use 'variables' as *;
+@use 'functions' as *;
+@use 'mixins' as *;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: $fondo;
+  color: $texto;
+  font-family: $fuente;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: $acento; color: $fondo; }
+:focus-visible { outline: 2px solid $acento; outline-offset: 2px; }
+button, input, select { font: inherit; }
+
+// Etiquetas de género generadas con @each a partir del mapa $generos
+@each $nombre, $color in $generos {
+  .genero-#{$nombre} { @include etiqueta($color); }
+}
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

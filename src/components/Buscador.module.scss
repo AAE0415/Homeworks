@@ -1,0 +1,37 @@
+@use '../styles/variables' as *;
+@use '../styles/functions' as *;
+@use '../styles/mixins' as *;
+
+.buscador {
+  @include tarjeta;
+  h2 { @include titulo-seccion; }
+}
+
+.campo { @include campo; font-size: 1.05rem; }
+
+.sugerencias {
+  list-style: none;
+  margin: esp(3) 0 0;
+  padding: 0;
+
+  li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 esp(3);
+    align-items: center;
+    padding: esp(2) esp(3);
+    border-radius: $radio-chico;
+    cursor: pointer;
+
+    &[aria-selected='true'] { background: $superficie-alta; }
+  }
+
+  mark { background: none; color: $acento; font-weight: 700; }
+}
+
+.titulo { font-weight: 600; }
+.artista { grid-row: 2; font-size: 0.85rem; color: $texto-tenue; }
+
+.existe, .noExiste, .vacio { margin: esp(3) 0 0; font-size: 0.9rem; }
+.existe { color: $menta; font-weight: 600; }
+.noExiste, .vacio { color: $texto-tenue; }

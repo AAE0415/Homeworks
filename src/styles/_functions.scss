@@ -1,0 +1,34 @@
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:math';
+@use 'variables' as *;
+
+// ─── Funciones Sass ───
+
+// Espaciado: esp(4) → 16px
+@function esp($n) {
+  @return $espacio * $n;
+}
+
+// Color del puesto en el ranking: 1 = coral, 2 y 3 = oro, el resto se va apagando
+@function color-puesto($puesto) {
+  @if $puesto == 1 {
+    @return $acento;
+  } @else if $puesto <= 3 {
+    @return $oro;
+  }
+  @return color.mix($texto-tenue, $texto, math.min(($puesto - 3) * 12%, 70%));
+}
+
+// Color de un género (con respaldo si no existe)
+@function color-genero($genero) {
+  @if map.has-key($generos, $genero) {
+    @return map.get($generos, $genero);
+  }
+  @return map.get($generos, 'otro');
+}
+
+// Fondo translúcido de un color
+@function velo($c, $alfa: 0.14) {
+  @return rgba($c, $alfa);
+}

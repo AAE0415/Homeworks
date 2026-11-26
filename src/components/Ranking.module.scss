@@ -1,0 +1,63 @@
+@use '../styles/variables' as *;
+@use '../styles/functions' as *;
+@use '../styles/mixins' as *;
+
+.ranking {
+  @include tarjeta;
+
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: esp(2); }
+
+  li {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 140px 76px auto;
+    gap: esp(3);
+    align-items: center;
+    padding: esp(2) esp(3);
+    border-radius: $radio-chico;
+    border: 1px solid transparent;
+    background: $superficie-alta;
+  }
+}
+
+.cabecera {
+  display: flex; justify-content: space-between; align-items: baseline; gap: esp(3); flex-wrap: wrap;
+  h2 { @include titulo-seccion; }
+}
+
+.nota { font-size: 0.8rem; color: $texto-tenue; }
+
+.numero { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: center; }
+
+.info {
+  display: grid; text-align: left; background: none; border: 0; color: inherit; padding: 0; cursor: pointer; min-width: 0;
+  b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  > span { font-size: 0.82rem; color: $texto-tenue; }
+  &:hover b { color: $acento; }
+}
+
+.barra {
+  height: 8px; border-radius: 999px; background: $borde; overflow: hidden;
+  i { display: block; height: 100%; border-radius: inherit; transition: width 0.4s ease; }
+}
+
+.plays { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
+
+.escuchar {
+  @include boton($superficie);
+  min-height: 34px; padding: 0 esp(3); color: $texto; border: 1px solid $borde; font-size: 0.85rem;
+}
+
+// Colores del 1 al 10 generados con un bucle @for y la función color-puesto()
+@for $i from 1 through 10 {
+  .ranking .puesto#{$i} {
+    .numero { color: color-puesto($i); }
+    .barra i { background: color-puesto($i); }
+    @if $i <= 3 { border: 1px solid velo(color-puesto($i), 0.55); }
+  }
+}
+
+@include hasta($movil) {
+  .ranking li { grid-template-columns: 36px minmax(0, 1fr) auto; }
+  .barra { grid-column: 2 / -1; grid-row: 2; }
+  .escuchar { display: none; }
+}

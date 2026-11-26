@@ -36,6 +36,11 @@ describe('celdasAlmanaque', () => {
     expect(c.find((x) => x.dia === 24).entrega).toMatchObject({ elegible: false, motivo: 'Cerrado' });
   });
 
+  it('una fecha sin límite se cierra el mismo día de la entrega', () => {
+    const c = celdasAlmanaque(fechas.map((f) => ({ ...f, ocupados: 0 })), new Date(2026, 11, 31));
+    expect(c.find((x) => x.dia === 31 && !x.vacia).entrega).toMatchObject({ elegible: false, motivo: 'Cerrado' });
+  });
+
   it('sin fechas devuelve []', () => {
     expect(celdasAlmanaque([], new Date())).toEqual([]);
   });

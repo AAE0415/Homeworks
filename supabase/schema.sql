@@ -158,7 +158,9 @@ create or replace function public.crear_pedido(
 ) returns bigint language plpgsql security definer set search_path = public as $$
 declare
   v_fecha public.fechas_entrega;
+  v_hoy date := (now() at time zone 'America/Bogota')::date;
   v_ocupados int;
+  v_abiertos int;
   v_conf public.configuracion;
   v_subtotal int := 0;
   v_pedido_id bigint;
@@ -171,11 +173,20 @@ begin
   if jsonb_array_length(coalesce(p_items, '[]'::jsonb)) = 0 then
     raise exception 'La canasta está vacía';
   end if;
+  if coalesce(trim(p_nombre_recibe), '') = '' or coalesce(trim(p_direccion), '') = '' or coalesce(trim(p_barrio_id), '') = '' then
+    raise exception 'Faltan los datos de entrega: quién recibe, barrio y dirección';
+  end if;
+
+  -- Un cliente no puede tener más de 2 pedidos esperando confirmación del anticipo
+  select count(*) into v_abiertos from public.pedidos where user_id = auth.uid() and estado = 'recibido';
+  if v_abiertos >= 2 then
+    raise exception 'Ya tienes pedidos esperando la confirmación del anticipo. Escríbenos por WhatsApp si necesitas otro';
+  end if;
 
   -- Bloquear la fecha para que dos pedidos simultáneos no superen el cupo
   select * into v_fecha from public.fechas_entrega where id = p_fecha_entrega_id for update;
   if not found then raise exception 'La fecha de entrega no existe'; end if;
-  if v_fecha.pedir_hasta is not null and v_fecha.pedir_hasta < (now() at time zone 'America/Bogota')::date then
+  if (v_fecha.pedir_hasta is not null and v_fecha.pedir_hasta < v_hoy) or v_fecha.fecha <= v_hoy then
     raise exception 'Ya no se reciben pedidos para el %', v_fecha.texto;
   end if;
   select count(*) into v_ocupados from public.pedidos
@@ -197,7 +208,7 @@ begin
 
   insert into public.pedidos (user_id, fecha_entrega_id, personas, nombre_recibe, barrio_id, direccion, notas,
                               subtotal, domicilio_gratis, anticipo)
-  values (auth.uid(), p_fecha_entrega_id, greatest(p_personas, 1), p_nombre_recibe, p_barrio_id, p_direccion, p_notas,
+  values (auth.uid(), p_fecha_entrega_id, greatest(p_personas, 1), trim(p_nombre_recibe), p_barrio_id, trim(p_direccion), p_notas,
           v_subtotal, v_subtotal >= v_conf.domicilio_gratis_desde, round(v_subtotal * v_conf.anticipo / 100.0))
   returning id into v_pedido_id;
 
@@ -213,6 +224,9 @@ end $$;
 create or replace function public.registrar_comprobante(p_pedido_id bigint, p_url text)
 returns void language plpgsql security definer set search_path = public as $$
 begin
+  if p_url is null or p_url not like auth.uid()::text || '/%' then
+    raise exception 'El comprobante no es válido';
+  end if;
   update public.pedidos set comprobante_url = p_url
   where id = p_pedido_id and user_id = auth.uid() and estado = 'recibido';
   if not found then raise exception 'No se pudo registrar el comprobante de este pedido'; end if;
@@ -291,7 +305,9 @@ exception when duplicate_object then null; end $$;
 -- ========== Archivos (Storage) ==========
 insert into storage.buckets (id, name, public) values ('platos', 'platos', true)
   on conflict (id) do nothing;
-insert into storage.buckets (id, name, public) values ('comprobantes', 'comprobantes', false)
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+  values ('comprobantes', 'comprobantes', false, 5242880,
+          array['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'])
   on conflict (id) do nothing;
 
 drop policy if exists "admin sube fotos" on storage.objects;

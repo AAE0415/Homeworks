@@ -14,6 +14,7 @@ import useAuth from '../../hooks/useAuth';
 import useCart from '../../hooks/useCart';
 import useDeliveryRoute from '../../hooks/useDeliveryRoute';
 import useFechas from '../../hooks/useFechas';
+import useMenu from '../../hooks/useMenu';
 import useOrders from '../../hooks/useOrders';
 import styles from './Checkout.module.scss';
 
@@ -26,6 +27,7 @@ export default function Checkout() {
   const { items, subtotal, anticipo, domicilioGratis, hayAgotados, fechaElegida, elegirFecha, limpiarTodo } = useCart();
   const { fechas, cargando } = useFechas();
   const { crearPedido } = useOrders();
+  const { configuracion } = useMenu();
   const navigate = useNavigate();
   const disponibles = useMemo(() => fechasDisponibles(fechas), [fechas]);
 
@@ -167,7 +169,7 @@ export default function Checkout() {
             <dt>Domicilio</dt><dd className={domicilioGratis ? styles.gratis : ''}>{domicilioGratis ? 'Gratis' : 'Por acordar'}</dd>
             <dt>Saldo al recibir</dt><dd>{formatCOP(subtotal - anticipo)}</dd>
           </dl>
-          <div className={styles.anticipo}><span>Anticipo hoy (50 %)</span><span className="numeral">{formatCOP(anticipo)}</span></div>
+          <div className={styles.anticipo}><span>Anticipo hoy ({configuracion?.anticipo ?? 50} %)</span><span className="numeral">{formatCOP(anticipo)}</span></div>
           <div className={styles.acciones}>
             {errorGeneral && <p className={f.error} role="alert">{errorGeneral}</p>}
             {hayAgotados && <p className={f.error} role="alert">Quita los platos agotados de la canasta para continuar.</p>}

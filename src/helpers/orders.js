@@ -13,7 +13,8 @@ export function siguienteEstado(estado) {
 /** Fechas que aún se pueden elegir: no vencidas (por día) y con cupo. */
 export function fechasDisponibles(fechas, hoy = new Date()) {
   const dia = fechaLocalISO(hoy);
-  return fechas.filter((f) => (!f.pedir_hasta || f.pedir_hasta >= dia) && f.ocupados < f.cupo);
+  // Abierta si: no pasó el último día para pedir, la entrega es después de hoy y queda cupo
+  return fechas.filter((f) => (!f.pedir_hasta || f.pedir_hasta >= dia) && f.fecha > dia && f.ocupados < f.cupo);
 }
 
 /** Pone al día una canasta guardada con el menú actual. */
@@ -25,6 +26,7 @@ export function reconciliarCanasta(items, productosPorId) {
     if (!p) { cambios.push({ id: item.id, tipo: 'eliminado' }); continue; }
     if (p.precio !== item.precio) cambios.push({ id: item.id, tipo: 'precio' });
     if (!p.disponible) cambios.push({ id: item.id, tipo: 'agotado' });
+    else if (item.disponible === false) cambios.push({ id: item.id, tipo: 'disponible' });
     resultado.push({ ...item, precio: p.precio, disponible: p.disponible });
   }
   return { items: resultado, cambios };

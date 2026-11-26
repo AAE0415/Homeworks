@@ -36,7 +36,7 @@ export function celdasAlmanaque(fechas, hoy = new Date()) {
     };
     if (f) {
       const restantes = Math.max(0, f.cupo - f.ocupados);
-      const vencida = f.pedir_hasta && f.pedir_hasta < hoyISO;
+      const vencida = (f.pedir_hasta && f.pedir_hasta < hoyISO) || f.fecha <= hoyISO;
       celda.entrega = {
         id: f.id,
         texto: f.texto,

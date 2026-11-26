@@ -9,7 +9,9 @@ import styles from './ContenidoCanasta.module.scss';
 function textoCambios(cambios) {
   const precios = cambios.filter((c) => c.tipo === 'precio').length;
   const eliminados = cambios.filter((c) => c.tipo === 'eliminado').length;
+  const agotados = cambios.filter((c) => c.tipo === 'agotado').length;
   const partes = [];
+  if (agotados) partes.push(agotados === 1 ? 'un plato se agotó' : `${agotados} platos se agotaron`);
   if (precios) partes.push(precios === 1 ? 'un precio cambió' : `${precios} precios cambiaron`);
   if (eliminados) partes.push(eliminados === 1 ? 'un plato ya no está en el menú' : `${eliminados} platos ya no están en el menú`);
   return partes.length ? `Pusimos tu canasta al día: ${partes.join(' y ')}.` : null;

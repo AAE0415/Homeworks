@@ -105,3 +105,19 @@ describe('orders', () => {
     expect(siguienteEstado('cancelado')).toBeNull();
   });
 });
+
+describe('revisión final: fechas y canasta', () => {
+  it('fechasDisponibles cierra una fecha sin límite cuando ya llegó o pasó el día', () => {
+    const f = [{ id: 2, fecha: '2026-12-31', pedir_hasta: null, cupo: 40, ocupados: 0 }];
+    expect(fechasDisponibles(f, new Date(2026, 11, 30))).toHaveLength(1);
+    expect(fechasDisponibles(f, new Date(2026, 11, 31))).toHaveLength(0);
+    expect(fechasDisponibles(f, new Date(2027, 0, 2))).toHaveLength(0);
+  });
+
+  it('reconciliarCanasta reactiva un plato que volvió a estar disponible', () => {
+    const items = [{ id: 'galantina', precio: 35000, cantidad: 1, disponible: false }];
+    const { items: r, cambios } = reconciliarCanasta(items, { galantina: { id: 'galantina', precio: 35000, disponible: true } });
+    expect(r[0].disponible).toBe(true);
+    expect(cambios).toEqual([{ id: 'galantina', tipo: 'disponible' }]);
+  });
+});

@@ -29,5 +29,5 @@ grant select on public.ventas_por_producto, public.fechas_disponibilidad to anon
 grant execute on function public.es_admin() to anon, authenticated;
 grant execute on function public.crear_pedido(int, int, text, text, text, text, jsonb) to authenticated;
 grant execute on function public.registrar_comprobante(bigint, text) to authenticated;
-revoke execute on function public.crear_pedido(int, int, text, text, text, text, jsonb) from anon;
-revoke execute on function public.registrar_comprobante(bigint, text) from anon;
+revoke execute on function public.crear_pedido(int, int, text, text, text, text, jsonb) from public, anon;
+revoke execute on function public.registrar_comprobante(bigint, text) from public, anon;

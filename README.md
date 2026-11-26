@@ -52,7 +52,7 @@ Requisitos: Node 20 o superior y un proyecto de Supabase.
    VITE_SUPABASE_URL=https://xxxx.supabase.co
    VITE_SUPABASE_KEY=sb_publishable_xxxx
    ```
-3. En Supabase → SQL Editor, ejecutar en este orden: [`supabase/schema.sql`](supabase/schema.sql), [`supabase/grants.sql`](supabase/grants.sql) y [`supabase/seed.sql`](supabase/seed.sql).
+3. En Supabase → SQL Editor, ejecutar en este orden: [`supabase/schema.sql`](supabase/schema.sql), [`supabase/grants.sql`](supabase/grants.sql) y [`supabase/seed.sql`](supabase/seed.sql). (`migracion-01-revision.sql` solo hace falta en bases creadas antes de esa revisión.)
 4. Iniciar:
    ```bash
    npm run dev      # http://localhost:5173

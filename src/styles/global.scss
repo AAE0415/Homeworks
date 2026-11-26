@@ -206,3 +206,6 @@ main { flex: 1; }
   background: var(--tinta); color: var(--papel); padding: var(--s2) var(--s4);
 }
 .saltar:focus { top: var(--s2); color: var(--papel); }
+
+/* Evita palabras sueltas al final de los párrafos */
+p { text-wrap: pretty; }
